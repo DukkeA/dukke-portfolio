@@ -1,4 +1,6 @@
 import { SourceIcon } from "../source-icons";
+import { CodeIcon } from "../engineering-icons";
+import { ExperienceCounter } from "../experience-counter";
 import { profile } from "@/content/profile";
 
 export function Hero() {
@@ -138,15 +140,15 @@ export function Hero() {
           </p>
           <div className={"hero-content-layout"}>
             <h1 className={"hero-heading"}>
-              {"Webflow, "}
+              {"Software, "}
               <br />
-              {"Applied "}
+              {"Engineered "}
               <br />
-              {"Differently."}
+              {"with care."}
             </h1>
             <div className={"hero-buttons-wrap"}>
               <div className={"hero-cta-button"}>
-                <p className={"button-text"}>{"Book a Call"}</p>
+                <p className={"button-text"}>{"Say hello"}</p>
               </div>
               <div className={"hero-button"}>
                 <p className={"button-text"}>{"About Me"}</p>
@@ -172,8 +174,7 @@ export function Hero() {
                 <div data-flip-id={"hero-card-2"} className={"hero-card-2"}>
                   <div className={"hero-card-2-bg"}></div>
                   <div className={"hero-webflow-icon-wrap"}>
-                    <SourceIcon
-                      name="asset7"
+                    <CodeIcon
                       xmlns={"http://www.w3.org/2000/svg"}
                       width={"100%"}
                       viewBox={"0 0 91 57"}
@@ -188,9 +189,9 @@ export function Hero() {
                       data-flip-id={"hero-card-2-text"}
                       className={"hero-webflow-projects-text"}
                     >
-                      {"80+"}
+                      {"Full-stack"}
                       <br />
-                      {"Projects"}
+                      {"development"}
                     </p>
                   </div>
                 </div>
@@ -199,8 +200,7 @@ export function Hero() {
                 <div className={"hero-card-1"}>
                   <div className={"experience-bg"}></div>
                   <div className={"experience-number-wrap"}>
-                    <SourceIcon
-                      name="asset8"
+                    <ExperienceCounter
                       xmlns={"http://www.w3.org/2000/svg"}
                       width={"100%"}
                       viewBox={"0 0 41 28"}
@@ -213,7 +213,7 @@ export function Hero() {
                       id={"yrs_small_text_start"}
                       className={"experience-text"}
                     >
-                      {"Years of "}
+                      {"Years of"}
                       <br />
                       {"experience"}
                     </p>
@@ -244,7 +244,7 @@ export function Hero() {
                   fill={"none"}
                   className={"hero-card-3-icon"}
                 />
-                <p>{"Creative"}</p>
+                <p>{"Curious"}</p>
               </div>
               <div className={"hero-card-3-item"}>
                 <SourceIcon
@@ -266,7 +266,7 @@ export function Hero() {
                   fill={"none"}
                   className={"hero-card-3-icon"}
                 />
-                <p>{"Strategist"}</p>
+                <p>{"Thoughtful"}</p>
               </div>
               <div className={"hero-card-3-item"}>
                 <SourceIcon
@@ -288,7 +288,7 @@ export function Hero() {
                   fill={"none"}
                   className={"hero-card-3-icon"}
                 />
-                <p>{"Efficient"}</p>
+                <p>{"Learning"}</p>
               </div>
             </div>
           </div>

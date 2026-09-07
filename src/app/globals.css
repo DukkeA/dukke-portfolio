@@ -12,6 +12,92 @@
   --font-body: "Ppneuemontreal Book", Arial, sans-serif;
 }
 
+.about-card-wrap.ac-8 {
+  @apply top-[88%];
+}
+.journey-image {
+  @apply flex h-[clamp(3.5rem,4vw,4.5rem)] w-[clamp(4rem,6vw,7rem)] shrink-0 items-center justify-center rounded-lg bg-[#ebeada] p-2 text-black;
+}
+.journey-image-dark {
+  @apply bg-[#252622];
+}
+.journey-card-bottom {
+  @apply gap-3;
+}
+.journey-card-bottom .about-card-bottom-layout-left {
+  @apply min-w-0 gap-3;
+}
+.journey-card-bottom .about-card-button {
+  @apply shrink-0 whitespace-nowrap;
+}
+.about-card-year.journey-card-phase,
+.journey-popup-phase {
+  @apply text-[clamp(2rem,3.6vw,4.5rem)] leading-none;
+}
+.journey-tags {
+  @apply mt-6 flex list-none flex-wrap gap-2 p-0;
+}
+.journey-tags li {
+  @apply rounded-full border border-white/20 px-3 py-1 text-xs text-white/75;
+}
+.popup-card-wrap[aria-hidden="true"] {
+  visibility: hidden;
+}
+.popup-card-wrap[aria-hidden="false"] {
+  visibility: visible;
+}
+button.popup-close {
+  @apply shrink-0 border-0 p-0;
+}
+@media (768px <= width < 992px) {
+  .hero-heading {
+    @apply text-[clamp(2.25rem,4.5vw,3rem)];
+  }
+  .about-section .about-card-wrap {
+    @apply w-auto;
+  }
+  .about-section .about-card {
+    @apply w-[35vw];
+  }
+  .about-section .popup-card-wrap {
+    @apply w-full;
+  }
+  .about-timeline,
+  .about-timeline-position {
+    @apply h-[300vw];
+  }
+  .journey-card-bottom {
+    @apply flex-wrap;
+  }
+  .journey-card-bottom .about-card-button {
+    @apply ml-auto;
+  }
+}
+@media (width < 768px) {
+  .hero-left-text {
+    @apply text-white [text-shadow:0_1px_8px_#000];
+  }
+  .about-section .popup-card {
+    @apply max-h-[calc(100svh-120px)] overflow-y-auto overscroll-contain [scrollbar-width:thin] [scrollbar-color:#77796f_transparent];
+  }
+  .journey-card-bottom {
+    @apply flex-wrap gap-4;
+  }
+  .journey-card-bottom .about-card-button {
+    @apply ml-auto;
+  }
+  .journey-image {
+    @apply h-14 w-20;
+  }
+  .journey-card-bottom .about-card-bottom-text {
+    @apply text-sm;
+  }
+  .about-card-year.journey-card-phase,
+  .journey-popup-phase {
+    @apply text-4xl;
+  }
+}
+
 button.faq-toggle {
   @apply cursor-pointer border-0 bg-transparent text-left;
 }

@@ -797,9 +797,14 @@ export function createAnimationEngine(root, onResize = () => {}) {
       const originalTrigger = el.getAttribute("data-tl-trigger") || ".hero";
       // The desktop paragraph is display:none on mobile. Measure its visible
       // counterpart so capability icons also reveal after direct navigation.
-      const mobileCapability = window.innerWidth < 768 && originalTrigger === ".what_you_get-text";
-      const trigger = mobileCapability ? ".what_you_get-text-mobile" : originalTrigger;
-      const start = mobileCapability ? "top 90%" : el.getAttribute("data-tl-start") || "900px top";
+      const mobileCapability =
+        window.innerWidth < 768 && originalTrigger === ".what_you_get-text";
+      const trigger = mobileCapability
+        ? ".what_you_get-text-mobile"
+        : originalTrigger;
+      const start = mobileCapability
+        ? "top 90%"
+        : el.getAttribute("data-tl-start") || "900px top";
       const end = el.getAttribute("data-tl-end") || "bottom top";
 
       let rawFrom = el.getAttribute("data-tl-from") || "{}";
@@ -2000,46 +2005,38 @@ export function createAnimationEngine(root, onResize = () => {}) {
 
     initAboutCards() {
       const cards = Utils.$$(".about-card-wrap");
-      const buttons = Utils.$$(".about-card-button");
+      const closeCard = (card, restoreFocus = false) => {
+        const popup = card.querySelector(".popup-card-wrap");
+        const button = card.querySelector(".about-card-button");
+        if (!popup || !button) return;
+        popup.classList.remove("is-active-card");
+        popup.setAttribute("aria-hidden", "true");
+        popup.inert = true;
+        button.setAttribute("aria-expanded", "false");
+        card.style.zIndex = "5";
+        if (restoreFocus) button.focus({ preventScroll: true });
+      };
 
-      buttons.forEach((button) => {
-        const handler = () => {
-          const card = button.closest(".about-card-wrap");
-          if (!card) return;
-
-          const popup = card.querySelector(".popup-card-wrap");
-          if (!popup) return;
-
-          // If this popup is already open, do nothing (avoid flicker + duplicate close listeners).
+      cards.forEach((card) => {
+        const button = card.querySelector(".about-card-button");
+        const popup = card.querySelector(".popup-card-wrap");
+        const closeButton = popup?.querySelector(".popup-close");
+        if (!button || !popup || !closeButton) return;
+        closeCard(card);
+        Utils.addEvent(button, "click", () => {
           if (popup.classList.contains("is-active-card")) return;
-
-          // Only one popup open at a time: close any other open popup first.
-          document
-            .querySelectorAll(".popup-card-wrap.is-active-card")
-            .forEach((p) => {
-              p.classList.remove("is-active-card");
-            });
-
-          cards.forEach((c) => (c.style.zIndex = "5"));
+          cards.forEach((other) => closeCard(other));
           card.style.zIndex = "10";
-
+          popup.inert = false;
+          popup.setAttribute("aria-hidden", "false");
           popup.classList.add("is-active-card");
-
-          const closeBtn = popup.querySelector(".popup-close");
-          if (closeBtn) {
-            Utils.addEvent(
-              closeBtn,
-              "click",
-              () => {
-                popup.classList.remove("is-active-card");
-                card.style.zIndex = "5";
-              },
-              { once: true },
-            );
+          button.setAttribute("aria-expanded", "true");
+          if (window.innerWidth < 768) {
+            STATE.lenis?.scrollTo(card, { offset: -104, duration: 0.4 });
           }
-        };
-
-        Utils.addEvent(button, "click", handler);
+          closeButton.focus({ preventScroll: true });
+        });
+        Utils.addEvent(closeButton, "click", () => closeCard(card, true));
       });
     },
 

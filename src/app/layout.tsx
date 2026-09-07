@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Dukke — Creative Developer",
+  title: "Dukke — Software Engineer",
   description:
-    "Dukke — creative development, interactive websites and selected projects.",
+    "Andrés Duque, also known as Dukke. Software engineer building web applications across frontend and backend. A little about me and what I build.",
   robots: { index: false, follow: false },
   icons: { icon: "/assets/dukke-icon.svg" },
 };

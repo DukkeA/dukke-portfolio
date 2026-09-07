@@ -1,4 +1,6 @@
 import { SourceIcon } from "../source-icons";
+import { CodeIcon } from "../engineering-icons";
+import { ExperienceCounter } from "../experience-counter";
 import { profile } from "@/content/profile";
 
 export function Navigation() {
@@ -105,22 +107,19 @@ export function Navigation() {
                 className={"social-link w-inline-block"}
                 data-tl-trigger={".hero"}
                 data-tl-end={"46% top"}
-                href={profile.socials.x}
+                href={profile.socials.github}
                 data-tl-type={"scroll"}
                 data-tl-to={"{'scale' : 1, 'opacity' : 1}"}
-                aria-label={"x"}
+                aria-label={"GitHub"}
                 data-tl-start={"44% top"}
                 target={"_blank"}
                 data-tl-from={"{'scale' : 0.3, 'opacity' : 0}"}
                 rel={"noopener noreferrer"}
               >
-                <SourceIcon
-                  name="asset4"
-                  xmlns={"http://www.w3.org/2000/svg"}
-                  width={"100%"}
-                  viewBox={"0 0 15 15"}
-                  fill={"none"}
-                  className={"instagram"}
+                <img
+                  src="/assets/journey/github.svg"
+                  alt=""
+                  className="instagram"
                 />
               </a>
               <a
@@ -153,7 +152,7 @@ export function Navigation() {
                 className={"nav-button-mobile w-button"}
                 rel={"noopener noreferrer"}
               >
-                {"Book a Call"}
+                {"Say hello"}
               </a>
               <div
                 className={"mobile-menu"}
@@ -207,8 +206,7 @@ export function Navigation() {
               className={"nav-webflow-bg"}
             ></div>
             <div className={"nav-webflow-icon-wrap"}>
-              <SourceIcon
-                name="asset7"
+              <CodeIcon
                 xmlns={"http://www.w3.org/2000/svg"}
                 width={"100%"}
                 viewBox={"0 0 91 57"}
@@ -234,9 +232,9 @@ export function Navigation() {
                 data-tl-from={"{'color': 'white'}"}
                 data-flip-end={"40% top"}
               >
-                {"80+"}
+                {"Full-stack"}
                 <br />
-                {"Projects"}
+                {"development"}
               </p>
             </div>
           </div>
@@ -257,8 +255,7 @@ export function Navigation() {
               className={"nav-experience-bg"}
             ></div>
             <div id={"yrs_big_text"} className={"nav-experience-numb-wrap"}>
-              <SourceIcon
-                name="asset8"
+              <ExperienceCounter
                 xmlns={"http://www.w3.org/2000/svg"}
                 width={"100%"}
                 viewBox={"0 0 41 28"}
@@ -285,7 +282,7 @@ export function Navigation() {
                 data-tl-from={"{'color': 'white'}"}
                 data-flip-end={"40% top"}
               >
-                {"Years of "}
+                {"Years of"}
                 <br />
                 {"experience"}
               </p>
@@ -874,7 +871,7 @@ export function Navigation() {
               className={"nav-button w-inline-block"}
               rel={"noopener noreferrer"}
             >
-              <p className={"button-text"}>{"Book a Call"}</p>
+              <p className={"button-text"}>{"Say hello"}</p>
             </a>
             <a
               data-button-hover={""}
