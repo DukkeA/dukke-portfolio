@@ -244,7 +244,7 @@ export function Hero() {
                   fill={"none"}
                   className={"hero-card-3-icon"}
                 />
-                <p>{"Curious"}</p>
+                <p>{"Creative"}</p>
               </div>
               <div className={"hero-card-3-item"}>
                 <SourceIcon

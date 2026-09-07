@@ -2055,6 +2055,18 @@ export function createAnimationEngine(root, onResize = () => {}) {
       cards.forEach((card, index) => {
         const parentCard = card.closest(".capa-card");
 
+        // Keyboard focus reveals the same details as pointer hover.
+        Utils.addEvent(card, "focus", function () {
+          if (self.isMobile) return;
+          if (parentCard) parentCard.style.zIndex = "10";
+          self.animateCardIn(card);
+        });
+        Utils.addEvent(card, "blur", function () {
+          if (self.isMobile || card.matches(":hover")) return;
+          self.animateCardOut(card);
+          if (parentCard) parentCard.style.zIndex = "5";
+        });
+
         // Desktop: hover
         Utils.addEvent(card, "mouseenter", function () {
           if (self.isMobile) return;
@@ -2064,7 +2076,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
         });
 
         Utils.addEvent(card, "mouseleave", function () {
-          if (self.isMobile) return;
+          if (self.isMobile || document.activeElement === card) return;
 
           self.animateCardOut(card);
           if (parentCard) parentCard.style.zIndex = "5";
@@ -2204,6 +2216,8 @@ export function createAnimationEngine(root, onResize = () => {}) {
           // Store references
           self.activeCard = card;
           self.activeClone = clone;
+          card.setAttribute("aria-expanded", "true");
+          clone.focus({ preventScroll: true });
         });
       });
 
@@ -2222,6 +2236,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
     },
 
     animateCardIn(targetCard) {
+      targetCard.setAttribute("aria-expanded", "true");
       const cardBottom = targetCard.querySelector(".capa-card-bottom");
       const cardIcons = targetCard.querySelectorAll(
         "[data-var-hover], [data-var-hover-mobile]",
@@ -2293,6 +2308,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
     },
 
     animateCardOut(targetCard) {
+      targetCard.setAttribute("aria-expanded", "false");
       const cardBottom = targetCard.querySelector(".capa-card-bottom");
       const cardIcons = targetCard.querySelectorAll(
         "[data-var-hover], [data-var-hover-mobile]",
@@ -2359,6 +2375,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
 
       const originalCard = this.activeCard;
       const clone = this.activeClone;
+      originalCard.setAttribute("aria-expanded", "false");
 
       // Get original arrow wrap to restore later
       const originalArrowWrap = originalCard.querySelector(
@@ -2390,6 +2407,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
               backgroundColor: "transparent",
             });
             originalCard.style.visibility = "visible";
+            originalCard.focus({ preventScroll: true });
 
             // Restore original arrow wrap visibility
             if (originalArrowWrap) {
@@ -2446,6 +2464,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
           backgroundColor: "transparent",
         });
         originalCard.style.visibility = "visible";
+        originalCard.focus({ preventScroll: true });
 
         // Restore original arrow wrap visibility
         if (originalArrowWrap) {

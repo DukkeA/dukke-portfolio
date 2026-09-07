@@ -12,6 +12,13 @@
   --font-body: "Ppneuemontreal Book", Arial, sans-serif;
 }
 
+.capability-anchor {
+  @apply inline-block h-[0.85em] w-[1.9em] align-middle;
+}
+.what_you_get-text {
+  @apply max-w-full text-[clamp(2.25rem,4.72vw,5.5rem)];
+}
+
 .about-card-wrap.ac-8 {
   @apply top-[88%];
 }
@@ -50,6 +57,15 @@ button.popup-close {
   @apply shrink-0 border-0 p-0;
 }
 @media (768px <= width < 992px) {
+  #overview .h2-big {
+    @apply text-[14vw];
+  }
+  .capa-card-heading {
+    @apply text-base;
+  }
+  .capa-card-text {
+    @apply text-sm;
+  }
   .hero-heading {
     @apply text-[clamp(2.25rem,4.5vw,3rem)];
   }
@@ -74,6 +90,10 @@ button.popup-close {
   }
 }
 @media (width < 768px) {
+  .what_you_get-text-mobile {
+    @apply ml-0;
+  }
+
   .hero-left-text {
     @apply text-white [text-shadow:0_1px_8px_#000];
   }
