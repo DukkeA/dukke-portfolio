@@ -23,21 +23,18 @@ export function Navigation() {
           <div className={"profile-img-item"}>
             <img
               className={"hero-profile-img"}
-              src={"/assets/fddfeb78-nenad_edit-photo_final-1.avif"}
+              src={profile.image}
               data-tl-trigger={".hero"}
-              alt={"Nenad Popadic"}
+              alt={profile.name}
               data-tl-end={"70% top"}
               data-tl-desktop={""}
               data-tl-type={"scroll"}
               data-tl-to={"{'filter': 'blur(90px)', 'opacity': 0.3}"}
               data-tl-start={"top top"}
               sizes={"100vw"}
-              loading={"lazy"}
+              loading={"eager"}
               data-tl-from={"{'filter': 'blur(0px)', 'opacity': 1}"}
               fetchPriority={"high"}
-              srcSet={
-                "/assets/6b4cd290-nenad_edit-photo_final-1-p-500.avif 500w, /assets/fddfeb78-nenad_edit-photo_final-1.avif 1670w"
-              }
             />
           </div>
         </div>
@@ -73,7 +70,7 @@ export function Navigation() {
                   data-flip-trigger={".hero"}
                   data-flip-start={"top top"}
                   data-flip-end={"44% top"}
-                  className={"nesh-logo"}
+                  className={"dukke-logo"}
                 >
                   <SourceIcon
                     name="asset2"
@@ -81,9 +78,9 @@ export function Navigation() {
                     width={"100%"}
                     viewBox={"0 0 1288 338"}
                     fill={"none"}
-                    className={"nesh-logo-svg"}
+                    className={"dukke-logo-svg"}
                   />
-                  <div className={"nesh-copyright-wrap"}>
+                  <div className={"dukke-copyright-wrap"}>
                     <SourceIcon
                       name="asset3"
                       xmlns={"http://www.w3.org/2000/svg"}
@@ -97,7 +94,7 @@ export function Navigation() {
                       data-tl-from={"{'opacity': 0}"}
                       data-tl-to={"{'opacity' : 1}"}
                       data-tl-desktop={""}
-                      className={"nesh-copyright-icon"}
+                      className={"dukke-copyright-icon"}
                     />
                   </div>
                 </div>

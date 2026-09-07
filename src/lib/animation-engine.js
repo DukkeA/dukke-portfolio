@@ -332,8 +332,8 @@ export function createAnimationEngine(root, onResize = () => {}) {
       });
 
       const ghostElements = [
-        ".nav-logo-item .nesh-logo",
-        ".nesh-copyright-icon",
+        ".nav-logo-item .dukke-logo",
+        ".dukke-copyright-icon",
         ".nav-button",
         ".nav-button-secondary",
         ".nav-webflow-bg",
@@ -393,7 +393,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
 
       if (type === "logo") {
         const parent =
-          real.closest(".nesh-copyright-wrap") ||
+          real.closest(".dukke-copyright-wrap") ||
           real.closest(".nav-button-wrap") ||
           real.closest(".nav-logo-item") ||
           real.parentElement;
@@ -442,7 +442,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
         const { parent, parentRect, computedStyle, offsetHeight } = m;
 
         if (
-          !parent.classList.contains("nesh-copyright-wrap") &&
+          !parent.classList.contains("dukke-copyright-wrap") &&
           !parent.classList.contains("nav-button-wrap")
         ) {
           parent.style.position = "relative";
@@ -600,8 +600,8 @@ export function createAnimationEngine(root, onResize = () => {}) {
 
       measurements.push(
         this.measurePair(
-          Utils.$(".nav-logo-item .nesh-logo"),
-          Utils.$(".nesh-logo-ghost"),
+          Utils.$(".nav-logo-item .dukke-logo"),
+          Utils.$(".dukke-logo-ghost"),
           "logo",
         ),
       );
@@ -682,13 +682,13 @@ export function createAnimationEngine(root, onResize = () => {}) {
 
       // ---- Phase 3: Copyright icon (explicit handler) ----
       // Must happen AFTER Phase 2 because the main logo animation sets
-      // .nav-logo-item to position:relative, which shifts .nesh-copyright-wrap
+      // .nav-logo-item to position:relative, which shifts .dukke-copyright-wrap
       // (position:absolute inside .nav-logo-item). Measuring before that
       // gives wrong rRect. Also uses same scroll range as main logo (end: 50% top).
-      const crReal = Utils.$(".nesh-copyright-icon");
-      const crGhost = Utils.$(".nesh-copyright-icon-ghost");
+      const crReal = Utils.$(".dukke-copyright-icon");
+      const crGhost = Utils.$(".dukke-copyright-icon-ghost");
       if (crReal && crGhost) {
-        const parent = crReal.closest(".nesh-copyright-wrap");
+        const parent = crReal.closest(".dukke-copyright-wrap");
         const gRect = crGhost.getBoundingClientRect();
         const pRect = parent.getBoundingClientRect();
         const computedWidth = window.getComputedStyle(crReal).width;
@@ -1333,11 +1333,11 @@ export function createAnimationEngine(root, onResize = () => {}) {
       // Disable preloader on mobile devices (screen width < 768px)
       if (window.innerWidth < 768) return;
 
-      const logo = Utils.$(".nesh-logo-preload-svg");
-      const wrapper = Utils.$(".nesh-logo-wrap");
+      const logo = Utils.$(".dukke-logo-preload-svg");
+      const wrapper = Utils.$(".dukke-logo-wrap");
       if (!logo || !wrapper) return;
 
-      const letters = Utils.$$(".nesh-logo-letter");
+      const letters = Utils.$$(".dukke-logo-letter");
       const navContainer = Utils.$(".nav-container");
       // .profile-img-wrap has an inverse-scale applied by Sidebar.scale(), so we
       // animate the inner .profile-img-item to avoid fighting that transform.
@@ -1351,7 +1351,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
       const heroHeading = Utils.$(".hero-heading");
       const navButton = Utils.$(".nav-button");
       const navButtonSecondary = Utils.$(".nav-button-secondary");
-      // Captures .nav-logo-item which contains both the real nav logo (.nesh-logo)
+      // Captures .nav-logo-item which contains both the real nav logo (.dukke-logo)
       // and copyright wrap. Both are FLIP'd by GhostEngine to hero ghost positions,
       // so they'd flash visible if nav-container is shown before preloader logo hides.
       const navLogoItem = Utils.$(".nav-logo-item");
@@ -3469,7 +3469,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
         this.handleMouseLeave.bind(this),
       );
 
-      console.log("✓ NESH Image Trail initialized");
+      console.log("✓ Dukke Image Trail initialized");
     },
 
     getSVGCoords(e) {

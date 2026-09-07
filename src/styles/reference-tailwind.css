@@ -822,7 +822,7 @@ a {
   @apply [inset:auto_0%_2.78%];
 }
 
-.nesh-logo-preload {
+.dukke-logo-preload {
   @apply [z-index:0];
   flex-flow: column;
   @apply justify-start;
@@ -834,7 +834,7 @@ a {
   @apply [inset:0%_0%_auto];
 }
 
-.nesh-logo {
+.dukke-logo {
   aspect-ratio: 3.5;
   transform-origin: 0 0;
   @apply [width:100%];
@@ -1204,7 +1204,7 @@ a {
   @apply flex;
 }
 
-.nesh-logo-wrap {
+.dukke-logo-wrap {
   aspect-ratio: 3.85;
   @apply [width:100%];
   @apply [height:auto];
@@ -1331,7 +1331,7 @@ a {
   @apply relative;
 }
 
-.nesh-logo-ghost {
+.dukke-logo-ghost {
   aspect-ratio: 3.8;
   @apply [opacity:0];
   transform-origin: 0 0;
@@ -1486,7 +1486,7 @@ a {
   @apply relative;
 }
 
-.nesh-copyright-icon {
+.dukke-copyright-icon {
   @apply [width:.6vw];
 }
 
@@ -1544,7 +1544,7 @@ a {
   @apply [inset:0%];
 }
 
-.nesh-logo-svg {
+.dukke-logo-svg {
   transform-origin: 0 0;
   @apply justify-center;
   @apply items-center;
@@ -1587,7 +1587,7 @@ a {
   @apply [inset:0%];
 }
 
-.nesh-logo-preload-svg {
+.dukke-logo-preload-svg {
   aspect-ratio: 3.8;
   @apply [opacity:1];
   transform-origin: 0 0;
@@ -3080,7 +3080,7 @@ a {
     width 0.25s;
 }
 
-.nesh-logo-ghost-wrap {
+.dukke-logo-ghost-wrap {
   @apply [grid-column-gap:1vw];
   @apply [grid-row-gap:1vw];
   @apply justify-start;
@@ -3088,7 +3088,7 @@ a {
   @apply flex;
 }
 
-.nesh-copyright-icon-ghost {
+.dukke-copyright-icon-ghost {
   @apply [opacity:0];
   flex: none;
   @apply [width:5vw];
@@ -3097,7 +3097,7 @@ a {
   @apply [inset:0%_-5.5%_auto_auto];
 }
 
-.nesh-copyright-wrap {
+.dukke-copyright-wrap {
   @apply [z-index:100];
   @apply justify-start;
   @apply items-start;
@@ -3375,7 +3375,7 @@ a {
   @apply [padding-right:.5vw];
 }
 
-.nesh-logo-preload-wrap {
+.dukke-logo-preload-wrap {
   aspect-ratio: 3.85;
   @apply justify-center;
   @apply items-center;
@@ -3528,7 +3528,7 @@ a {
     @apply [inset:auto_0%_clamp(6.93rem,34.67vw,16.63rem)];
   }
 
-  .nesh-logo-preload {
+  .dukke-logo-preload {
     @apply [padding-top:clamp(4.17rem,20.26vw_+_.126rem,9.71rem)];
     @apply [padding-left:clamp(1.07rem,5.33vw,2.56rem)];
     @apply [padding-right:clamp(1.07rem,5.33vw,2.56rem)];
@@ -3711,7 +3711,7 @@ a {
     @apply pointer-events-none;
   }
 
-  .nesh-logo-ghost {
+  .dukke-logo-ghost {
     @apply [opacity:1];
     @apply [width:100%];
   }
@@ -3729,7 +3729,7 @@ a {
     @apply hidden;
   }
 
-  .nesh-copyright-icon {
+  .dukke-copyright-icon {
     @apply [width:clamp(.43rem,2.13vw,1.02rem)];
   }
 
@@ -4388,7 +4388,7 @@ a {
     @apply [height:clamp(.21rem,1.07vw,.51rem)];
   }
 
-  .nesh-copyright-wrap {
+  .dukke-copyright-wrap {
     @apply [width:clamp(.43rem,2.13vw,1.02rem)];
     @apply [height:clamp(.43rem,2.13vw,1.02rem)];
     @apply [right:clamp(-.85rem,-4.27vw,-2.05rem)];
@@ -4432,7 +4432,7 @@ a {
   }
 
   .mobile-hero-image {
-    @apply [width:100%];
+    @apply h-[90%] w-full object-cover object-top;
   }
 
   .mobile-timeline-wrap {
@@ -4587,7 +4587,7 @@ a {
     @apply flex;
   }
 
-  .nesh-copyright-wrap {
+  .dukke-copyright-wrap {
     @apply [inset:0%_clamp(-.64rem,-3.2vw,-1.53rem)_0%_auto];
   }
 

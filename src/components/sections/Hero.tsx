@@ -10,9 +10,9 @@ export function Hero() {
       className={"hero"}
     >
       <div className={"hero-sticky"}>
-        <div className={"nesh-logo-preload"}>
-          <div data-flip-origin={""} className={"nesh-logo-wrap"}>
-            <div className={"nesh-logo-ghost-wrap"}>
+        <div className={"dukke-logo-preload"}>
+          <div data-flip-origin={""} className={"dukke-logo-wrap"}>
+            <div className={"dukke-logo-ghost-wrap"}>
               <SourceIcon
                 name="asset2"
                 xmlns={"http://www.w3.org/2000/svg"}
@@ -20,7 +20,7 @@ export function Hero() {
                 viewBox={"0 0 1288 338"}
                 fill={"none"}
                 data-flip-target={""}
-                className={"nesh-logo-ghost"}
+                className={"dukke-logo-ghost"}
               />
               <SourceIcon
                 name="asset3"
@@ -28,7 +28,7 @@ export function Hero() {
                 width={"100%"}
                 viewBox={"0 0 9 9"}
                 fill={"none"}
-                className={"nesh-copyright-icon-ghost"}
+                className={"dukke-copyright-icon-ghost"}
               />
             </div>
           </div>
@@ -295,10 +295,10 @@ export function Hero() {
         </div>
         <div className={"mobile-hero-image-wrap"}>
           <img
-            src={"/assets/cf6fa3ea-frame-2147258154.avif"}
-            loading={"lazy"}
+            src={profile.image}
+            loading={"eager"}
             fetchPriority={"high"}
-            alt={"Nenad Popadic"}
+            alt={profile.name}
             className={"mobile-hero-image"}
           />
         </div>

@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "NESH® — Creative Developer",
+  title: "Dukke — Creative Developer",
   description:
-    "A faithful Next.js recreation of the NESH creative developer portfolio.",
+    "Dukke — creative development, interactive websites and selected projects.",
   robots: { index: false, follow: false },
-  icons: { icon: "/assets/1101fef6-favicon.png" },
+  icons: { icon: "/assets/dukke-icon.svg" },
 };
 
 export default function RootLayout({

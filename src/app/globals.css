@@ -5,9 +5,9 @@
 @import "../styles/interactions.css";
 
 @theme {
-  --color-nesh-yellow: #ffff23;
-  --color-nesh-paper: #d5cfbe;
-  --color-nesh-ink: #000000;
+  --color-dukke-yellow: #ffff23;
+  --color-dukke-paper: #d5cfbe;
+  --color-dukke-ink: #000000;
   --font-display: "Tr 3 A", Arial, sans-serif;
   --font-body: "Ppneuemontreal Book", Arial, sans-serif;
 }
@@ -22,7 +22,7 @@ a:focus-visible,
   outline-offset: 4px;
 }
 .skip-link {
-  @apply fixed left-4 top-4 z-[10000] -translate-y-24 rounded-md bg-nesh-yellow px-5 py-3 text-black transition-transform focus:translate-y-0;
+  @apply fixed left-4 top-4 z-[10000] -translate-y-24 rounded-md bg-dukke-yellow px-5 py-3 text-black transition-transform focus:translate-y-0;
 }
 .faq-list[aria-hidden="true"] {
   visibility: hidden;

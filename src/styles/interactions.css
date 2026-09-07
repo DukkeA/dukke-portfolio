@@ -45,10 +45,10 @@ body {
 /* ============================================
    2. BASE RESETS & PERFORMANCE
    ============================================ */
-.nesh-logo,
-.nesh-logo svg,
+.dukke-logo,
+.dukke-logo svg,
 .nav-logo-item,
-.nesh-copyright-icon,
+.dukke-copyright-icon,
 .nav-button,
 .hero-cta-button,
 .nav-button-secondary,
@@ -67,7 +67,7 @@ body {
 /* ============================================
    3. LOGO & SVG OPTIMIZATION
    ============================================ */
-.nesh-logo-svg {
+.dukke-logo-svg {
   shape-rendering: geometricPrecision;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;

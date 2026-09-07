@@ -1,9 +1,10 @@
-/** Original reference identity; change here when personalizing the portfolio. */
+/** Portfolio identity and shared primary portrait. */
 export const profile = {
-  name: "Nenad Popadic",
+  name: "Dukke",
+  image: "/assets/main-photo.png",
   email: "nenad@popadic.co",
   callUrl: "https://cal.com/nenad-popadic/intro-call",
-  tagline: "The Webflow Expert. That’s Nenad.",
+  tagline: "The Webflow Expert. That’s Dukke.",
   description:
     "Working closely with your team to deliver Webflow builds that merge creativity, technical excellence, and long-term value.",
   socials: {
