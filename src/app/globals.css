@@ -1,0 +1,50 @@
+@import "tailwindcss/theme.css";
+@import "tailwindcss/utilities.css";
+@import "swiper/css/bundle";
+@import "../styles/reference-tailwind.css";
+@import "../styles/interactions.css";
+
+@theme {
+  --color-nesh-yellow: #ffff23;
+  --color-nesh-paper: #d5cfbe;
+  --color-nesh-ink: #000000;
+  --font-display: "Tr 3 A", Arial, sans-serif;
+  --font-body: "Ppneuemontreal Book", Arial, sans-serif;
+}
+
+button.faq-toggle {
+  @apply cursor-pointer border-0 bg-transparent text-left;
+}
+button:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+.skip-link {
+  @apply fixed left-4 top-4 z-[10000] -translate-y-24 rounded-md bg-nesh-yellow px-5 py-3 text-black transition-transform focus:translate-y-0;
+}
+.faq-list[aria-hidden="true"] {
+  visibility: hidden;
+  transition: visibility 0s 0.4s;
+}
+.faq-list[aria-hidden="false"] {
+  visibility: visible;
+}
+.faq-icon-v-line {
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+  .nav-comapny-item {
+    animation: none !important;
+  }
+  .faq-answer-wrap {
+    transition-duration: 0.01ms !important;
+  }
+}

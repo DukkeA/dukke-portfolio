@@ -1,0 +1,24 @@
+# Dependencies and build output
+/node_modules/
+/.next/
+/out/
+/build/
+/coverage/
+*.tsbuildinfo
+/next-env.d.ts
+
+# Local environment and deployment metadata
+.env*
+!.env.example
+/.vercel/
+*.log
+.DS_Store
+Thumbs.db
+
+# Local reference material and development helpers
+/reference/
+/scripts/
+/docs/
+/design-qa.md
+/AGENTS.md
+/CLAUDE.md
