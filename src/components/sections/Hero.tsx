@@ -96,8 +96,8 @@ export function Hero() {
                 className={"hero-navigation-sep"}
               ></div>
               <div className={"ghost-link-item"}>
-                <div data-link-id={"clients"} className={"hero-link-ghost"}>
-                  {"clients"}
+                <div data-link-id={"references"} className={"hero-link-ghost"}>
+                  {"references"}
                 </div>
               </div>
               <div

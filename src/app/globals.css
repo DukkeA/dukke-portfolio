@@ -118,6 +118,34 @@ button.popup-close {
   }
 }
 
+.reference-card .swiper-heading {
+  @apply max-w-full;
+}
+.reference-card .swiper-card-bottom {
+  @apply items-start;
+}
+.reference-card .client-img {
+  @apply aspect-square h-auto shrink-0 object-cover;
+}
+.reference-card .client-info {
+  @apply min-w-0 leading-snug;
+}
+.reference-name-link {
+  @apply inline-flex max-w-full items-center gap-2 text-black/80 no-underline transition-colors duration-200 [font-size:inherit] hover:text-black focus-visible:text-black;
+}
+.reference-name-text {
+  @apply min-w-0 bg-[linear-gradient(currentColor,currentColor)] bg-left-bottom bg-no-repeat pb-0.5 [background-size:0%_1px] transition-[background-size] duration-300;
+}
+.reference-name-link:is(:hover, :focus-visible) .reference-name-text {
+  @apply [background-size:100%_1px];
+}
+.reference-linkedin-icon {
+  @apply inline-flex size-[1.6em] shrink-0 items-center justify-center text-black transition-colors duration-200;
+}
+.reference-name-link:is(:hover, :focus-visible) .reference-linkedin-icon {
+  @apply text-dukke-yellow;
+}
+
 button.faq-toggle {
   @apply cursor-pointer border-0 bg-transparent text-left;
 }
@@ -162,6 +190,11 @@ a:focus-visible,
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .reference-name-link,
+  .reference-name-text,
+  .reference-linkedin-icon {
+    transition-duration: 0.01ms;
+  }
   *,
   *::before,
   *::after {

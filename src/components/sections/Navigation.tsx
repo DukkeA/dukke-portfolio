@@ -577,17 +577,17 @@ export function Navigation() {
                 href={"#testimonial"}
                 data-tl-type={"trigger"}
                 data-tl-to={"{'scale': 1}"}
-                aria-label={"clients"}
+                aria-label={"references"}
                 data-tl-start={"50% top"}
                 data-tl-from={"{'scale': 0}"}
               ></a>
               <a
                 data-button-hover={""}
-                data-link-id={"clients"}
+                data-link-id={"references"}
                 href={"#testimonial"}
                 className={"hero-navigation-link"}
               >
-                {"clients"}
+                {"references"}
               </a>
               <SourceIcon
                 name="asset14"
