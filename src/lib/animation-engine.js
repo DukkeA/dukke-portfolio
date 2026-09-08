@@ -176,7 +176,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
         });
       }
 
-      const navBtnText = Utils.$(".nav-button p");
+      const navBtnText = Utils.$(".nav-button .contact-button-content, .nav-button p");
       const navBtnSecText = Utils.$(".nav-button-secondary p");
       if (navBtnText)
         gsap.set(navBtnText, {
@@ -333,7 +333,6 @@ export function createAnimationEngine(root, onResize = () => {}) {
 
       const ghostElements = [
         ".nav-logo-item .dukke-logo",
-        ".dukke-copyright-icon",
         ".nav-button",
         ".nav-button-secondary",
         ".nav-webflow-bg",
@@ -393,7 +392,6 @@ export function createAnimationEngine(root, onResize = () => {}) {
 
       if (type === "logo") {
         const parent =
-          real.closest(".dukke-copyright-wrap") ||
           real.closest(".nav-button-wrap") ||
           real.closest(".nav-logo-item") ||
           real.parentElement;
@@ -441,10 +439,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
       if (type === "logo") {
         const { parent, parentRect, computedStyle, offsetHeight } = m;
 
-        if (
-          !parent.classList.contains("dukke-copyright-wrap") &&
-          !parent.classList.contains("nav-button-wrap")
-        ) {
+        if (!parent.classList.contains("nav-button-wrap")) {
           parent.style.position = "relative";
           parent.style.minHeight = offsetHeight + "px";
           parent.style.display = "block";
@@ -595,7 +590,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
     },
 
     createAll() {
-      // ---- Phase 1: Measure everything on a clean DOM (copyright icon handled separately) ----
+      // ---- Phase 1: Measure everything on a clean DOM ----
       const measurements = [];
 
       measurements.push(
@@ -679,53 +674,6 @@ export function createAnimationEngine(root, onResize = () => {}) {
       gsap.set(".hero-button", { opacity: 0 });
 
       measurements.forEach((m) => this.applyAnimation(m));
-
-      // ---- Phase 3: Copyright icon (explicit handler) ----
-      // Must happen AFTER Phase 2 because the main logo animation sets
-      // .nav-logo-item to position:relative, which shifts .dukke-copyright-wrap
-      // (position:absolute inside .nav-logo-item). Measuring before that
-      // gives wrong rRect. Also uses same scroll range as main logo (end: 50% top).
-      const crReal = Utils.$(".dukke-copyright-icon");
-      const crGhost = Utils.$(".dukke-copyright-icon-ghost");
-      if (crReal && crGhost) {
-        const parent = crReal.closest(".dukke-copyright-wrap");
-        const gRect = crGhost.getBoundingClientRect();
-        const pRect = parent.getBoundingClientRect();
-        const computedWidth = window.getComputedStyle(crReal).width;
-        const computedHeight = window.getComputedStyle(crReal).height;
-
-        gsap.fromTo(
-          crReal,
-          {
-            x: Math.round((gRect.left - pRect.left) / STATE.sidebarScale),
-            y: Math.round((gRect.top - pRect.top) / STATE.sidebarScale),
-            width: gRect.width / STATE.sidebarScale + "px",
-            height: gRect.height / STATE.sidebarScale + "px",
-            position: "absolute",
-            top: "0px",
-            left: "0px",
-            transformOrigin: "top left",
-            ease: "power1.inOut",
-          },
-          {
-            x: 0,
-            y: 0,
-            width: computedWidth,
-            height: computedHeight,
-            position: "absolute",
-            top: "0px",
-            left: "0px",
-            ease: "power1.inOut",
-            force3D: false,
-            scrollTrigger: {
-              trigger: ".hero",
-              start: "top top",
-              end: "50% top",
-              scrub: 1,
-            },
-          },
-        );
-      }
     },
   };
 
@@ -1143,8 +1091,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
             background: "rgba(29, 29, 29, 0.60)",
             color: "rgba(255, 255, 255, 0.90)",
           },
-          ".happy-ring, .semiconbio": { opacity: 0 },
-          ".happy-ring-white, .semiconbio-white": { opacity: 1 },
+          ".sidebar-brand-logo": { filter: "brightness(0) invert(1)" },
         },
         light: {
           ".nav-comapny-wrap": {
@@ -1152,8 +1099,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
             background: "rgba(223, 222, 206, 0.80)",
             color: "#000000",
           },
-          ".happy-ring, .semiconbio": { opacity: 1 },
-          ".happy-ring-white, .semiconbio-white": { opacity: 0 },
+          ".sidebar-brand-logo": { filter: "brightness(0) invert(0)" },
         },
       },
       {
@@ -1356,9 +1302,8 @@ export function createAnimationEngine(root, onResize = () => {}) {
       const heroHeading = Utils.$(".hero-heading");
       const navButton = Utils.$(".nav-button");
       const navButtonSecondary = Utils.$(".nav-button-secondary");
-      // Captures .nav-logo-item which contains both the real nav logo (.dukke-logo)
-      // and copyright wrap. Both are FLIP'd by GhostEngine to hero ghost positions,
-      // so they'd flash visible if nav-container is shown before preloader logo hides.
+      // The real nav logo is FLIP'd by GhostEngine to its hero ghost position,
+      // so it would flash if nav-container appeared before the preloader logo hides.
       const navLogoItem = Utils.$(".nav-logo-item");
 
       // Split text helper: splits element into lines. With useMask, wraps each line
@@ -1429,7 +1374,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
       // Show the nav-container at t=1.4 (40% through the logo's y-climb) so the
       // hero reveal chain can run while the preloader logo finishes its climb.
       // Inner elements stay hidden via their own autoAlpha:0 / mask states; the
-      // real nav logo + copyright (.nav-logo-item) reveal at t=2 when the
+      // real nav logo (.nav-logo-item) reveals at t=2 when the
       // preloader logo hides — a clean handoff.
       this.timeline.set(navContainer, { autoAlpha: 1 }, 1.4);
       this.timeline.set(logo, { display: "none" }, 2);
@@ -2487,13 +2432,19 @@ export function createAnimationEngine(root, onResize = () => {}) {
   const ProfileImage = {
     isMoved: false,
     originalStyles: null,
+    element: null,
+    container: null,
 
     init() {
+      if (window.innerWidth < 768) return;
+
       const hero = Utils.$(".hero");
       const profileWrap = Utils.$(".profile-img-wrap");
       const navContainer = Utils.$(".nav-container");
       if (!hero || !profileWrap || !navContainer) return;
 
+      this.element = profileWrap;
+      this.container = navContainer;
       this.originalStyles = {
         cssText: profileWrap.style.cssText,
         scale: 1 / STATE.sidebarScale,
@@ -2544,6 +2495,18 @@ export function createAnimationEngine(root, onResize = () => {}) {
 
       Utils.addEvent(window, "scroll", handleScroll, { passive: true });
       handleScroll();
+    },
+
+    destroy() {
+      // Return the portaled portrait to its original React tree before disposal.
+      if (this.isMoved && this.element && this.container) {
+        this.container.prepend(this.element);
+        this.element.style.cssText = this.originalStyles.cssText;
+      }
+      this.isMoved = false;
+      this.element = null;
+      this.container = null;
+      this.originalStyles = null;
     },
   };
 
@@ -3670,6 +3633,8 @@ export function createAnimationEngine(root, onResize = () => {}) {
           cloneTarget = cloneP;
         }
 
+        cloneTarget.setAttribute("aria-hidden", "true");
+
         const splitA = new SplitText(originalTarget, {
           type: "words",
           wordsClass: "word",
@@ -3851,6 +3816,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
     LenisInit.destroy();
     ImageTrail.destroy();
     MobileMenu.destroy();
+    ProfileImage.destroy();
 
     STATE.initialized = false;
   }

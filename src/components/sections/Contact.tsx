@@ -1,4 +1,5 @@
 import { profile } from "@/content/profile";
+import { ContactButtonLabel } from "../contact-button-label";
 
 export function Contact() {
   return (
@@ -17,13 +18,13 @@ export function Contact() {
             data-tl-split={"lines"}
             className={"cta_heading"}
           >
-            {"Transform Your "}
+            {"Have an idea?"}
             <br />
-            {"Webflow"}
+            {"Let's build"}
             <br />
-            <span className={"cta-span-heading"}>{"Experience"}</span>
+            <span className={"cta-span-heading"}>{"something"}</span>
             <br />
-            <span className={"cta-span-heading"}>{"Journey"}</span>
+            <span className={"cta-span-heading"}>{"useful."}</span>
           </h2>
           <p
             data-tl-once={""}
@@ -38,15 +39,15 @@ export function Contact() {
             className={"max-width-389"}
           >
             {
-              "Every Webflow site has room to grow. You get a clear view of what works, what holds you back and how to move toward a setup that feels faster, lighter and easier to manage."
+              "A new application, an existing product that needs attention, or a team looking for another engineer. Tell me what you're working on, and we can talk through the details and see how I can help."
             }
           </p>
           <div className={"cta-wrap"}>
             <img
-              src={"/assets/2b15efd6-frame-1321314730.avif"}
+              src={profile.image}
               loading={"lazy"}
-              alt={""}
-              className={"cta_img"}
+              alt={profile.name}
+              className="cta_img aspect-square shrink-0 rounded-full bg-[#e4e0ce] object-cover object-top"
             />
             <div className={"column"}>
               <div className={"cta-column-item"}>
@@ -63,7 +64,7 @@ export function Contact() {
                           }
                           className={"cta-text"}
                         >
-                          {"Have something in mind?"}
+                          {"Tell me about it."}
                         </p>
                       </div>
                     </div>
@@ -75,10 +76,11 @@ export function Contact() {
                       data-button-hover={""}
                       href={profile.callUrl}
                       target={"_blank"}
-                      className={"cta-button w-inline-block"}
+                      className={"cta-button contact-button w-inline-block"}
+                      aria-label="Let's talk on WhatsApp"
                       rel={"noopener noreferrer"}
                     >
-                      <p className={"button-text"}>{"Let's Talk"}</p>
+                      <ContactButtonLabel>{"Let's Talk"}</ContactButtonLabel>
                     </a>
                   </div>
                 </div>

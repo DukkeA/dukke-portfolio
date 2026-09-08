@@ -2,6 +2,7 @@ import { SourceIcon } from "../source-icons";
 import { CodeIcon } from "../engineering-icons";
 import { ExperienceCounter } from "../experience-counter";
 import { profile } from "@/content/profile";
+import { ContactButtonLabel } from "../contact-button-label";
 
 export function Hero() {
   return (
@@ -23,14 +24,6 @@ export function Hero() {
                 fill={"none"}
                 data-flip-target={""}
                 className={"dukke-logo-ghost"}
-              />
-              <SourceIcon
-                name="asset3"
-                xmlns={"http://www.w3.org/2000/svg"}
-                width={"100%"}
-                viewBox={"0 0 9 9"}
-                fill={"none"}
-                className={"dukke-copyright-icon-ghost"}
               />
             </div>
           </div>
@@ -139,7 +132,7 @@ export function Hero() {
             {profile.tagline}
           </p>
           <div className={"hero-content-layout"}>
-            <h1 className={"hero-heading"}>
+            <h1 className={"hero-heading z-50"}>
               {"Software, "}
               <br />
               {"Engineered "}
@@ -147,8 +140,11 @@ export function Hero() {
               {"with care."}
             </h1>
             <div className={"hero-buttons-wrap"}>
-              <div className={"hero-cta-button"}>
-                <p className={"button-text"}>{"Say hello"}</p>
+              <div
+                className={"hero-cta-button contact-button"}
+                aria-hidden="true"
+              >
+                <ContactButtonLabel>Say hello</ContactButtonLabel>
               </div>
               <div className={"hero-button"}>
                 <p className={"button-text"}>{"About Me"}</p>

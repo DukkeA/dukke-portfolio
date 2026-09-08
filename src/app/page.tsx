@@ -10,10 +10,12 @@ import { Testimonials } from "@/components/sections/Testimonials";
 import { DragIndicator } from "@/components/sections/DragIndicator";
 import { Footer } from "@/components/sections/Footer";
 import { Preloader } from "@/components/sections/Preloader";
+import { StructuredData } from "@/components/structured-data";
 
 export default function Home() {
   return (
     <MotionRoot>
+      <StructuredData />
       <a className="skip-link" href="#about">
         Skip to content
       </a>

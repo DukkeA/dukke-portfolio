@@ -10,7 +10,7 @@ export function Footer() {
             <SourceIcon
               name="asset45"
               xmlns={"http://www.w3.org/2000/svg"}
-              viewBox={"0 0 1388 338"}
+              viewBox={"0 0 1288 338"}
               className={"footer-logo-icon"}
             />
           </div>

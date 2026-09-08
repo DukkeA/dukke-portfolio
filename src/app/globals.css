@@ -23,10 +23,10 @@
   @apply top-[88%];
 }
 .journey-image {
-  @apply flex h-[clamp(3.5rem,4vw,4.5rem)] w-[clamp(4rem,6vw,7rem)] shrink-0 items-center justify-center rounded-lg bg-[#ebeada] p-2 text-black;
+  @apply flex h-[clamp(3.5rem,4vw,4.5rem)] w-[clamp(4rem,6vw,7rem)] shrink-0 items-center justify-center;
 }
-.journey-image-dark {
-  @apply bg-[#252622];
+.about-section .popup-card {
+  @apply gap-0;
 }
 .journey-card-bottom {
   @apply gap-3;
@@ -35,7 +35,10 @@
   @apply min-w-0 gap-3;
 }
 .journey-card-bottom .about-card-button {
-  @apply shrink-0 whitespace-nowrap;
+  @apply ml-auto shrink-0 whitespace-nowrap;
+}
+.about-card-img-wrap > .popup-heading:first-child {
+  @apply mt-0;
 }
 .about-card-year.journey-card-phase,
 .journey-popup-phase {
@@ -109,9 +112,6 @@ button.popup-close {
   .journey-image {
     @apply h-14 w-20;
   }
-  .journey-card-bottom .about-card-bottom-text {
-    @apply text-sm;
-  }
   .about-card-year.journey-card-phase,
   .journey-popup-phase {
     @apply text-4xl;
@@ -120,6 +120,26 @@ button.popup-close {
 
 button.faq-toggle {
   @apply cursor-pointer border-0 bg-transparent text-left;
+}
+.contact-button {
+  @apply items-center justify-center gap-2;
+}
+.cta-button.contact-button,
+.hero-cta-button.contact-button {
+  @apply inline-flex;
+}
+.contact-button-icon {
+  @apply h-[1.25em] w-[1.25em] shrink-0;
+}
+.contact-button-content {
+  @apply inline-flex shrink-0 items-center justify-center gap-2;
+}
+.contact-button .button-text {
+  @apply w-auto whitespace-nowrap px-0;
+}
+.contact-button .nav-button-mask,
+.contact-button .clone-p {
+  @apply px-0;
 }
 button:focus-visible,
 a:focus-visible,

@@ -48,7 +48,6 @@ body {
 .dukke-logo,
 .dukke-logo svg,
 .nav-logo-item,
-.dukke-copyright-icon,
 .nav-button,
 .hero-cta-button,
 .nav-button-secondary,
@@ -243,7 +242,7 @@ body {
 .nav-comapny-item {
   display: inline-flex;
   flex-shrink: 0;
-  animation: marquee-move 25s linear infinite;
+  animation: marquee-move 55s linear infinite;
 }
 
 @keyframes marquee-move {

@@ -2,6 +2,8 @@ import { SourceIcon } from "../source-icons";
 import { CodeIcon } from "../engineering-icons";
 import { ExperienceCounter } from "../experience-counter";
 import { profile } from "@/content/profile";
+import { SidebarLogos } from "../sidebar-logos";
+import { ContactButtonLabel } from "../contact-button-label";
 
 export function Navigation() {
   return (
@@ -82,23 +84,6 @@ export function Navigation() {
                     fill={"none"}
                     className={"dukke-logo-svg"}
                   />
-                  <div className={"dukke-copyright-wrap"}>
-                    <SourceIcon
-                      name="asset3"
-                      xmlns={"http://www.w3.org/2000/svg"}
-                      width={"100%"}
-                      viewBox={"0 0 9 9"}
-                      fill={"none"}
-                      data-tl-type={"scroll"}
-                      data-tl-trigger={".hero"}
-                      data-tl-start={"2% top"}
-                      data-tl-end={"5% top"}
-                      data-tl-from={"{'opacity': 0}"}
-                      data-tl-to={"{'opacity' : 1}"}
-                      data-tl-desktop={""}
-                      className={"dukke-copyright-icon"}
-                    />
-                  </div>
                 </div>
               </div>
             </div>
@@ -116,9 +101,11 @@ export function Navigation() {
                 data-tl-from={"{'scale' : 0.3, 'opacity' : 0}"}
                 rel={"noopener noreferrer"}
               >
-                <img
-                  src="/assets/journey/github.svg"
-                  alt=""
+                <SourceIcon
+                  name="github"
+                  viewBox="0 0 496 512"
+                  fill="none"
+                  aria-hidden="true"
                   className="instagram"
                 />
               </a>
@@ -144,15 +131,38 @@ export function Navigation() {
                   className={"instagram"}
                 />
               </a>
+              <a
+                className="social-link w-inline-block shrink-0"
+                data-tl-trigger=".hero"
+                data-tl-start="48% top"
+                data-tl-end="50% top"
+                data-tl-type="scroll"
+                data-tl-from="{'scale' : 0.3, 'opacity' : 0}"
+                data-tl-to="{'scale' : 1, 'opacity' : 1}"
+                href={profile.cv.path}
+                target="_blank"
+                rel="noopener noreferrer"
+                type="application/pdf"
+                aria-label="CV (PDF, opens in a new tab)"
+                title="View CV (PDF)"
+              >
+                <span
+                  aria-hidden="true"
+                  className="social-bg-path font-display text-[0.85vw] font-bold leading-none"
+                >
+                  CV
+                </span>
+              </a>
             </div>
             <div className={"mobile-menu-wrap"}>
               <a
                 href={profile.callUrl}
                 target={"_blank"}
-                className={"nav-button-mobile w-button"}
+                className={"nav-button-mobile contact-button w-button"}
+                aria-label="Say hello on WhatsApp"
                 rel={"noopener noreferrer"}
               >
-                {"Say hello"}
+                <ContactButtonLabel>Say hello</ContactButtonLabel>
               </a>
               <div
                 className={"mobile-menu"}
@@ -676,147 +686,10 @@ export function Navigation() {
             data-tl-from={"{'opacity' : 0}"}
             data-tl-to={"{ 'opacity' : 1}"}
             className={"nav-comapny-wrap"}
+            role="group"
+            aria-label="Companies and tools I work with"
           >
-            <div className={"nav-comapny-item"}>
-              <SourceIcon
-                name="asset16"
-                xmlns={"http://www.w3.org/2000/svg"}
-                width={"100%"}
-                viewBox={"0 0 51 18"}
-                fill={"none"}
-                className={"_1910"}
-              />
-              <SourceIcon
-                name="asset17"
-                xmlns={"http://www.w3.org/2000/svg"}
-                width={"100%"}
-                viewBox={"0 0 71 18"}
-                fill={"none"}
-                className={"alosant"}
-              />
-              <div className={"happy-ring-wrap"}>
-                <img
-                  src={"/assets/f5664f61-happyring.svg"}
-                  loading={"lazy"}
-                  alt={"Happy Ring"}
-                  className={"happy-ring"}
-                />
-                <img
-                  src={"/assets/a5012a1d-frame-1321314818.avif"}
-                  loading={"lazy"}
-                  alt={"Happy Ring"}
-                  className={"happy-ring-white"}
-                />
-              </div>
-              <SourceIcon
-                name="asset18"
-                xmlns={"http://www.w3.org/2000/svg"}
-                width={"100%"}
-                viewBox={"0 0 82 18"}
-                fill={"none"}
-                className={"invert"}
-              />
-              <div className={"semiconbio-wrap"}>
-                <img
-                  src={"/assets/379a39bb-semiconbio.svg"}
-                  loading={"lazy"}
-                  alt={"Semicon Bio"}
-                  className={"semiconbio"}
-                />
-                <img
-                  src={"/assets/0c26674c-semi-white.svg"}
-                  loading={"lazy"}
-                  alt={"SemiconBio"}
-                  className={"semiconbio-white"}
-                />
-              </div>
-              <SourceIcon
-                name="asset19"
-                xmlns={"http://www.w3.org/2000/svg"}
-                width={"100%"}
-                viewBox={"0 0 74 14"}
-                fill={"none"}
-                className={"curri"}
-              />
-              <SourceIcon
-                name="asset20"
-                xmlns={"http://www.w3.org/2000/svg"}
-                width={"100%"}
-                viewBox={"0 0 87 18"}
-                fill={"none"}
-                className={"omicron"}
-              />
-              <SourceIcon
-                name="asset21"
-                xmlns={"http://www.w3.org/2000/svg"}
-                width={"100%"}
-                viewBox={"0 0 49 18"}
-                fill={"none"}
-                className={"puck"}
-              />
-            </div>
-            <div className={"nav-comapny-item"}>
-              <SourceIcon
-                name="asset16"
-                xmlns={"http://www.w3.org/2000/svg"}
-                width={"100%"}
-                viewBox={"0 0 51 18"}
-                fill={"none"}
-                className={"_1910"}
-              />
-              <SourceIcon
-                name="asset17"
-                xmlns={"http://www.w3.org/2000/svg"}
-                width={"100%"}
-                viewBox={"0 0 71 18"}
-                fill={"none"}
-                className={"alosant"}
-              />
-              <img
-                src={"/assets/f5664f61-happyring.svg"}
-                loading={"lazy"}
-                alt={"Happy Ring"}
-                className={"happy-ring"}
-              />
-              <SourceIcon
-                name="asset18"
-                xmlns={"http://www.w3.org/2000/svg"}
-                width={"100%"}
-                viewBox={"0 0 82 18"}
-                fill={"none"}
-                className={"invert"}
-              />
-              <img
-                src={"/assets/379a39bb-semiconbio.svg"}
-                loading={"lazy"}
-                alt={"Semicon Bio"}
-                className={"semiconbio"}
-              />
-              <SourceIcon
-                name="asset19"
-                xmlns={"http://www.w3.org/2000/svg"}
-                width={"100%"}
-                viewBox={"0 0 74 14"}
-                fill={"none"}
-                className={"curri"}
-              />
-              <SourceIcon
-                name="asset20"
-                xmlns={"http://www.w3.org/2000/svg"}
-                width={"100%"}
-                viewBox={"0 0 87 18"}
-                fill={"none"}
-                className={"omicron"}
-              />
-              <SourceIcon
-                name="asset21"
-                xmlns={"http://www.w3.org/2000/svg"}
-                width={"100%"}
-                viewBox={"0 0 49 18"}
-                fill={"none"}
-                className={"puck"}
-              />
-            </div>
+            <SidebarLogos />
           </div>
           <div
             data-tl-desktop={""}
@@ -868,10 +741,11 @@ export function Navigation() {
               data-button-hover={""}
               href={profile.callUrl}
               target={"_blank"}
-              className={"nav-button w-inline-block"}
+              className={"nav-button contact-button w-inline-block"}
+              aria-label="Say hello on WhatsApp"
               rel={"noopener noreferrer"}
             >
-              <p className={"button-text"}>{"Say hello"}</p>
+              <ContactButtonLabel>Say hello</ContactButtonLabel>
             </a>
             <a
               data-button-hover={""}

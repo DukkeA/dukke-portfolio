@@ -943,7 +943,7 @@ a {
   @apply [height:auto];
   @apply [padding-top:.83vw];
   @apply [padding-bottom:.83vw];
-  @apply [padding-right:.5vw];
+  @apply px-0;
   @apply flex;
   @apply relative;
 }
@@ -1122,10 +1122,6 @@ a {
 
 .happy-ring {
   @apply [width:5.21vw];
-}
-
-.invert {
-  @apply [width:5.69vw];
 }
 
 .semiconbio {
@@ -1484,10 +1480,6 @@ a {
 .nav-top-text {
   @apply [z-index:1];
   @apply relative;
-}
-
-.dukke-copyright-icon {
-  @apply [width:.6vw];
 }
 
 .nav-item-icon {
@@ -2259,7 +2251,7 @@ a {
   @apply [width:clamp(10rem,14.58vw,17.5rem)];
   @apply [margin-top:0];
   @apply [margin-bottom:.28vw];
-  @apply [padding-top:3.47vw];
+  @apply pt-6;
   font-family: "Tr 3 A", Arial, sans-serif;
   @apply [font-size:1.39vw];
   @apply [font-weight:500];
@@ -3088,26 +3080,6 @@ a {
   @apply flex;
 }
 
-.dukke-copyright-icon-ghost {
-  @apply [opacity:0];
-  flex: none;
-  @apply [width:5vw];
-  @apply block;
-  @apply absolute;
-  @apply [inset:0%_-5.5%_auto_auto];
-}
-
-.dukke-copyright-wrap {
-  @apply [z-index:100];
-  @apply justify-start;
-  @apply items-start;
-  @apply [width:.6vw];
-  @apply [height:.6vw];
-  @apply flex;
-  @apply absolute;
-  @apply [inset:0%_-.8vw_auto_auto];
-}
-
 .code-embed {
   @apply [width:100%];
 }
@@ -3641,10 +3613,6 @@ a {
     @apply [width:clamp(4rem,20vw,9.6rem)];
   }
 
-  .invert {
-    @apply [width:clamp(4.37rem,21.87vw,10.5rem)];
-  }
-
   .semiconbio {
     @apply [width:clamp(5.33rem,26.67vw,12.78rem)];
   }
@@ -3685,7 +3653,6 @@ a {
 
   .nav-logo-item {
     @apply [width:clamp(2.77rem,13.87vw,6.65rem)];
-    @apply [margin-left:clamp(-.53rem,-2.67vw,-1.28rem)];
   }
 
   .hero-card-2-wrap {
@@ -3727,10 +3694,6 @@ a {
 
   .nav-top-text {
     @apply hidden;
-  }
-
-  .dukke-copyright-icon {
-    @apply [width:clamp(.43rem,2.13vw,1.02rem)];
   }
 
   .nav-item-icon {
@@ -4388,12 +4351,6 @@ a {
     @apply [height:clamp(.21rem,1.07vw,.51rem)];
   }
 
-  .dukke-copyright-wrap {
-    @apply [width:clamp(.43rem,2.13vw,1.02rem)];
-    @apply [height:clamp(.43rem,2.13vw,1.02rem)];
-    @apply [right:clamp(-.85rem,-4.27vw,-2.05rem)];
-  }
-
   .nav-button-wrap {
     @apply hidden;
   }
@@ -4585,10 +4542,6 @@ a {
   .faq-column {
     flex-flow: column;
     @apply flex;
-  }
-
-  .dukke-copyright-wrap {
-    @apply [inset:0%_clamp(-.64rem,-3.2vw,-1.53rem)_0%_auto];
   }
 
   .what_you_get-text-mobile {

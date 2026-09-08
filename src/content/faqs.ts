@@ -1,42 +1,43 @@
+import { profile } from "./profile";
+
 export const faqs = [
   {
-    question: "Why Webflow instead of custom code?",
+    question: "What kind of software do you build?",
     answer:
-      "Webflow gives you the best of both worlds. A platform your team can manage after launch, with the flexibility to build things that feel fully custom. I extend it with custom code and integrations so the result looks and performs like a fully coded site without needing a developer for every small change. For most businesses, that balance of control and independence is exactly what makes it worth it.",
+      "I build web applications, from the interface to the services and data behind it. That includes customer-facing products, internal tools, dashboards, and API integrations. My background is in full-stack development, with a strong focus on frontend work.",
   },
   {
-    question: "Already have a Webflow site that needs work?",
+    question: "Can you work on an existing product?",
     answer:
-      "That's a big part of what I do. Whether your site needs a structural cleanup, better performance, new sections, or a CMS overhaul, I can step in and improve what's already there. I'll audit what you have, identify what's holding it back, and build a clear plan to get it where it should be. You don't need to start from scratch to get a site that feels fast, clean, and easy to manage.",
+      "Yes. I can help with new features, bugs, performance, or parts of a codebase that have become difficult to maintain. I start by understanding how the product works and what the team needs, then work through the changes in manageable steps.",
   },
   {
-    question: "What’s the process from start to launch?",
+    question: "How do you approach a new project?",
     answer:
-      "It starts with a conversation about your goals, timeline, and what success looks like. From there I put together a clear scope and plan. Once we align, I build in stages and share progress as I go so nothing drifts and feedback stays easy. The goal is always a smooth handoff with a site you actually know how to use.",
+      "We start with what you're trying to do, who will use it, and any constraints. From there, we agree on a scope and priorities. I build in stages, share progress, and make room for feedback before moving on to the next part.",
   },
   {
-    question: "Do you work under NDA?",
+    question: "Can you work alongside our team?",
     answer:
-      "Yes. I've worked on projects that required strict confidentiality, from pre-launch products to internal tools, and I treat every client's work with the same level of discretion. I'm happy to sign an NDA before we even start talking details. Trust is a big part of why clients keep coming back, and that extends to how I handle sensitive information.",
+      "I've worked closely with designers, backend engineers, and product teams. I'm comfortable discussing technical decisions, reviewing code, and working within an existing process. If you're looking for another engineer for your team, tell me about the role and we can explore whether it's a good fit.",
   },
   {
-    question: "Do you handle design, or only development?",
+    question: "Which technologies do you work with?",
     answer:
-      "Development is my core strength, but I'm not the kind of developer who needs every pixel handed to them. I have a strong eye for design and regularly collaborate with designers to refine layouts, spacing, and visual quality. If you have a design team, I'll work closely with them. If you're coming in with a rough direction, I can help shape things and bring in a designer from my network when needed.",
+      "Most of my work uses React, Next.js, TypeScript, and Tailwind. On the backend, I work with Node.js, Python, APIs, and PostgreSQL. I also use tools such as Prisma, Docker, GitHub, and Vercel. The choice depends on the product and the people who will maintain it.",
   },
   {
-    question: "What does ongoing support look like?",
+    question: "Do you handle design and development?",
     answer:
-      "You get a dedicated block of development hours each month that you can use however you need. New sections, layout improvements, performance fixes, campaign updates, CMS changes. I work as an extension of your team, not someone you have to re-brief every time. Hours roll over for up to three months so nothing goes to waste, and we keep a running priority list so the most impactful work always gets done first. It's built for brands that want their site to keep evolving, not just sit there after launch.",
+      "Software engineering is my main focus. I can turn a design into a polished, responsive interface and help refine layouts, interactions, and accessibility along the way. I also enjoy working with designers when a project needs a more specific visual direction.",
   },
   {
-    question: "How do you handle revisions and feedback?",
+    question: "What happens after a release?",
     answer:
-      "Revisions are built into the process, not an afterthought. I share progress at key stages so you can give feedback while it's easy to adjust, not after everything is locked in. I keep a tight feedback loop through Slack or whatever your team already uses. If something doesn't feel right, just say so. I'd rather refine something twice than launch something you're not proud of.",
+      "I can help with fixes, monitoring, performance improvements, and new features. I also leave useful documentation so the work is easier to continue. We can agree on the support you need based on the product and the team taking care of it.",
   },
   {
-    question: "Not sure which plan fits your project?",
-    answer:
-      "No stress. Just reach out at nenad@popadic.co and tell me what you have in mind. I'll help you figure out the right option.",
+    question: "What's the best way to get in touch?",
+    answer: `Email me at ${profile.email}. A short note about your project, a role, or something you'd like to discuss is enough to get started. You can also find me on LinkedIn and GitHub through the links on this page.`,
   },
 ] as const;

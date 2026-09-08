@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, type ReactNode } from "react";
 import { faqs } from "@/content/faqs";
+import { profile } from "@/content/profile";
 
 const FaqContext = createContext<{
   active: number | null;
@@ -22,7 +23,7 @@ export function FaqItem({ index }: { index: number }) {
   const { active, setActive } = useContext(FaqContext);
   const open = active === index;
   const item = faqs[index];
-  const parts = item.answer.split("nenad@popadic.co");
+  const parts = item.answer.split(profile.email);
   return (
     <div className="faq w-dropdown">
       <button
@@ -67,11 +68,8 @@ export function FaqItem({ index }: { index: number }) {
               {parts[0]}
               {parts.length > 1 && (
                 <>
-                  <a
-                    href="mailto:nenad@popadic.co?subject=Not%20Sure%20Which%20Plan%20to%20Choose"
-                    tabIndex={open ? 0 : -1}
-                  >
-                    nenad@popadic.co
+                  <a href={`mailto:${profile.email}`} tabIndex={open ? 0 : -1}>
+                    {profile.email}
                   </a>
                   {parts[1]}
                 </>

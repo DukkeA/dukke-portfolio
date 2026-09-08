@@ -1,0 +1,21 @@
+export const sidebarBrands = [
+  { name: "Nevato", image: "/assets/journey/nevato.png", tall: true },
+  {
+    name: "Prevalentware",
+    image: "/assets/journey/prevalentware.png",
+    tall: true,
+  },
+  { name: "G6 Networks", image: "/assets/journey/gen6.svg" },
+  { name: "React", image: "/assets/stack/react.svg" },
+  { name: "Next.js", image: "/assets/stack/nextjs.svg" },
+  { name: "TypeScript", image: "/assets/stack/typescript.svg" },
+  { name: "Tailwind CSS", image: "/assets/stack/tailwindcss.svg" },
+  { name: "Node.js", image: "/assets/stack/nodejs.svg" },
+  { name: "Python", image: "/assets/stack/python.svg" },
+  { name: "PostgreSQL", image: "/assets/stack/postgresql.svg" },
+  { name: "Prisma", image: "/assets/stack/prisma.svg" },
+  { name: "Docker", image: "/assets/stack/docker.svg" },
+  { name: "Vercel", image: "/assets/stack/vercel.svg" },
+  { name: "AWS", image: "/assets/stack/amazonwebservices.svg" },
+  { name: "GitHub", image: "/assets/stack/github.svg" },
+] satisfies { name: string; image: string; tall?: boolean }[];

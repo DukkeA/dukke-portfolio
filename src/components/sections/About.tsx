@@ -1,5 +1,7 @@
 import { journey, type JourneyEntry } from "@/content/journey";
-import { CodeIcon, LearningIcon } from "../engineering-icons";
+import { profile } from "@/content/profile";
+import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr/ArrowUpRight";
+import { CodeIcon } from "../engineering-icons";
 import { SourceIcon } from "../source-icons";
 
 const starts = [
@@ -48,22 +50,26 @@ function entrance(index: number, delay = 0.3, split = false) {
   };
 }
 
-function JourneyImage({ entry }: { entry: JourneyEntry }) {
+function JourneyImage({
+  entry,
+  expanded = false,
+}: {
+  entry: JourneyEntry;
+  expanded?: boolean;
+}) {
+  if (!entry.image && !entry.symbol) return null;
+
   return (
-    <div
-      className={`journey-image ${entry.darkImage ? "journey-image-dark" : ""}`}
-    >
+    <div className={`journey-image ${expanded ? "text-white" : "text-black"}`}>
       {entry.image ? (
         <img
           src={entry.image}
           alt={entry.imageAlt}
           loading="lazy"
-          className="h-full w-full object-contain"
+          className={`h-full w-full object-contain ${entry.whiteLogo && !expanded ? "invert" : ""} ${!entry.whiteLogo && expanded ? "brightness-0 invert" : ""}`}
         />
-      ) : entry.symbol === "code" ? (
-        <CodeIcon className="h-9 w-12" />
       ) : (
-        <LearningIcon className="h-10 w-10" />
+        <CodeIcon className="h-9 w-12" />
       )}
     </div>
   );
@@ -132,22 +138,13 @@ function JourneyCard({ entry, index }: { entry: JourneyEntry; index: number }) {
           {entry.summary}
         </p>
         <div className="about-card-bottom-layout journey-card-bottom">
-          <div className="about-card-bottom-layout-left">
-            <div {...entrance(index, 0.45)} className="about-card-img-wrap">
-              <JourneyImage entry={entry} />
-              {index === journey.length - 1 && (
-                <div className="last-year-active-dot" />
-              )}
+          {(entry.image || entry.symbol) && (
+            <div className="about-card-bottom-layout-left">
+              <div {...entrance(index, 0.45)} className="about-card-img-wrap">
+                <JourneyImage entry={entry} />
+              </div>
             </div>
-            <p
-              {...entrance(index, 0.5, true)}
-              className="about-card-bottom-text"
-            >
-              {entry.organization}
-              <br />
-              {entry.caption}
-            </p>
-          </div>
+          )}
           <button
             {...entrance(index, 0.6)}
             type="button"
@@ -180,9 +177,9 @@ function JourneyCard({ entry, index }: { entry: JourneyEntry; index: number }) {
                     </span>
                   </button>
                 </div>
-                <div className="popup-card-bottom-item">
+                <div className="popup-card-bottom-item pt-6">
                   <div className="about-card-img-wrap">
-                    <JourneyImage entry={entry} />
+                    <JourneyImage entry={entry} expanded />
                     <h4 className="popup-heading">{entry.title}</h4>
                     <p>{entry.story}</p>
                     <ul className="journey-tags" aria-label="Topics">
@@ -291,6 +288,17 @@ export function About() {
             things out, and keep finding new things to learn. Here’s how I got
             here.
           </p>
+          <a
+            href={profile.cv.path}
+            target="_blank"
+            rel="noopener noreferrer"
+            type="application/pdf"
+            aria-label="View CV in English (PDF, opens in a new tab)"
+            className="mt-5 inline-flex w-fit items-center gap-2 py-2 text-sm underline decoration-black/40 underline-offset-4 transition-colors hover:decoration-black"
+          >
+            View CV <span className="text-black/60">(PDF)</span>
+            <ArrowUpRightIcon size={16} aria-hidden="true" />
+          </a>
         </div>
         <div className="about-wrap">
           <JourneyCard entry={journey[0]} index={0} />
