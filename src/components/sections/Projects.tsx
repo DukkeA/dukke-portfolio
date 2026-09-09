@@ -37,9 +37,9 @@ export function Projects() {
                 }
                 className={"h2-style-white"}
               >
-                {"Built in Webflow,"}
+                {"A few things"}
                 <br />
-                {"Made to Perform"}
+                {"I've built."}
               </h2>
             </div>
             <div
@@ -58,12 +58,17 @@ export function Projects() {
                 }
               >
                 {
-                  "Over seven years I've helped businesses across different industries turn their ideas into websites that look and work exactly how they imagined. Here's a look at some of that work."
+                  "Blockchain applications, internal tools, and AI-assisted research. A selection of work from Gen6, Prevalentware, and freelance projects, with more private and personal projects behind the scenes."
                 }
               </p>
             </div>
           </div>
-          <div className={"work-track-wrap"}>
+          <div
+            className="work-track-wrap"
+            tabIndex={0}
+            role="region"
+            aria-label="Selected projects"
+          >
             <div className={"work-track"}>
               {projects.map((project, index) => (
                 <ProjectCard

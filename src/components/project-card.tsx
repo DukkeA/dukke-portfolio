@@ -1,6 +1,6 @@
-import { projects } from "@/content/projects";
-import { SourceIcon } from "./source-icons";
-type Project = (typeof projects)[number];
+import type { Project } from "@/content/projects";
+import { ProjectPreview } from "./project-preview";
+
 export function ProjectCard({
   project,
   index,
@@ -9,79 +9,35 @@ export function ProjectCard({
   index: number;
 }) {
   return (
-    <a
-      aria-label={`View ${project.title} project`}
-      className="work-card w-inline-block"
-      href={project.url}
-      target="_blank"
-      rel="noopener noreferrer"
+    <article
+      className="work-card portfolio-project"
+      aria-labelledby={`project-${project.id}-title`}
+      data-project={project.id}
     >
-      <img
-        alt={project.imageAlt}
-        className="work-image"
-        loading="lazy"
-        src={project.image}
-      />
-      <div className="w-embed">
-        <video
-          className="work-bg absolute inset-0 size-full object-cover"
-          data-src={project.background}
-          loop
-          muted
-          playsInline
-          poster={project.backgroundPoster}
-          preload="none"
-        />
+      <div className="project-meta">
+        <span className="project-number">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <span>{project.context}</span>
+        {project.status && (
+          <span className="project-status">{project.status}</span>
+        )}
       </div>
-      <div className="work-card-content">
-        <div className="work-card-content-top-layout">
-          <div className="work-label">{String(index + 1).padStart(2, "0")}</div>
-          <div className="work-label-wrap">
-            {project.tags.map((tag) => (
-              <div className="work-label" key={tag}>
-                {tag}
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="w-embed">
-          <video
-            className="work-video absolute inset-0 size-full object-contain"
-            data-webm={project.foregroundWebm}
-            data-mov={project.foregroundMov}
-            loop
-            muted
-            playsInline
-            poster={project.foregroundPoster}
-            preload="none"
-          />
-        </div>
-        <div className="work-card-content-bottom-layout">
-          <h3 className="work-card-heading">{project.title}</h3>
-          <p className="op80">{project.description}</p>
-          <div className="work-card-arrow-wrap">
-            <div className={"work-card-arrow-icon"}>
-              <SourceIcon
-                name="asset1"
-                xmlns={"http://www.w3.org/2000/svg"}
-                width={"100%"}
-                viewBox={"0 0 23 23"}
-                fill={"none"}
-                className={"work-card-arrow"}
-              />
-              <SourceIcon
-                name="asset1"
-                xmlns={"http://www.w3.org/2000/svg"}
-                width={"100%"}
-                viewBox={"0 0 23 23"}
-                fill={"none"}
-                className={"work-card-arrow-2"}
-              />
-            </div>
-          </div>
-        </div>
+      <ProjectPreview kind={project.preview} label={project.previewAlt} />
+      <div className="project-details">
+        <h3 id={`project-${project.id}-title`} className="work-card-heading">
+          {project.title}
+        </h3>
+        <p className="project-description">{project.description}</p>
+        <ul
+          className="project-tags"
+          aria-label={`${project.title} technologies and features`}
+        >
+          {project.tags.map((tag) => (
+            <li key={tag}>{tag}</li>
+          ))}
+        </ul>
       </div>
-      <div className="work-image-overlay" />
-    </a>
+    </article>
   );
 }
