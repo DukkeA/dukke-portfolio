@@ -23,12 +23,6 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: site.title,
     description: site.description,
-    images: [
-      {
-        url: "/opengraph-image",
-        alt: `${profile.fullName} — Software Engineer`,
-      },
-    ],
   },
   robots: {
     index: isIndexable,
@@ -41,7 +35,13 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
-  icons: { icon: "/assets/dukke-icon.svg" },
+  icons: {
+    icon: [
+      { url: "/assets/dukke-icon-96.png", type: "image/png", sizes: "96x96" },
+      { url: "/assets/dukke-icon.svg", type: "image/svg+xml", sizes: "any" },
+    ],
+    apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
+  },
 };
 
 export const viewport: Viewport = { themeColor: "#d5cfbe" };
