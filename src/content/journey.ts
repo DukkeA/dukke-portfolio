@@ -21,6 +21,9 @@ export const journey: readonly JourneyEntry[] = [
       "During my civil engineering degree at Universidad Nacional, programming started to catch my attention. I wanted to understand what I could do with it.",
     story:
       "I was studying civil engineering at Universidad Nacional de Colombia when programming began to interest me. I liked the idea of writing instructions, trying them out, and seeing what happened. Alongside my degree, that curiosity gradually made room for something new.",
+    image: "/assets/journey/unal.png",
+    imageAlt: "Universidad Nacional de Colombia",
+    whiteLogo: true,
     tags: ["Curiosity", "Problem solving"],
   },
   {
@@ -31,7 +34,6 @@ export const journey: readonly JourneyEntry[] = [
       "I began learning to code in my spare time. Small projects and plenty of questions gave me reasons to keep coming back.",
     story:
       "At first, programming was something I did because I enjoyed it. I spent time learning, trying small projects, and working through the things I didn't understand. Little by little, a hobby became something I wanted to take more seriously.",
-    symbol: "code",
     tags: ["Personal projects", "Practice"],
   },
   {

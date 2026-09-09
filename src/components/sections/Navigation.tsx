@@ -158,10 +158,10 @@ export function Navigation() {
                 href={profile.callUrl}
                 target={"_blank"}
                 className={"nav-button-mobile contact-button w-button"}
-                aria-label="Say hello on WhatsApp"
+                aria-label="Say Hi! on WhatsApp"
                 rel={"noopener noreferrer"}
               >
-                <ContactButtonLabel>Say hello</ContactButtonLabel>
+                <ContactButtonLabel>Say Hi!</ContactButtonLabel>
               </a>
               <div
                 className={"mobile-menu"}
@@ -642,10 +642,10 @@ export function Navigation() {
               href={profile.callUrl}
               target={"_blank"}
               className={"nav-button contact-button w-inline-block"}
-              aria-label="Say hello on WhatsApp"
+              aria-label="Say Hi! on WhatsApp"
               rel={"noopener noreferrer"}
             >
-              <ContactButtonLabel>Say hello</ContactButtonLabel>
+              <ContactButtonLabel>Say Hi!</ContactButtonLabel>
             </a>
             <a
               data-button-hover={""}

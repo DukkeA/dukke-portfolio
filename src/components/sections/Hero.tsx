@@ -127,7 +127,7 @@ export function Hero() {
                 className={"hero-cta-button contact-button"}
                 aria-hidden="true"
               >
-                <ContactButtonLabel>Say hello</ContactButtonLabel>
+                <ContactButtonLabel>Say Hi!</ContactButtonLabel>
               </div>
               <div className={"hero-button"}>
                 <p className={"button-text"}>{"About Me"}</p>
@@ -156,9 +156,9 @@ export function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               className="contact-button"
-              aria-label="Say hello on WhatsApp"
+              aria-label="Say Hi! on WhatsApp"
             >
-              <ContactButtonLabel>Say hello</ContactButtonLabel>
+              <ContactButtonLabel>Say Hi!</ContactButtonLabel>
             </a>
             <a href="#about">About Me</a>
           </div>

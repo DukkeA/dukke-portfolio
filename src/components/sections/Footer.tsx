@@ -53,8 +53,8 @@ export function Footer() {
               Let&apos;s talk.
             </h2>
             <p className="closing-description">
-              A project, a question, or just a hello. I&apos;d be happy to hear
-              from you.
+              A project, a question, or just &ldquo;Hi!&rdquo; I&apos;d be happy
+              to hear from you.
             </p>
           </div>
           <div className="closing-actions">
@@ -63,9 +63,9 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="closing-whatsapp contact-button"
-              aria-label="Say hello on WhatsApp"
+              aria-label="Say Hi! on WhatsApp"
             >
-              <ContactButtonLabel>Say hello</ContactButtonLabel>
+              <ContactButtonLabel>Say Hi!</ContactButtonLabel>
             </a>
             <a className="closing-email" href={`mailto:${profile.email}`}>
               {profile.email}
