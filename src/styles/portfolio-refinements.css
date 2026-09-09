@@ -4,28 +4,16 @@
 .hero-role {
   @apply mt-2 block text-[clamp(1.75rem,3.1vw,3.5rem)] font-medium leading-tight;
 }
-.hero-experience {
-  @apply pointer-events-none absolute bottom-[7vw] left-0 z-30 flex items-center gap-3 font-display text-white;
+.hero-right-text {
+  @apply ml-auto;
 }
-.hero-experience .experience-number {
-  @apply w-[clamp(3.5rem,5vw,6rem)] shrink-0;
+.hero-experience-inline {
+  @apply whitespace-nowrap font-display text-[1.25em] font-medium text-black underline decoration-dukke-yellow decoration-2 underline-offset-4;
 }
-.hero-experience .experience-text {
-  @apply m-0 text-[clamp(0.875rem,1.1vw,1.25rem)] leading-tight;
+.hero-experience-value {
+  @apply font-bold tabular-nums;
 }
 @media (min-width: 768px) {
-  .hero-experience {
-    visibility: hidden;
-  }
-  .nav-stats-wrap {
-    @apply h-[5.5vw] min-h-16;
-  }
-  #stats_years {
-    @apply w-full flex-row items-center justify-center gap-[1vw];
-  }
-  .nav-experience-text {
-    @apply text-left;
-  }
   #projects .work-track-wrap {
     @apply pl-0;
   }
@@ -123,7 +111,10 @@
     @apply max-h-[100svh] overflow-y-auto overscroll-contain pb-5;
   }
   .hero-content-layout {
-    @apply bottom-[18rem] px-4;
+    @apply static order-1 px-0;
+  }
+  .hero-container {
+    @apply gap-5 pt-[26rem] pb-5;
   }
   .hero-heading {
     @apply text-[clamp(2.75rem,10.8vw,5rem)] leading-none;
@@ -131,17 +122,23 @@
   .hero-role {
     @apply mt-3 text-[clamp(1.4rem,5.6vw,2.6rem)];
   }
-  .hero-experience {
-    @apply bottom-[8rem] left-5 gap-3;
+  .hero-right-text {
+    @apply relative top-0 order-3 m-0 mt-5 p-0 text-base leading-relaxed text-black;
   }
-  .hero-experience .experience-number {
-    @apply w-14;
-  }
-  .hero-experience .experience-text {
-    @apply text-sm;
+  /* The full-width wash follows the copy as it reflows on narrow screens. */
+  .hero-right-text::before {
+    @apply pointer-events-none absolute -top-32 -bottom-40 left-1/2 -z-10 w-screen -translate-x-1/2 content-[''];
+    background: linear-gradient(
+      to bottom,
+      transparent 0,
+      --alpha(var(--color-dukke-paper) / 8%) 1.5rem,
+      --alpha(var(--color-dukke-paper) / 40%) 3.5rem,
+      --alpha(var(--color-dukke-paper) / 85%) 6rem,
+      var(--color-dukke-paper) 8rem
+    );
   }
   .hero-mobile-actions {
-    @apply absolute inset-x-5 bottom-[14rem] z-30 flex justify-center gap-3;
+    @apply relative order-2 z-30 flex w-full justify-center gap-3;
   }
   .hero-mobile-actions > a {
     @apply inline-flex min-h-11 items-center justify-center rounded-lg bg-dukke-yellow px-4 py-3 font-display text-sm font-medium text-black no-underline;
@@ -150,7 +147,7 @@
     @apply grid grid-cols-[auto_minmax(0,1fr)] gap-y-0;
   }
   .journey-with-quality > .about-card {
-    @apply col-start-2 row-start-1;
+    @apply z-10 col-start-2 row-start-1;
   }
   .journey-with-quality > .about-card-point-wrap {
     @apply col-start-1 row-start-1;

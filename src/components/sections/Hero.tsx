@@ -117,23 +117,10 @@ export function Hero() {
           </div>
         </div>
         <div className={"hero-container"}>
-          <p
-            className={"hero-left-text"}
-            data-tl-trigger={".hero"}
-            data-tl-split={"lines"}
-            data-tl-end={"10% top"}
-            data-tl-desktop={""}
-            data-tl-type={"scroll"}
-            data-tl-to={"{ 'y': '-100%'}"}
-            data-tl-start={"5% top"}
-            data-tl-from={"{ 'y': '0%'}"}
-          >
-            {profile.tagline}
-          </p>
           <div className={"hero-content-layout"}>
             <h1 className={"hero-heading z-50"}>
               {profile.fullName}{" "}
-              <span className="hero-role">Software Engineer</span>
+              <span className="hero-role">{profile.tagline}</span>
             </h1>
             <div className={"hero-buttons-wrap"}>
               <div
@@ -150,24 +137,19 @@ export function Hero() {
           <p
             className={"hero-right-text"}
             data-tl-trigger={".hero"}
-            data-tl-split={"lines"}
             data-tl-end={"10% top"}
             data-tl-desktop={""}
             data-tl-type={"scroll"}
-            data-tl-to={"{ 'y': '-100%'}"}
+            data-tl-to={"{ 'y': -32, 'opacity': 0}"}
             data-tl-start={"5% top"}
-            data-tl-from={"{ 'y': '0%'}"}
+            data-tl-from={"{ 'y': 0, 'opacity': 1}"}
           >
-            {profile.description}
+            With{" "}
+            <strong className="hero-experience-inline">
+              <ExperienceCounter className="hero-experience-value" /> years
+            </strong>{" "}
+            of experience, {profile.description}
           </p>
-          <div className="hero-experience" aria-label="Professional experience">
-            <ExperienceCounter className="experience-number" />
-            <p className="experience-text">
-              Years of
-              <br />
-              experience
-            </p>
-          </div>
           <div className="hero-mobile-actions">
             <a
               href={profile.callUrl}

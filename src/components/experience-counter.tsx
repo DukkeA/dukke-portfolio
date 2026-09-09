@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore, type SVGProps } from "react";
+import { useSyncExternalStore, type HTMLAttributes } from "react";
 import { getExperienceYears } from "@/lib/experience";
 
 function subscribe(onChange: () => void) {
@@ -18,32 +18,12 @@ function subscribe(onChange: () => void) {
 // Keep the prerendered page and initial hydration consistent across dates.
 const getServerSnapshot = () => null;
 
-export function ExperienceCounter(props: SVGProps<SVGSVGElement>) {
+export function ExperienceCounter(props: HTMLAttributes<HTMLSpanElement>) {
   const years = useSyncExternalStore(
     subscribe,
     getExperienceYears,
     getServerSnapshot,
   );
 
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 58 29"
-      fill="currentColor"
-      role="img"
-      aria-label={
-        years === null ? "Years of experience" : `${years}+ years of experience`
-      }
-    >
-      <text
-        x="0"
-        y="28"
-        fontFamily="Tr 3 A, Arial, sans-serif"
-        fontWeight="700"
-        fontSize="37"
-      >
-        {years === null ? "—" : `${years}+`}
-      </text>
-    </svg>
-  );
+  return <span {...props}>{years === null ? "—" : `${years}+`}</span>;
 }

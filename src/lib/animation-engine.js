@@ -348,9 +348,6 @@ export function createAnimationEngine(root, onResize = () => {}) {
         ".nav-webflow-bg",
         ".nav-webflow-icon",
         ".nav-webflow-text",
-        ".nav-experience-bg",
-        ".nav-experience-numb",
-        ".nav-experience-text",
       ];
 
       ghostElements.forEach((sel) => {
@@ -654,27 +651,6 @@ export function createAnimationEngine(root, onResize = () => {}) {
         this.measurePair(
           Utils.$(".nav-webflow-text"),
           Utils.$(".hero-webflow-projects-text"),
-          "text_font",
-        ),
-      );
-      measurements.push(
-        this.measurePair(
-          Utils.$(".nav-experience-bg"),
-          Utils.$(".experience-bg"),
-          "background",
-        ),
-      );
-      measurements.push(
-        this.measurePair(
-          Utils.$(".nav-experience-numb"),
-          Utils.$(".experience-number"),
-          "icon_center",
-        ),
-      );
-      measurements.push(
-        this.measurePair(
-          Utils.$(".nav-experience-text"),
-          Utils.$(".experience-text"),
           "text_font",
         ),
       );
@@ -1208,31 +1184,6 @@ export function createAnimationEngine(root, onResize = () => {}) {
         },
       },
       {
-        selector: ".nav-stats-wrap",
-        dark: {
-          ".nav-stats-wrap": { color: "rgba(255, 255, 255, 0.90)" },
-          ".nav-stats-wrap .nav-top-bg": {
-            border: "1px solid rgba(255, 255, 255, 0.10)",
-            background: "rgba(29, 29, 29, 0.60)",
-          },
-        },
-        light: {
-          ".nav-stats-wrap": { color: "#000000" },
-          ".nav-stats-wrap .nav-top-bg": {
-            border: "1px solid rgba(255, 255, 255, 0.20)",
-            background: "rgba(223, 222, 206, 0.80)",
-          },
-        },
-        onDark: () => {
-          Utils.$(".nav-experience-text")?.classList.add("text-color-white");
-          Utils.$(".nav-webflow-text")?.classList.add("text-color-white");
-        },
-        onLight: () => {
-          Utils.$(".nav-experience-text")?.classList.remove("text-color-white");
-          Utils.$(".nav-webflow-text")?.classList.remove("text-color-white");
-        },
-      },
-      {
         // .nav-top-bg + social-links switch together: when .nav-top-layout overlaps
         // a dark section, both the nav-top background AND the social-links flip theme
         // at the same moment. (Standalone .social-link config removed for this reason.)
@@ -1365,9 +1316,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
       const profileImgItem = Utils.$(".profile-img-item");
       const navLinks = Utils.$$(".hero-navigation-link");
       const navSeps = Utils.$$(".hero-navigation-sep");
-      const navCards = Utils.$$(".nav-stats-card");
       const heroCard3 = Utils.$(".hero-card-3");
-      const heroLeftText = Utils.$(".hero-left-text");
       const heroRightText = Utils.$(".hero-right-text");
       const heroHeading = Utils.$(".hero-heading");
       const navButton = Utils.$(".nav-button");
@@ -1401,7 +1350,6 @@ export function createAnimationEngine(root, onResize = () => {}) {
       };
 
       const headingLines = splitLines(heroHeading, false);
-      if (heroLeftText) gsap.set(heroLeftText, { autoAlpha: 0 });
       if (heroRightText) gsap.set(heroRightText, { autoAlpha: 0 });
 
       const rect = wrapper.getBoundingClientRect();
@@ -1464,18 +1412,12 @@ export function createAnimationEngine(root, onResize = () => {}) {
         gsap.set(link, { autoAlpha: 1, pointerEvents: "none" });
       });
       if (navSeps.length) gsap.set(navSeps, { autoAlpha: 1 });
-      if (navCards.length) gsap.set(navCards, { autoAlpha: 1 });
 
       const webflowChildren = Utils.$$(
         ".nav-webflow-bg, .nav-webflow-icon, .nav-webflow-text",
       );
-      const experienceChildren = Utils.$$(
-        ".nav-experience-bg, .nav-experience-numb, .nav-experience-text",
-      );
       if (webflowChildren.length)
         gsap.set(webflowChildren, { autoAlpha: 0, filter: "blur(8px)" });
-      if (experienceChildren.length)
-        gsap.set(experienceChildren, { autoAlpha: 0, filter: "blur(8px)" });
       if (navButton)
         gsap.set(navButton, {
           autoAlpha: 0,
@@ -1563,7 +1505,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
         );
       }
 
-      // 4. t=0.80 — cards group, 0.1s stagger: webflow trio → experience trio → hero-card-3
+      // 4. Cards group, 0.1s stagger.
       //    (all use the same autoAlpha + minimal blur, 0.9s duration)
       //    Links at 0.5, cards @ 0.60
       const cardsStart = 0.6;
@@ -1571,9 +1513,6 @@ export function createAnimationEngine(root, onResize = () => {}) {
         Utils.$(".nav-webflow-bg"),
         Utils.$(".nav-webflow-icon"),
         Utils.$(".nav-webflow-text"),
-        Utils.$(".nav-experience-bg"),
-        Utils.$(".nav-experience-numb"),
-        Utils.$(".nav-experience-text"),
         heroCard3,
       ];
       cardOrder.forEach((el, i) => {
@@ -1617,58 +1556,17 @@ export function createAnimationEngine(root, onResize = () => {}) {
           "heroReveal+=1.33",
         );
 
-      // 6. t=1.65 / 1.75 — hero-left-text + hero-right-text (paragraphs, line reveal)
-      //    50% cascade: buttons start at 1.25, 50% of 0.8s = 0.40 → paragraphs @ 1.65
+      // Reveal the biography as one element to preserve the live experience counter.
       const paragraphsStart = 1.65;
-      if (heroLeftText) {
-        this.timeline.call(
-          () => {
-            gsap.set(heroLeftText, { autoAlpha: 1 });
-            const lines = heroLeftText.querySelectorAll(".line");
-            if (lines.length) {
-              gsap.set(lines, {
-                yPercent: 100,
-                autoAlpha: 0,
-                filter: "blur(6px)",
-              });
-              gsap.to(lines, {
-                yPercent: 0,
-                autoAlpha: 1,
-                filter: "blur(0px)",
-                duration: 0.7,
-                stagger: 0.075,
-                ease: "power2.out",
-              });
-            }
-          },
-          null,
-          "heroReveal+=" + paragraphsStart,
-        );
-      }
-
       if (heroRightText) {
-        this.timeline.call(
-          () => {
-            gsap.set(heroRightText, { autoAlpha: 1 });
-            const lines = heroRightText.querySelectorAll(".line");
-            if (lines.length) {
-              gsap.set(lines, {
-                yPercent: 100,
-                autoAlpha: 0,
-                filter: "blur(6px)",
-              });
-              gsap.to(lines, {
-                yPercent: 0,
-                autoAlpha: 1,
-                filter: "blur(0px)",
-                duration: 0.7,
-                stagger: 0.075,
-                ease: "power2.out",
-              });
-            }
+        this.timeline.to(
+          heroRightText,
+          {
+            autoAlpha: 1,
+            duration: 0.7,
+            ease: "power2.out",
           },
-          null,
-          "heroReveal+=" + (paragraphsStart + 0.1),
+          "heroReveal+=" + paragraphsStart,
         );
       }
     },
@@ -4012,6 +3910,26 @@ export function createAnimationEngine(root, onResize = () => {}) {
     }
 
     TextReveal.init();
+
+    if (
+      window.innerWidth < 768 &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      // Move the portrait and its editorial copy together through the hero exit.
+      gsap.to(
+        [Utils.$(".hero-container"), Utils.$(".mobile-hero-image-wrap")],
+        {
+          y: -24,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".hero",
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        },
+      );
+    }
 
     // The React host rebuilds after a responsive breakpoint change.
     ResizeHandler.init();

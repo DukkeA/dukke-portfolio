@@ -1,6 +1,5 @@
 import { SourceIcon } from "../source-icons";
 import { ProfileLinks } from "../profile-links";
-import { ExperienceCounter } from "../experience-counter";
 import { profile } from "@/content/profile";
 import { SidebarLogos } from "../sidebar-logos";
 import { ContactButtonLabel } from "../contact-button-label";
@@ -207,52 +206,6 @@ export function Navigation() {
           >
             {profile.description}
           </p>
-        </div>
-        <div className={"nav-stats-wrap"}>
-          <div id={"stats_years"} className={"nav-stats-card"}>
-            <div id={"yrs_big_text"} className={"nav-experience-numb-wrap"}>
-              <ExperienceCounter
-                xmlns={"http://www.w3.org/2000/svg"}
-                width={"100%"}
-                viewBox={"0 0 41 28"}
-                fill={"none"}
-                data-flip-trigger={".hero"}
-                data-flip-start={"top top"}
-                data-flip-end={"40% top"}
-                className={"nav-experience-numb"}
-              />
-            </div>
-            <div
-              id={"yrs_small_text_end"}
-              className={"nav-experience-text-wrap"}
-            >
-              <p
-                className={"nav-experience-text"}
-                data-flip-start={"top top"}
-                data-tl-trigger={".hero"}
-                data-tl-end={"22% top"}
-                data-tl-type={"scroll"}
-                data-tl-to={"{'color': 'black'}"}
-                data-tl-start={"20% top"}
-                data-flip-trigger={".hero"}
-                data-tl-from={"{'color': 'white'}"}
-                data-flip-end={"40% top"}
-              >
-                {"Years of"}
-                <br />
-                {"experience"}
-              </p>
-            </div>
-          </div>
-          <div
-            data-tl-to={"{'scale' : 1, 'opacity' : 1}"}
-            data-tl-type={"scroll"}
-            data-tl-trigger={".hero"}
-            data-tl-start={"34% top"}
-            data-tl-end={"38% top"}
-            data-tl-from={"{'scale' : 0.5, 'opacity' : 0}"}
-            className={"nav-top-bg"}
-          ></div>
         </div>
         <div id="mobile-navigation" className={"nav-menu-wrap"}>
           <nav className={"nav-menu"}>
