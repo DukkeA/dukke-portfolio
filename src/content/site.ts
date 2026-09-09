@@ -1,5 +1,5 @@
 export const site = {
-  url: "https://andres-duque.com",
+  url: "https://www.andres-duque.com",
   name: "Andrés Duque · Dukke",
   title: "Andrés Duque — Software Engineer · Dukke",
   description:

@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { dukkeWordmark } from "@/components/brand-artwork";
 import { profile } from "@/content/profile";
+import { site } from "@/content/site";
 
 export const alt = "Andrés Duque (Dukke) — Software Engineer";
 export const size = { width: 1200, height: 630 };
@@ -74,7 +75,7 @@ export default function OpenGraphImage() {
           <span>Engineer.</span>
         </div>
         <div style={{ display: "flex", marginTop: 76, fontSize: 24 }}>
-          andres-duque.com
+          {new URL(site.url).hostname}
         </div>
       </div>
     </div>,
