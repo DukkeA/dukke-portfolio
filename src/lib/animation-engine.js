@@ -1682,6 +1682,91 @@ export function createAnimationEngine(root, onResize = () => {}) {
   };
 
   // ==========================================================================
+  // JOURNEY COMPANIONS
+  // ==========================================================================
+  const JourneyQualities = {
+    timelines: [],
+
+    init() {
+      this.destroy();
+      const notes = Utils.$$(".journey-quality");
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const mobile = window.innerWidth < 768;
+      notes.forEach((note) => {
+        const content = note.querySelector(".journey-quality-content");
+        const icon = note.querySelector(".journey-quality-icon");
+        const line = note.querySelector(".journey-quality-line");
+        const direction = note.dataset.side === "left" ? -1 : 1;
+        const timeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: mobile ? note : note.closest(".about-card-wrap"),
+            start: mobile ? "top 95%" : "top 90%",
+            end: mobile ? "bottom 5%" : "bottom 10%",
+            scrub: 0.6,
+            invalidateOnRefresh: true,
+          },
+        });
+        timeline
+          .fromTo(
+            content,
+            {
+              opacity: 0,
+              x: direction * (mobile ? 12 : 28),
+              y: 24,
+              rotation: direction * 3,
+            },
+            {
+              opacity: 1,
+              x: 0,
+              y: 0,
+              rotation: 0,
+              duration: 0.25,
+              ease: "power2.out",
+            },
+            0,
+          )
+          .fromTo(
+            icon,
+            { rotation: direction * -65, scale: 0.65 },
+            { rotation: 0, scale: 1, duration: 0.3, ease: "power2.out" },
+            0.03,
+          )
+          .fromTo(
+            line,
+            { scaleX: mobile ? 1 : 0, scaleY: mobile ? 0 : 1, opacity: 0 },
+            { scaleX: 1, scaleY: 1, opacity: 1, duration: 0.3 },
+            0,
+          )
+          .to(
+            content,
+            { y: mobile ? -8 : -22, duration: 0.45, ease: "none" },
+            0.25,
+          )
+          .to(
+            content,
+            {
+              opacity: 0,
+              y: mobile ? -20 : -40,
+              duration: 0.25,
+              ease: "power1.in",
+            },
+            0.75,
+          )
+          .to(line, { opacity: 0, duration: 0.2 }, 0.8);
+        this.timelines.push(timeline);
+      });
+    },
+
+    destroy() {
+      this.timelines.forEach((timeline) => {
+        timeline.scrollTrigger?.kill();
+        timeline.revert();
+      });
+      this.timelines = [];
+    },
+  };
+
+  // ==========================================================================
   // MAGNETIC POSITIONING
   // ==========================================================================
   const MagneticPositions = {
@@ -3881,6 +3966,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
     StyleEngine.destroy();
     HorizontalScroll.destroy();
     MagneticPositions.destroy();
+    JourneyQualities.destroy();
     Preloader.destroy();
     SwiperInit.destroy();
     LenisInit.destroy();
@@ -3936,7 +4022,17 @@ export function createAnimationEngine(root, onResize = () => {}) {
 
     setTimeout(() => {
       MagneticPositions.init();
+      JourneyQualities.init();
+      ScrollTrigger.refresh();
     }, CONFIG.magneticInitDelay);
+    Utils.addEvent(
+      window.matchMedia("(prefers-reduced-motion: reduce)"),
+      "change",
+      () => {
+        JourneyQualities.init();
+        ScrollTrigger.refresh();
+      },
+    );
   }
 
   let context;

@@ -92,17 +92,6 @@ export function MotionRoot({ children }: { children: ReactNode }) {
       window.addEventListener("hashchange", followLocation, {
         signal: abort.signal,
       });
-      root.addEventListener(
-        "toggle",
-        (event) => {
-          if (event.target instanceof HTMLDetailsElement) {
-            requestAnimationFrame(() => {
-              if (!disposed) engine?.refresh();
-            });
-          }
-        },
-        { capture: true, signal: abort.signal },
-      );
 
       // Navigation is handled locally, including the menu's complete close state.
       root.addEventListener(

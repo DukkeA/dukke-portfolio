@@ -4,28 +4,68 @@ import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr/ArrowUpRight";
 import { CodeIcon } from "../engineering-icons";
 import { SourceIcon } from "../source-icons";
 
-const qualities = [
-  [
-    "Creative",
-    "I like trying different approaches when the obvious solution doesn't quite fit.",
-  ],
-  [
-    "Reliable",
-    "I follow through, communicate progress, and speak up when something needs attention.",
-  ],
-  [
-    "Thoughtful",
-    "I ask questions and think about the people who will use and maintain what I build.",
-  ],
-  [
-    "Builder",
-    "I enjoy taking an idea through the small decisions that turn it into working software.",
-  ],
-  [
-    "Learning",
-    "I make time to explore, learn from others, and share what I figure out.",
-  ],
-] as const;
+const qualities = {
+  "a-hobby": {
+    title: "Creative",
+    text: "Trying ideas. Finding my own way.",
+    icon: "asset24",
+    side: "right",
+    position: "60%",
+  },
+  prevalentware: {
+    title: "Reliable",
+    text: "Following through, together.",
+    icon: "asset25",
+    side: "left",
+    position: "15%",
+  },
+  "g6-networks": {
+    title: "Builder",
+    text: "Connecting the pieces. Making things work.",
+    icon: "asset27",
+    side: "right",
+    position: "55%",
+  },
+  masters: {
+    title: "Thoughtful",
+    text: "Understanding the why behind the how.",
+    icon: "asset26",
+    side: "left",
+    position: "15%",
+  },
+  "still-learning": {
+    title: "Learning",
+    text: "One more question. Something new to try.",
+    icon: "asset28",
+    side: "left",
+    position: "35%",
+  },
+} as const;
+
+type JourneyQuality = (typeof qualities)[keyof typeof qualities];
+
+function JourneyQuality({ quality }: { quality: JourneyQuality }) {
+  return (
+    <aside
+      className="journey-quality"
+      data-side={quality.side}
+      style={{ top: quality.position }}
+      aria-label={`${quality.title}: how I work`}
+    >
+      <span className="journey-quality-line" aria-hidden="true" />
+      <div className="journey-quality-content">
+        <SourceIcon
+          name={quality.icon}
+          viewBox={quality.icon === "asset27" ? "0 0 19 22" : "0 0 19 19"}
+          className="journey-quality-icon"
+          aria-hidden="true"
+        />
+        <h4 className="journey-quality-title">{quality.title}</h4>
+        <p>{quality.text}</p>
+      </div>
+    </aside>
+  );
+}
 
 const starts = [
   "-38% top",
@@ -117,6 +157,7 @@ function JourneyPoint({ index }: { index: number }) {
 function JourneyCard({ entry, index }: { entry: JourneyEntry; index: number }) {
   const fromRight = index === 0 || index === 3 || index === 7;
   const headingId = `journey-${entry.id}-title`;
+  const quality = qualities[entry.id as keyof typeof qualities];
   return (
     <article
       id={`journey-${entry.id}`}
@@ -125,7 +166,7 @@ function JourneyCard({ entry, index }: { entry: JourneyEntry; index: number }) {
       data-origin={
         index > 0 ? `bottom ${fromRight ? "right" : "left"}` : undefined
       }
-      className={`about-card-wrap ac-${index + 1}`}
+      className={`about-card-wrap ac-${index + 1}${quality ? " journey-with-quality" : ""}`}
       aria-labelledby={headingId}
     >
       {!fromRight && <JourneyPoint index={index} />}
@@ -218,6 +259,7 @@ function JourneyCard({ entry, index }: { entry: JourneyEntry; index: number }) {
         </div>
       </div>
       {fromRight && <JourneyPoint index={index} />}
+      {quality && <JourneyQuality quality={quality} />}
     </article>
   );
 }
@@ -322,24 +364,6 @@ export function About() {
             View CV <span className="text-black/60">(PDF)</span>
             <ArrowUpRightIcon size={16} aria-hidden="true" />
           </a>
-          <div className="about-qualities">
-            <p className="quality-label">How I like to work</p>
-            <div className="quality-list">
-              {qualities.map(([title, description]) => (
-                <details
-                  className="quality-detail"
-                  name="working-style"
-                  key={title}
-                >
-                  <summary>
-                    {title}
-                    <span aria-hidden="true">+</span>
-                  </summary>
-                  <p>{description}</p>
-                </details>
-              ))}
-            </div>
-          </div>
         </div>
         <div className="about-wrap">
           <JourneyCard entry={journey[0]} index={0} />
