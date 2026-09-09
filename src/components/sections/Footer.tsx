@@ -1,5 +1,8 @@
 import { SourceIcon } from "../source-icons";
 import { FaqGroup, FaqItem } from "../faq-item";
+import { ProfileLinks } from "../profile-links";
+import { ContactButtonLabel } from "../contact-button-label";
+import { profile } from "@/content/profile";
 
 export function Footer() {
   return (
@@ -39,6 +42,37 @@ export function Footer() {
             </div>
           </FaqGroup>
         </div>
+        <section
+          id="contact"
+          className="closing-section"
+          aria-labelledby="closing-heading"
+        >
+          <div>
+            <p className="label w-fit">KEEP IN TOUCH</p>
+            <h2 id="closing-heading" className="closing-heading">
+              Let&apos;s talk.
+            </h2>
+            <p className="closing-description">
+              A project, a question, or just a hello. I&apos;d be happy to hear
+              from you.
+            </p>
+          </div>
+          <div className="closing-actions">
+            <a
+              href={profile.callUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="closing-whatsapp contact-button"
+              aria-label="Say hello on WhatsApp"
+            >
+              <ContactButtonLabel>Say hello</ContactButtonLabel>
+            </a>
+            <a className="closing-email" href={`mailto:${profile.email}`}>
+              {profile.email}
+            </a>
+            <ProfileLinks />
+          </div>
+        </section>
       </div>
     </footer>
   );

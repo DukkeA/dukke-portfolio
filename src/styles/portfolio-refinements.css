@@ -1,0 +1,163 @@
+.hero-heading {
+  @apply text-center;
+}
+.hero-role {
+  @apply mt-2 block text-[clamp(1.75rem,3.1vw,3.5rem)] font-medium leading-tight;
+}
+.hero-experience {
+  @apply pointer-events-none absolute bottom-[7vw] left-0 z-30 flex items-center gap-3 font-display text-white;
+}
+.hero-experience .experience-number {
+  @apply w-[clamp(3.5rem,5vw,6rem)] shrink-0;
+}
+.hero-experience .experience-text {
+  @apply m-0 text-[clamp(0.875rem,1.1vw,1.25rem)] leading-tight;
+}
+@media (min-width: 768px) {
+  .hero-experience {
+    visibility: hidden;
+  }
+  .nav-stats-wrap {
+    @apply h-[5.5vw] min-h-16;
+  }
+  #stats_years {
+    @apply w-full flex-row items-center justify-center gap-[1vw];
+  }
+  .nav-experience-text {
+    @apply text-left;
+  }
+  #projects .work-track-wrap {
+    @apply pl-0;
+  }
+}
+.hero-mobile-actions,
+.profile-links.mobile-profile-links {
+  @apply hidden;
+}
+.profile-links {
+  @apply flex flex-wrap items-center gap-2;
+}
+.profile-access-link {
+  @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-black/10 bg-white/20 px-3 py-2 font-display text-sm font-medium text-black no-underline transition-colors duration-200 hover:bg-dukke-yellow focus-visible:bg-dukke-yellow;
+}
+.profile-access-link svg {
+  @apply shrink-0;
+}
+.about-qualities {
+  @apply mt-8 w-full max-w-[clamp(18rem,27vw,30rem)];
+}
+.quality-label {
+  @apply mb-3 text-sm;
+}
+.quality-list {
+  @apply flex flex-wrap items-start gap-2;
+}
+.quality-detail {
+  @apply rounded-xl border border-black/10 bg-white/20;
+}
+.quality-detail summary {
+  @apply flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 px-3 py-2 font-display text-sm font-medium;
+}
+.quality-detail summary::-webkit-details-marker {
+  display: none;
+}
+.quality-detail summary span {
+  @apply transition-transform duration-200;
+}
+.quality-detail[open] {
+  @apply w-full;
+}
+.quality-detail[open] summary span {
+  @apply rotate-45;
+}
+.quality-detail p {
+  @apply m-0 max-w-prose px-3 pb-4 text-sm leading-relaxed;
+}
+.project-pagination {
+  @apply mb-3 flex items-center gap-1;
+}
+.project-pagination-button {
+  @apply flex h-8 w-7 cursor-pointer items-center justify-center border-0 bg-transparent p-0;
+}
+.project-pagination-button span {
+  @apply h-1 w-[18px] rounded-full bg-white/30 transition-[width,background-color] duration-300;
+}
+.project-pagination-button[aria-current="true"] {
+  @apply w-11;
+}
+.project-pagination-button[aria-current="true"] span {
+  @apply w-9 bg-dukke-yellow;
+}
+.project-pagination-button:is(:hover, :focus-visible) span {
+  @apply bg-dukke-yellow;
+}
+.closing-section {
+  @apply mt-24 grid gap-8 border-t border-black/15 pt-12 md:grid-cols-[1fr_auto] md:items-end;
+}
+.closing-heading {
+  @apply mb-4 text-[clamp(3rem,5vw,6rem)] leading-none;
+}
+.closing-description {
+  @apply mb-0 max-w-[25rem] text-base leading-relaxed;
+}
+.closing-actions {
+  @apply flex flex-col items-start gap-5;
+}
+.closing-whatsapp {
+  @apply inline-flex min-h-12 rounded-xl bg-dukke-yellow px-6 py-3 font-display text-base font-medium text-black no-underline transition-transform hover:-translate-y-0.5;
+}
+.closing-email {
+  @apply break-all text-base text-black underline decoration-black/30 underline-offset-4 hover:decoration-black;
+}
+@media (max-width: 767px) {
+  .profile-links.mobile-profile-links {
+    @apply mb-4 flex px-2;
+  }
+  .mobile-profile-links .profile-access-link {
+    @apply flex-1;
+  }
+  .navigation .nav-menu-wrap {
+    @apply max-h-[100svh] overflow-y-auto overscroll-contain pb-5;
+  }
+  .hero-content-layout {
+    @apply bottom-[18rem] px-4;
+  }
+  .hero-heading {
+    @apply text-[clamp(2.75rem,10.8vw,5rem)] leading-none;
+  }
+  .hero-role {
+    @apply mt-3 text-[clamp(1.4rem,5.6vw,2.6rem)];
+  }
+  .hero-experience {
+    @apply bottom-[8rem] left-5 gap-3;
+  }
+  .hero-experience .experience-number {
+    @apply w-14;
+  }
+  .hero-experience .experience-text {
+    @apply text-sm;
+  }
+  .hero-mobile-actions {
+    @apply absolute inset-x-5 bottom-[14rem] z-30 flex justify-center gap-3;
+  }
+  .hero-mobile-actions > a {
+    @apply inline-flex min-h-11 items-center justify-center rounded-lg bg-dukke-yellow px-4 py-3 font-display text-sm font-medium text-black no-underline;
+  }
+  .about-qualities {
+    @apply max-w-full;
+  }
+  #projects .project-pagination {
+    @apply px-5;
+  }
+  .closing-section {
+    @apply mt-16 pt-8;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-pagination-button span,
+  .quality-detail summary span,
+  .profile-access-link,
+  .closing-whatsapp {
+    transition: none;
+  }
+}

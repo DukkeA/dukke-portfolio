@@ -19,8 +19,10 @@ export function MotionRoot({ children }: { children: ReactNode }) {
           typeof import("@/lib/animation-engine").createAnimationEngine
         >
       | undefined;
-    let observer: IntersectionObserver | undefined;
+    let navigationFrame: number | undefined;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const previousScrollRestoration = history.scrollRestoration;
+    history.scrollRestoration = "manual";
 
     const initialize = async () => {
       const { createAnimationEngine } = await import("@/lib/animation-engine");
@@ -37,12 +39,70 @@ export function MotionRoot({ children }: { children: ReactNode }) {
         restoreScroll.current = window.scrollY;
         setRevision((value) => value + 1);
       });
-      engine.start();
+      await engine.start();
+      if (disposed) return;
       if (revision > 0 || reduced) engine.finishIntro();
       cleanMedia = mountProjectMedia(root, reduced);
       root.dataset.ready = "true";
-      if (restoreScroll.current)
-        engine.lenis?.scrollTo(restoreScroll.current, { immediate: true, force: true });
+
+      const navigateToSection = (id: string, immediate = false) => {
+        const section = document.getElementById(id);
+        if (!section) return;
+        engine?.finishIntro();
+        const menu = root.querySelector<HTMLElement>(".mobile-menu");
+        if (innerWidth < 768 && menu?.getAttribute("aria-expanded") === "true")
+          menu.click();
+        // Projects is sticky: its enclosing section supplies a stable destination.
+        const target =
+          id === "projects" ? document.getElementById("work")! : section;
+        const top =
+          id === "hero"
+            ? 0
+            : target.getBoundingClientRect().top + window.scrollY;
+        const offset = innerWidth < 768 && id !== "hero" ? 80 : 0;
+        engine?.lenis?.start();
+        if (engine?.lenis) {
+          engine.lenis.scrollTo(Math.max(0, top - offset), {
+            duration: reduced || immediate ? 0 : 1.15,
+            immediate: reduced || immediate,
+            force: true,
+          });
+        } else {
+          window.scrollTo({
+            top: Math.max(0, top - offset),
+            behavior: reduced || immediate ? "instant" : "smooth",
+          });
+        }
+      };
+      const followLocation = () =>
+        navigateToSection(location.hash.slice(1) || "hero", true);
+      if (revision > 0 && restoreScroll.current) {
+        engine.finishIntro();
+        engine.lenis?.start();
+        engine.lenis?.scrollTo(restoreScroll.current, {
+          immediate: true,
+          force: true,
+        });
+      } else if (location.hash) {
+        followLocation();
+      }
+      window.addEventListener("popstate", followLocation, {
+        signal: abort.signal,
+      });
+      window.addEventListener("hashchange", followLocation, {
+        signal: abort.signal,
+      });
+      root.addEventListener(
+        "toggle",
+        (event) => {
+          if (event.target instanceof HTMLDetailsElement) {
+            requestAnimationFrame(() => {
+              if (!disposed) engine?.refresh();
+            });
+          }
+        },
+        { capture: true, signal: abort.signal },
+      );
 
       // Navigation is handled locally, including the menu's complete close state.
       root.addEventListener(
@@ -50,28 +110,21 @@ export function MotionRoot({ children }: { children: ReactNode }) {
         (event) => {
           const target = event.target as HTMLElement;
           const link = target.closest<HTMLAnchorElement>('a[href^="#"]');
-          if (link) {
+          if (
+            link &&
+            !event.ctrlKey &&
+            !event.metaKey &&
+            !event.shiftKey &&
+            !event.altKey &&
+            event.button === 0
+          ) {
             const id = link.getAttribute("href")?.slice(1);
             const section = id ? document.getElementById(id) : null;
             if (!section) return;
             event.preventDefault();
-            engine?.finishIntro();
-            const menu = root.querySelector<HTMLElement>(".mobile-menu");
-            if (
-              innerWidth < 768 &&
-              menu?.getAttribute("aria-expanded") === "true"
-            )
-              menu.click();
-            engine?.lenis?.start();
-            engine?.lenis?.scrollTo(section, {
-              duration: reduced ? 0 : 1.15,
-              offset: innerWidth < 768 ? -80 : 0,
-              immediate: reduced,
-            });
-            if (!engine?.lenis)
-              section.scrollIntoView({
-                behavior: reduced ? "instant" : "smooth",
-              });
+            if (location.hash !== `#${id}`)
+              history.pushState(history.state, "", `#${id}`);
+            navigateToSection(id!);
           }
           if (target.closest(".mobile-menu")) {
             const menu = root.querySelector<HTMLElement>(".mobile-menu");
@@ -131,19 +184,35 @@ export function MotionRoot({ children }: { children: ReactNode }) {
           if (active) link.setAttribute("aria-current", "location");
           else link.removeAttribute("aria-current");
         });
-      setCurrent("hero");
-      observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) setCurrent(entry.target.id);
-          });
+      const sectionTargets = sections.map((id) => ({
+        id,
+        element: document.getElementById(id === "projects" ? "work" : id),
+      }));
+      let currentSection = "";
+      const updateCurrentSection = () => {
+        navigationFrame = undefined;
+        // The project track is sticky; follow its full scroll range instead.
+        let active = "hero";
+        for (const { id, element } of sectionTargets) {
+          if (
+            element &&
+            element.getBoundingClientRect().top <= innerHeight * 0.35
+          )
+            active = id;
+        }
+        if (active !== currentSection) {
+          currentSection = active;
+          setCurrent(active);
+        }
+      };
+      window.addEventListener(
+        "scroll",
+        () => {
+          navigationFrame ??= requestAnimationFrame(updateCurrentSection);
         },
-        { rootMargin: "-12% 0px -48% 0px" },
+        { passive: true, signal: abort.signal },
       );
-      sections.forEach((id) => {
-        const section = document.getElementById(id);
-        if (section) observer?.observe(section);
-      });
+      updateCurrentSection();
     };
     void initialize().catch((error) => {
       if (!disposed)
@@ -151,8 +220,9 @@ export function MotionRoot({ children }: { children: ReactNode }) {
     });
     return () => {
       disposed = true;
+      history.scrollRestoration = previousScrollRestoration;
       abort.abort();
-      observer?.disconnect();
+      if (navigationFrame !== undefined) cancelAnimationFrame(navigationFrame);
       cleanMedia?.();
       engine?.destroy();
     };

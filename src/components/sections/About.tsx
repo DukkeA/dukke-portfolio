@@ -4,6 +4,29 @@ import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr/ArrowUpRight";
 import { CodeIcon } from "../engineering-icons";
 import { SourceIcon } from "../source-icons";
 
+const qualities = [
+  [
+    "Creative",
+    "I like trying different approaches when the obvious solution doesn't quite fit.",
+  ],
+  [
+    "Reliable",
+    "I follow through, communicate progress, and speak up when something needs attention.",
+  ],
+  [
+    "Thoughtful",
+    "I ask questions and think about the people who will use and maintain what I build.",
+  ],
+  [
+    "Builder",
+    "I enjoy taking an idea through the small decisions that turn it into working software.",
+  ],
+  [
+    "Learning",
+    "I make time to explore, learn from others, and share what I figure out.",
+  ],
+] as const;
+
 const starts = [
   "-38% top",
   "-25% top",
@@ -299,6 +322,24 @@ export function About() {
             View CV <span className="text-black/60">(PDF)</span>
             <ArrowUpRightIcon size={16} aria-hidden="true" />
           </a>
+          <div className="about-qualities">
+            <p className="quality-label">How I like to work</p>
+            <div className="quality-list">
+              {qualities.map(([title, description]) => (
+                <details
+                  className="quality-detail"
+                  name="working-style"
+                  key={title}
+                >
+                  <summary>
+                    {title}
+                    <span aria-hidden="true">+</span>
+                  </summary>
+                  <p>{description}</p>
+                </details>
+              ))}
+            </div>
+          </div>
         </div>
         <div className="about-wrap">
           <JourneyCard entry={journey[0]} index={0} />

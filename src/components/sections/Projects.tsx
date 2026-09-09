@@ -64,12 +64,31 @@ export function Projects() {
             </div>
           </div>
           <div
+            className="project-pagination"
+            role="group"
+            aria-label="Choose a project"
+          >
+            {projects.map((project, index) => (
+              <button
+                key={project.id}
+                type="button"
+                className="project-pagination-button"
+                data-project-index={index}
+                aria-label={`Show project ${index + 1}: ${project.title}`}
+                aria-current={index === 0 ? "true" : undefined}
+                aria-controls="project-track"
+              >
+                <span />
+              </button>
+            ))}
+          </div>
+          <div
             className="work-track-wrap"
             tabIndex={0}
             role="region"
             aria-label="Selected projects"
           >
-            <div className={"work-track"}>
+            <div id="project-track" className={"work-track"}>
               {projects.map((project, index) => (
                 <ProjectCard
                   key={project.title}

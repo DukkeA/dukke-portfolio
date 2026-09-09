@@ -4,6 +4,7 @@
 @import "../styles/reference-tailwind.css";
 @import "../styles/interactions.css";
 @import "../styles/project-previews.css";
+@import "../styles/portfolio-refinements.css";
 
 @theme {
   --color-dukke-yellow: #ffff23;

@@ -176,7 +176,9 @@ export function createAnimationEngine(root, onResize = () => {}) {
         });
       }
 
-      const navBtnText = Utils.$(".nav-button .contact-button-content, .nav-button p");
+      const navBtnText = Utils.$(
+        ".nav-button .contact-button-content, .nav-button p",
+      );
       const navBtnSecText = Utils.$(".nav-button-secondary p");
       if (navBtnText)
         gsap.set(navBtnText, {
@@ -212,6 +214,8 @@ export function createAnimationEngine(root, onResize = () => {}) {
       this.menuIcons = Utils.$$(".mobile-menu-icons");
 
       if (!this.menuTrigger || !this.menuWrap) return;
+      this.menuWrap.inert = true;
+      this.menuWrap.setAttribute("aria-hidden", "true");
 
       // Calculate gap offset based on icon height
       if (this.menuIcons.length > 0) {
@@ -244,6 +248,8 @@ export function createAnimationEngine(root, onResize = () => {}) {
 
     open() {
       this.isOpen = true;
+      this.menuWrap.inert = false;
+      this.menuWrap.setAttribute("aria-hidden", "false");
 
       // Reveal menu from top to bottom
       gsap.to(this.menuWrap, {
@@ -271,6 +277,10 @@ export function createAnimationEngine(root, onResize = () => {}) {
 
     close() {
       this.isOpen = false;
+      if (this.menuWrap.contains(document.activeElement))
+        this.menuTrigger.focus({ preventScroll: true });
+      this.menuWrap.inert = true;
+      this.menuWrap.setAttribute("aria-hidden", "true");
 
       // Hide menu from bottom to top
       gsap.to(this.menuWrap, {
@@ -883,12 +893,82 @@ export function createAnimationEngine(root, onResize = () => {}) {
   // ==========================================================================
   const HorizontalScroll = {
     setupTimeout: null,
+    completeSetup: null,
+    pagination: [],
+    activeIndex: -1,
 
     init() {
-      // Disable HorizontalScroll on mobile devices (screen width < 768px)
-      if (window.innerWidth < 768) return;
+      this.pagination = Utils.$$(".project-pagination-button");
+      this.activeIndex = -1;
+      this.updatePagination(0);
+      const wrap = Utils.$(".work-track-wrap");
+      this.pagination.forEach((button, index) => {
+        Utils.addEvent(button, "click", () => this.goTo(index));
+        Utils.addEvent(button, "keydown", (event) => {
+          let next;
+          if (event.key === "ArrowRight")
+            next = Math.min(index + 1, this.pagination.length - 1);
+          if (event.key === "ArrowLeft") next = Math.max(index - 1, 0);
+          if (event.key === "Home") next = 0;
+          if (event.key === "End") next = this.pagination.length - 1;
+          if (next === undefined) return;
+          event.preventDefault();
+          this.pagination[next].focus({ preventScroll: true });
+          this.goTo(next);
+        });
+      });
+      if (window.innerWidth < 768) {
+        if (wrap)
+          Utils.addEvent(
+            wrap,
+            "scroll",
+            () => {
+              const max = wrap.scrollWidth - wrap.clientWidth;
+              this.updatePagination(max > 0 ? wrap.scrollLeft / max : 0);
+            },
+            { passive: true },
+          );
+        return Promise.resolve();
+      }
+      return this.setup();
+    },
 
-      this.setup();
+    updatePagination(progress) {
+      const index = Math.round(
+        gsap.utils.clamp(0, 1, progress) * (this.pagination.length - 1),
+      );
+      if (index === this.activeIndex) return;
+      this.activeIndex = index;
+      this.pagination.forEach((button, i) => {
+        if (i === index) button.setAttribute("aria-current", "true");
+        else button.removeAttribute("aria-current");
+      });
+    },
+
+    goTo(index) {
+      const progress = index / Math.max(1, this.pagination.length - 1);
+      const reduced = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      const wrap = Utils.$(".work-track-wrap");
+      if (window.innerWidth < 768) {
+        wrap?.scrollTo({
+          left: progress * (wrap.scrollWidth - wrap.clientWidth),
+          behavior: reduced ? "instant" : "smooth",
+        });
+        return;
+      }
+      const trigger = STATE.workTween?.scrollTrigger;
+      if (!trigger) return;
+      const top = trigger.start + progress * (trigger.end - trigger.start);
+      STATE.lenis?.start();
+      if (STATE.lenis)
+        STATE.lenis.scrollTo(top, {
+          duration: reduced ? 0 : 0.8,
+          immediate: reduced,
+          force: true,
+        });
+      else window.scrollTo({ top, behavior: reduced ? "instant" : "smooth" });
     },
 
     destroy() {
@@ -901,6 +981,8 @@ export function createAnimationEngine(root, onResize = () => {}) {
         STATE.workTween.kill();
         STATE.workTween = null;
       }
+      this.completeSetup?.();
+      this.completeSetup = null;
     },
 
     setup() {
@@ -910,16 +992,28 @@ export function createAnimationEngine(root, onResize = () => {}) {
       const wrap = Utils.$(".work-track-wrap");
       const track = Utils.$(".work-track");
 
-      if (!section || !stickyEl || !stickySupportEl || !wrap || !track) return;
+      if (!section || !stickyEl || !stickySupportEl || !wrap || !track)
+        return Promise.resolve();
 
       this.destroy();
       gsap.set(track, { clearProps: "transform" });
 
-      requestAnimationFrame(() => {
+      return new Promise((resolve) => {
+        this.completeSetup = resolve;
         requestAnimationFrame(() => {
-          this.setupTimeout = setTimeout(() => {
-            this.performSetup(section, stickyEl, stickySupportEl, wrap, track);
-          }, CONFIG.horizontalScrollDelay);
+          requestAnimationFrame(() => {
+            this.setupTimeout = setTimeout(() => {
+              this.performSetup(
+                section,
+                stickyEl,
+                stickySupportEl,
+                wrap,
+                track,
+              );
+              this.completeSetup = null;
+              resolve();
+            }, CONFIG.horizontalScrollDelay);
+          });
         });
       });
     },
@@ -938,49 +1032,25 @@ export function createAnimationEngine(root, onResize = () => {}) {
       const supportHeight = sectionHeight - stickyHeight;
       stickySupportEl.style.height = supportHeight + "px";
 
-      const wrapRect = wrap.getBoundingClientRect();
-      const trackRect = track.getBoundingClientRect();
-      const overflowRight = Math.max(0, trackRect.right - wrapRect.right);
-      const xMovement = -overflowRight;
-
-      // Calculate the scroll distance (section height minus viewport)
-      const viewportHeight = window.innerHeight;
-      const scrollDistance = sectionHeight - viewportHeight;
+      // Layout widths do not change when the animation translates the track.
+      const distance = () => Math.max(0, track.scrollWidth - wrap.clientWidth);
 
       STATE.workTween = gsap.to(track, {
-        x: xMovement,
+        x: () => -distance(),
         ease: "none",
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: `+=${scrollDistance}`,
+          end: () => `+=${section.offsetHeight - window.innerHeight}`,
           scrub: 1,
           invalidateOnRefresh: true,
+          onUpdate: (trigger) => this.updatePagination(trigger.progress),
           onRefresh: () => {
-            const newWrapRect = wrap.getBoundingClientRect();
-            const newTrackRect = track.getBoundingClientRect();
-            const newOverflowRight = Math.max(
-              0,
-              newTrackRect.right - newWrapRect.right,
-            );
-
             // Recalculate heights on refresh
             const newSectionHeight = section.offsetHeight;
             const newStickyHeight = stickyEl.offsetHeight;
             const newSupportHeight = newSectionHeight - newStickyHeight;
             stickySupportEl.style.height = newSupportHeight + "px";
-
-            // Recalculate scroll distance on refresh
-            const newViewportHeight = window.innerHeight;
-            const newScrollDistance = newSectionHeight - newViewportHeight;
-
-            // Update the tween
-            if (STATE.workTween && STATE.workTween.scrollTrigger) {
-              gsap.set(track, { x: 0 });
-              STATE.workTween.vars.x = -newOverflowRight;
-              STATE.workTween.scrollTrigger.vars.end = `+=${newScrollDistance}`;
-              STATE.workTween.invalidate();
-            }
           },
         },
       });
@@ -3821,6 +3891,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
     STATE.initialized = false;
   }
 
+  let layoutReady = Promise.resolve();
   function initAll() {
     if (STATE.initialized) {
       console.warn(
@@ -3834,7 +3905,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
     Sidebar.init();
     GhostEngine.init();
     StyleEngine.init();
-    HorizontalScroll.init();
+    layoutReady = HorizontalScroll.init();
     ThemeSwitcher.init();
     MobileMenu.init();
 
@@ -3875,6 +3946,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
         Preloader.init();
         initAll();
       }, root);
+      return layoutReady;
     },
     refresh() {
       Sidebar.scale();

@@ -1,5 +1,4 @@
 import { SourceIcon } from "../source-icons";
-import { CodeIcon } from "../engineering-icons";
 import { ExperienceCounter } from "../experience-counter";
 import { profile } from "@/content/profile";
 import { ContactButtonLabel } from "../contact-button-label";
@@ -133,11 +132,8 @@ export function Hero() {
           </p>
           <div className={"hero-content-layout"}>
             <h1 className={"hero-heading z-50"}>
-              {"Software, "}
-              <br />
-              {"Engineered "}
-              <br />
-              {"with care."}
+              {profile.fullName}{" "}
+              <span className="hero-role">Software Engineer</span>
             </h1>
             <div className={"hero-buttons-wrap"}>
               <div
@@ -164,129 +160,25 @@ export function Hero() {
           >
             {profile.description}
           </p>
-          <div className={"hero-cards-wrap"}>
-            <div className={"hero-cards-left"}>
-              <div className={"hero-card-2-wrap"}>
-                <div data-flip-id={"hero-card-2"} className={"hero-card-2"}>
-                  <div className={"hero-card-2-bg"}></div>
-                  <div className={"hero-webflow-icon-wrap"}>
-                    <CodeIcon
-                      xmlns={"http://www.w3.org/2000/svg"}
-                      width={"100%"}
-                      viewBox={"0 0 91 57"}
-                      fill={"none"}
-                      data-flip-id={"icon"}
-                      className={"hero-webflow-icon"}
-                    />
-                  </div>
-                  <div className={"hero-c-projects-text-wrap"}>
-                    <p
-                      id={"projects_start_text"}
-                      data-flip-id={"hero-card-2-text"}
-                      className={"hero-webflow-projects-text"}
-                    >
-                      {"Full-stack"}
-                      <br />
-                      {"development"}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className={"hero-card-1-wrap"}>
-                <div className={"hero-card-1"}>
-                  <div className={"experience-bg"}></div>
-                  <div className={"experience-number-wrap"}>
-                    <ExperienceCounter
-                      xmlns={"http://www.w3.org/2000/svg"}
-                      width={"100%"}
-                      viewBox={"0 0 41 28"}
-                      fill={"none"}
-                      className={"experience-number"}
-                    />
-                  </div>
-                  <div className={"experience-text-wrap"}>
-                    <p
-                      id={"yrs_small_text_start"}
-                      className={"experience-text"}
-                    >
-                      {"Years of"}
-                      <br />
-                      {"experience"}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              data-tl-desktop={""}
-              data-tl-type={"scroll"}
-              data-tl-trigger={".hero"}
-              data-tl-start={"5% top"}
-              data-tl-end={"20% top"}
-              data-tl-from={
-                "{'scale': 1, 'opacity': 1, 'x': '0vw', 'y': '0vw'}"
-              }
-              data-tl-to={
-                "{'scale': 0.3, 'opacity': 0, 'x': '-25vw', 'y': '-5vw'}"
-              }
-              className={"hero-card-3"}
+          <div className="hero-experience" aria-label="Professional experience">
+            <ExperienceCounter className="experience-number" />
+            <p className="experience-text">
+              Years of
+              <br />
+              experience
+            </p>
+          </div>
+          <div className="hero-mobile-actions">
+            <a
+              href={profile.callUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contact-button"
+              aria-label="Say hello on WhatsApp"
             >
-              <div className={"hero-card-3-item"}>
-                <SourceIcon
-                  name="asset24"
-                  xmlns={"http://www.w3.org/2000/svg"}
-                  width={"100%"}
-                  viewBox={"0 0 19 19"}
-                  fill={"none"}
-                  className={"hero-card-3-icon"}
-                />
-                <p>{"Creative"}</p>
-              </div>
-              <div className={"hero-card-3-item"}>
-                <SourceIcon
-                  name="asset25"
-                  xmlns={"http://www.w3.org/2000/svg"}
-                  width={"100%"}
-                  viewBox={"0 0 19 19"}
-                  fill={"none"}
-                  className={"hero-card-3-icon"}
-                />
-                <p>{"Reliable"}</p>
-              </div>
-              <div className={"hero-card-3-item"}>
-                <SourceIcon
-                  name="asset26"
-                  xmlns={"http://www.w3.org/2000/svg"}
-                  width={"100%"}
-                  viewBox={"0 0 19 19"}
-                  fill={"none"}
-                  className={"hero-card-3-icon"}
-                />
-                <p>{"Thoughtful"}</p>
-              </div>
-              <div className={"hero-card-3-item"}>
-                <SourceIcon
-                  name="asset27"
-                  xmlns={"http://www.w3.org/2000/svg"}
-                  width={"100%"}
-                  viewBox={"0 0 19 22"}
-                  fill={"none"}
-                  className={"hero-card-3-icon"}
-                />
-                <p>{"Builder"}</p>
-              </div>
-              <div className={"hero-card-3-item"}>
-                <SourceIcon
-                  name="asset28"
-                  xmlns={"http://www.w3.org/2000/svg"}
-                  width={"100%"}
-                  viewBox={"0 0 18 18"}
-                  fill={"none"}
-                  className={"hero-card-3-icon"}
-                />
-                <p>{"Learning"}</p>
-              </div>
-            </div>
+              <ContactButtonLabel>Say hello</ContactButtonLabel>
+            </a>
+            <a href="#about">About Me</a>
           </div>
         </div>
         <div className={"mobile-hero-image-wrap"}>

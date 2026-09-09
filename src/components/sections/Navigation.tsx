@@ -1,5 +1,5 @@
 import { SourceIcon } from "../source-icons";
-import { CodeIcon } from "../engineering-icons";
+import { ProfileLinks } from "../profile-links";
 import { ExperienceCounter } from "../experience-counter";
 import { profile } from "@/content/profile";
 import { SidebarLogos } from "../sidebar-logos";
@@ -169,6 +169,7 @@ export function Navigation() {
                 role={"button"}
                 tabIndex={0}
                 aria-label={"Toggle navigation"}
+                aria-controls="mobile-navigation"
                 aria-expanded={"false"}
               >
                 <div className={"mobile-menu-icons"}>
@@ -208,62 +209,7 @@ export function Navigation() {
           </p>
         </div>
         <div className={"nav-stats-wrap"}>
-          <div id={"stats_projects"} className={"nav-stats-card"}>
-            <div
-              data-flip-end={"40% top"}
-              data-flip-trigger={".hero"}
-              data-flip-start={"top top"}
-              className={"nav-webflow-bg"}
-            ></div>
-            <div className={"nav-webflow-icon-wrap"}>
-              <CodeIcon
-                xmlns={"http://www.w3.org/2000/svg"}
-                width={"100%"}
-                viewBox={"0 0 91 57"}
-                fill={"none"}
-                data-flip-id={"icon"}
-                data-flip-trigger={".hero"}
-                data-flip-start={"top top"}
-                data-flip-end={"40% top"}
-                className={"nav-webflow-icon"}
-              />
-            </div>
-            <div className={"nav-webflow-text-wrap"}>
-              <p
-                className={"nav-webflow-text"}
-                data-flip-start={"top top"}
-                data-tl-trigger={".hero"}
-                data-tl-end={"22% top"}
-                data-tl-type={"scroll"}
-                data-tl-to={"{'color': 'black'}"}
-                data-tl-start={"20% top"}
-                id={"projects_start_text"}
-                data-flip-trigger={".hero"}
-                data-tl-from={"{'color': 'white'}"}
-                data-flip-end={"40% top"}
-              >
-                {"Full-stack"}
-                <br />
-                {"development"}
-              </p>
-            </div>
-          </div>
-          <div
-            data-tl-to={"{'opacity' : 1}"}
-            data-tl-type={"scroll"}
-            data-tl-trigger={".hero"}
-            data-tl-start={"39% top"}
-            data-tl-end={"41% top"}
-            data-tl-from={"{'opacity' : 0}"}
-            className={"nav-stats-sep"}
-          ></div>
           <div id={"stats_years"} className={"nav-stats-card"}>
-            <div
-              data-flip-end={"40% top"}
-              data-flip-trigger={".hero"}
-              data-flip-start={"top top"}
-              className={"nav-experience-bg"}
-            ></div>
             <div id={"yrs_big_text"} className={"nav-experience-numb-wrap"}>
               <ExperienceCounter
                 xmlns={"http://www.w3.org/2000/svg"}
@@ -308,7 +254,7 @@ export function Navigation() {
             className={"nav-top-bg"}
           ></div>
         </div>
-        <div className={"nav-menu-wrap"}>
+        <div id="mobile-navigation" className={"nav-menu-wrap"}>
           <nav className={"nav-menu"}>
             <div
               data-flip-end={"30% top"}
@@ -677,6 +623,7 @@ export function Navigation() {
               className={"nav-menu-bg"}
             ></div>
           </nav>
+          <ProfileLinks className="mobile-profile-links" />
           <div
             data-tl-desktop={""}
             data-tl-type={"scroll"}
