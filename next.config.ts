@@ -10,6 +10,16 @@ const nextConfig: NextConfig = {
   redirects() {
     return [
       {
+        source: "/en",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/es",
+        destination: "/",
+        permanent: true,
+      },
+      {
         source: "/:path*",
         has: [{ type: "host", value: "andres-duque\\.com" }],
         destination: `${site.url}/:path*`,

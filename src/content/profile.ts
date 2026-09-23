@@ -4,6 +4,7 @@ const cvFileName = "CV-Andres-Duque-EN_c.pdf";
 export const profile = {
   name: "Dukke",
   fullName: "Andrés Duque",
+  legalName: "Andrés David Duque Cadena",
   image: "/assets/main-photo.png",
   email: "andduque.ing@gmail.com",
   callUrl: "https://wa.me/573202411663",

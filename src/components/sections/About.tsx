@@ -349,9 +349,9 @@ export function About() {
             My Journey
           </h2>
           <p {...headingEntrance} className="max-width-389">
-            I’m Andrés, also known as Dukke. I build software, enjoy figuring
-            things out, and keep finding new things to learn. Here’s how I got
-            here.
+            I’m Andrés David Duque Cadena, though most know me as Andrés or
+            Dukke. I build software, enjoy figuring things out, and keep finding
+            new things to learn. Here’s how I got here.
           </p>
           <a
             href={profile.cv.path}

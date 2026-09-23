@@ -3,9 +3,9 @@ export const site = {
   name: "Andrés Duque · Dukke",
   title: "Andrés Duque — Software Engineer",
   description:
-    "Software engineer building full-stack apps with React, Next.js, Python and PostgreSQL. Explore Andrés Duque's projects, experience, services and CV.",
+    "Andrés Duque (Andrés David Duque Cadena) is a software engineer building full-stack applications with React, Next.js, Python and PostgreSQL. Explore his work and CV.",
   personDescription:
-    "Software engineer working across frontend, backend, databases and cloud infrastructure, with experience in blockchain platforms and AI applications.",
+    "Andrés David Duque Cadena is a software engineer working across frontend, backend, databases and cloud infrastructure, with experience in blockchain platforms and AI applications.",
   socialImageAlt:
     "Andrés Duque, MSc Software Engineer — full-stack web applications, APIs and cloud infrastructure.",
   locale: "en_US",
