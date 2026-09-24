@@ -1,0 +1,62 @@
+/* Portfolio skin; the generated diagram and its interaction runtime stay intact. */
+@font-face { font-family: "Portfolio Body"; src: url("/assets/1f6c22ee-ppneuemontreal-book.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "Portfolio Display"; src: url("/assets/f581f73c-tr3a-bold.woff2") format("woff2"); font-display: swap; }
+:root, html[data-theme] {
+  --bg: #222;
+  --grid: #ffffff0c;
+  --text: #f2f2f2;
+  --text-muted: #bdbbad;
+  --text-dim: #8e8b80;
+  --text-faint: #aaa799;
+  --panel: #222;
+  --panel-border: #ffffff20;
+  --mask: #222;
+  --lane-fill: #ffff2304;
+  --lane-stroke: #ffff2340;
+  --arrow: #aca99e;
+  --arrow-emphasis: #ffff23;
+  --frontend-fill: #30302d;
+  --frontend-stroke: #d5cfbe;
+  --backend-fill: #2d2d20;
+  --backend-stroke: #ffff23;
+  --database-fill: #d5cfbe;
+  --database-stroke: #d5cfbe;
+  --cloud-fill: #30302d;
+  --cloud-stroke: #d5cfbe;
+  --security-fill: #2d2d20;
+  --security-stroke: #ffff23;
+  --messagebus-fill: #2d2d20;
+  --messagebus-stroke: #ffff23;
+  --external-fill: #30302d;
+  --external-stroke: #d5cfbe;
+  --toolbar-bg: #222f;
+  --toolbar-border: #ffffff25;
+  --toolbar-text: #d5cfbe;
+  --toolbar-hover: #333;
+  --toolbar-menu-bg: #222;
+}
+html, body { width: 100%; height: 100%; overflow: hidden; }
+body { min-height: 0; padding: 0; font-family: "Portfolio Body", sans-serif; }
+.header, .cards, .toolbar, .guided-views,
+#btn-route-probe, #btn-overview-map, #btn-semantic-lens,
+#btn-node-finder, #btn-diagram-guide { display: none !important; }
+.container { width: 100%; height: 100%; max-width: none !important; margin: 0; }
+.diagram-container { box-sizing: border-box; height: 100%; padding: 16px 12px 56px !important; border: 0; border-radius: 0; }
+.diagram-container > svg { display: block; width: 100%; height: 100%; min-width: 0; font-family: "Portfolio Body", sans-serif; }
+html:not([data-portfolio-expanded="true"]) .diagram-container[data-wide-diagram="true"] > svg { min-width: 0; }
+html:not([data-portfolio-expanded="true"]) .diagram-container[data-wide-diagram="true"] { overflow: hidden; }
+.diagram-nav { right: 8px; bottom: 8px; max-width: calc(100% - 16px); font-family: inherit; }
+.diagram-nav [data-view="out"] { margin-left: 0; }
+.diagram-nav [data-view="out"]::before { display: none; }
+button, input { font-family: inherit; }
+.t-primary { font-family: "Portfolio Display", sans-serif; font-size: 16px; }
+.t-muted { font-size: 12px; }
+[data-edge-id] text { font-size: 12px; paint-order: stroke fill; stroke: #222; stroke-width: 5px; stroke-linejoin: round; }
+[data-node-kind="database"] .t-primary, [data-node-kind="database"] .t-muted { fill: #222; }
+[data-node-kind="database"] .semantic-sigil { stroke: #222; }
+.focus-chip, .semantic-lens, .node-finder, .diagram-guide { font-family: "Portfolio Body", sans-serif; }
+.focus-chip { max-width: min(360px, calc(100% - 24px)); }
+.portfolio-dragging, .portfolio-dragging * { cursor: grabbing !important; user-select: none !important; }
+@media (max-width: 500px) {
+  .diagram-container { padding-inline: 4px !important; }
+}

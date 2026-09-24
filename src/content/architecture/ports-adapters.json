@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "A payment service with replaceable adapters",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "animation": "trace",
+    "viewBox": [
+      1350,
+      700
+    ]
+  },
+  "components": [
+    {
+      "id": "rest-adapter",
+      "type": "frontend",
+      "label": "HTTP adapter",
+      "sublabel": "Auth + input mapping",
+      "pos": [
+        60,
+        70
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "checkout-usecase",
+      "type": "backend",
+      "label": "Checkout use case",
+      "sublabel": "Coordinates the workflow",
+      "pos": [
+        390,
+        70
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "domain-rules",
+      "type": "backend",
+      "label": "Payment aggregate",
+      "sublabel": "Invariants + state changes",
+      "pos": [
+        740,
+        70
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "webhook-adapter",
+      "type": "external",
+      "label": "Webhook adapter",
+      "sublabel": "Signature + replay check",
+      "pos": [
+        60,
+        300
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "payment-port",
+      "type": "backend",
+      "label": "Payment port",
+      "sublabel": "Provider-neutral contract",
+      "pos": [
+        390,
+        300
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "gateway-adapter",
+      "type": "external",
+      "label": "Gateway adapter",
+      "sublabel": "Idempotency + timeouts",
+      "pos": [
+        390,
+        530
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "persistence-port",
+      "type": "backend",
+      "label": "Repository port",
+      "sublabel": "Persistence contract",
+      "pos": [
+        740,
+        300
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "postgres-adapter",
+      "type": "database",
+      "label": "PostgreSQL adapter",
+      "sublabel": "SQL + transaction mapping",
+      "pos": [
+        740,
+        530
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "test-driver",
+      "type": "backend",
+      "label": "In-memory adapter",
+      "sublabel": "Deterministic test state",
+      "pos": [
+        1090,
+        300
+      ],
+      "size": [
+        200,
+        80
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "http-command",
+      "from": "rest-adapter",
+      "to": "checkout-usecase",
+      "label": "Command",
+      "variant": "emphasis"
+    },
+    {
+      "id": "domain-call",
+      "from": "checkout-usecase",
+      "to": "domain-rules",
+      "label": "Apply rules",
+      "variant": "emphasis"
+    },
+    {
+      "id": "payment-contract",
+      "from": "checkout-usecase",
+      "to": "payment-port",
+      "label": "Depends on",
+      "variant": "default",
+      "labelAt": [
+        490,
+        220
+      ]
+    },
+    {
+      "id": "provider-implements",
+      "from": "gateway-adapter",
+      "to": "payment-port",
+      "label": "Implements",
+      "variant": "dashed"
+    },
+    {
+      "id": "persistence-contract",
+      "from": "checkout-usecase",
+      "to": "persistence-port",
+      "label": "Uses contract",
+      "variant": "default"
+    },
+    {
+      "id": "sql-implements",
+      "from": "postgres-adapter",
+      "to": "persistence-port",
+      "label": "Implements",
+      "variant": "dashed"
+    },
+    {
+      "id": "provider-event",
+      "from": "webhook-adapter",
+      "to": "checkout-usecase",
+      "label": "Verified event",
+      "variant": "security"
+    },
+    {
+      "id": "tests",
+      "from": "test-driver",
+      "to": "persistence-port",
+      "label": "In-memory double",
+      "variant": "dashed"
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "DOMAIN + APPLICATION / NO INFRASTRUCTURE DEPENDENCIES",
+      "wraps": [
+        "checkout-usecase",
+        "domain-rules",
+        "payment-port",
+        "persistence-port"
+      ],
+      "pad": 45
+    }
+  ]
+}

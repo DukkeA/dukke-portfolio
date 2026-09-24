@@ -5,6 +5,7 @@
 @import "../styles/interactions.css";
 @import "../styles/project-previews.css";
 @import "../styles/portfolio-refinements.css";
+@import "../styles/architecture.css";
 
 @theme {
   --color-dukke-yellow: #ffff23;

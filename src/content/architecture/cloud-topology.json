@@ -1,0 +1,250 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "A production web application",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "animation": "trace",
+    "viewBox": [
+      1370,
+      860
+    ]
+  },
+  "components": [
+    {
+      "id": "browser-client",
+      "type": "frontend",
+      "label": "Web / mobile",
+      "sublabel": "Public clients",
+      "pos": [
+        50,
+        50
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "edge-cdn",
+      "type": "cloud",
+      "label": "CDN + WAF",
+      "sublabel": "TLS + rate limiting",
+      "pos": [
+        410,
+        50
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "api-gateway",
+      "type": "cloud",
+      "label": "Load balancer",
+      "sublabel": "Health-checked ingress",
+      "pos": [
+        770,
+        50
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "identity-service",
+      "type": "security",
+      "label": "Identity provider",
+      "sublabel": "OIDC / JWKS",
+      "pos": [
+        1130,
+        50
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "static-origin",
+      "type": "cloud",
+      "label": "Object storage",
+      "sublabel": "Private static origin",
+      "pos": [
+        410,
+        260
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "api-service",
+      "type": "backend",
+      "label": "API replicas",
+      "sublabel": "Stateless containers",
+      "pos": [
+        770,
+        260
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "redis-cache",
+      "type": "database",
+      "label": "Redis",
+      "sublabel": "Read cache + TTL",
+      "pos": [
+        1130,
+        260
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "job-queue",
+      "type": "messagebus",
+      "label": "Job queue",
+      "sublabel": "Durable background work",
+      "pos": [
+        410,
+        700
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "postgres-primary",
+      "type": "database",
+      "label": "PostgreSQL",
+      "sublabel": "Managed HA + PITR",
+      "pos": [
+        770,
+        490
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "job-worker",
+      "type": "backend",
+      "label": "Workers",
+      "sublabel": "Retry + idempotency",
+      "pos": [
+        1130,
+        700
+      ],
+      "size": [
+        200,
+        80
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "edge-request",
+      "from": "browser-client",
+      "to": "edge-cdn",
+      "label": "HTTPS",
+      "variant": "emphasis"
+    },
+    {
+      "id": "api-route",
+      "from": "edge-cdn",
+      "to": "api-gateway",
+      "label": "API traffic",
+      "variant": "emphasis"
+    },
+    {
+      "id": "origin-assets",
+      "from": "edge-cdn",
+      "to": "static-origin",
+      "label": "Signed origin",
+      "variant": "dashed",
+      "labelAt": [
+        510,
+        205
+      ]
+    },
+    {
+      "id": "forward-api",
+      "from": "api-gateway",
+      "to": "api-service",
+      "label": "Forward",
+      "variant": "emphasis",
+      "labelAt": [
+        870,
+        205
+      ]
+    },
+    {
+      "id": "token-verification",
+      "from": "api-service",
+      "to": "identity-service",
+      "label": "Verify JWT",
+      "variant": "security"
+    },
+    {
+      "id": "cache-read",
+      "from": "api-service",
+      "to": "redis-cache",
+      "label": "Read-through",
+      "variant": "default",
+      "labelAt": [
+        1050,
+        338
+      ]
+    },
+    {
+      "id": "sql-access",
+      "from": "api-service",
+      "to": "postgres-primary",
+      "label": "SQL / TLS",
+      "variant": "default",
+      "labelAt": [
+        870,
+        415
+      ]
+    },
+    {
+      "id": "enqueue-job",
+      "from": "api-service",
+      "to": "job-queue",
+      "label": "Enqueue",
+      "variant": "dashed"
+    },
+    {
+      "id": "worker-poll",
+      "from": "job-queue",
+      "to": "job-worker",
+      "label": "Lease job",
+      "variant": "dashed"
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "security-group",
+      "label": "PRIVATE APPLICATION + DATA / RESTRICTED INGRESS",
+      "wraps": [
+        "api-service",
+        "redis-cache",
+        "postgres-primary",
+        "job-worker"
+      ],
+      "pad": 40
+    }
+  ]
+}

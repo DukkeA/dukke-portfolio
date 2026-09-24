@@ -1,0 +1,280 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "An application on AWS",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "animation": "trace",
+    "viewBox": [
+      1390,
+      760
+    ]
+  },
+  "components": [
+    {
+      "id": "visitor",
+      "type": "frontend",
+      "label": "Browser",
+      "sublabel": "React application",
+      "pos": [
+        50,
+        50
+      ],
+      "size": [
+        220,
+        84
+      ]
+    },
+    {
+      "id": "distribution",
+      "type": "cloud",
+      "label": "CloudFront",
+      "sublabel": "CDN + AWS WAF",
+      "pos": [
+        410,
+        50
+      ],
+      "size": [
+        220,
+        84
+      ]
+    },
+    {
+      "id": "private-alb",
+      "type": "cloud",
+      "label": "Application LB",
+      "sublabel": "Internal ALB / HTTPS",
+      "pos": [
+        770,
+        50
+      ],
+      "size": [
+        220,
+        84
+      ]
+    },
+    {
+      "id": "web-origin",
+      "type": "cloud",
+      "label": "S3 · frontend",
+      "sublabel": "Private React build",
+      "pos": [
+        410,
+        240
+      ],
+      "size": [
+        220,
+        84
+      ],
+      "tag": "Block public access"
+    },
+    {
+      "id": "fargate-api",
+      "type": "backend",
+      "label": "ECS Fargate · API",
+      "sublabel": "Replicas across two AZs",
+      "pos": [
+        770,
+        240
+      ],
+      "size": [
+        220,
+        84
+      ],
+      "tag": "Task IAM role"
+    },
+    {
+      "id": "relational-store",
+      "type": "database",
+      "label": "RDS PostgreSQL",
+      "sublabel": "Multi-AZ + backups",
+      "pos": [
+        1130,
+        240
+      ],
+      "size": [
+        220,
+        84
+      ],
+      "tag": "Private DB subnets"
+    },
+    {
+      "id": "failed-jobs",
+      "type": "messagebus",
+      "label": "SQS · dead letter",
+      "sublabel": "Inspect + controlled redrive",
+      "pos": [
+        410,
+        440
+      ],
+      "size": [
+        220,
+        84
+      ]
+    },
+    {
+      "id": "work-queue",
+      "type": "messagebus",
+      "label": "SQS · jobs",
+      "sublabel": "At-least-once delivery",
+      "pos": [
+        770,
+        440
+      ],
+      "size": [
+        220,
+        84
+      ]
+    },
+    {
+      "id": "fargate-consumer",
+      "type": "backend",
+      "label": "ECS Fargate · worker",
+      "sublabel": "Idempotent file processing",
+      "pos": [
+        1130,
+        440
+      ],
+      "size": [
+        220,
+        84
+      ],
+      "tag": "Private app subnets"
+    },
+    {
+      "id": "worker-monitoring",
+      "type": "cloud",
+      "label": "CloudWatch",
+      "sublabel": "Worker logs + alarms",
+      "pos": [
+        770,
+        620
+      ],
+      "size": [
+        220,
+        84
+      ]
+    },
+    {
+      "id": "private-objects",
+      "type": "cloud",
+      "label": "S3 · files",
+      "sublabel": "Private generated artifacts",
+      "pos": [
+        1130,
+        620
+      ],
+      "size": [
+        220,
+        84
+      ],
+      "tag": "Encryption + lifecycle"
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "security-group",
+      "label": "PRIVATE COMPUTE / API INGRESS FROM ALB ONLY",
+      "wraps": [
+        "fargate-api"
+      ],
+      "pad": 38
+    },
+    {
+      "kind": "security-group",
+      "label": "DATA SUBNETS / SQL FROM API ONLY",
+      "wraps": [
+        "relational-store"
+      ],
+      "pad": 38
+    }
+  ],
+  "connections": [
+    {
+      "id": "viewer-https",
+      "from": "visitor",
+      "to": "distribution",
+      "label": "HTTPS",
+      "variant": "emphasis"
+    },
+    {
+      "id": "private-api-origin",
+      "from": "distribution",
+      "to": "private-alb",
+      "label": "/api/* · VPC origin",
+      "variant": "emphasis"
+    },
+    {
+      "id": "private-static-origin",
+      "from": "distribution",
+      "to": "web-origin",
+      "label": "OAC · signed origin",
+      "variant": "security",
+      "labelAt": [
+        520,
+        180
+      ]
+    },
+    {
+      "id": "target-group-routing",
+      "from": "private-alb",
+      "to": "fargate-api",
+      "label": "Healthy targets",
+      "variant": "emphasis",
+      "labelAt": [
+        880,
+        180
+      ]
+    },
+    {
+      "id": "database-session",
+      "from": "fargate-api",
+      "to": "relational-store",
+      "label": "SQL / TLS"
+    },
+    {
+      "id": "publish-job",
+      "from": "fargate-api",
+      "to": "work-queue",
+      "label": "SendMessage",
+      "variant": "dashed",
+      "labelAt": [
+        880,
+        390
+      ]
+    },
+    {
+      "id": "failed-delivery",
+      "from": "work-queue",
+      "to": "failed-jobs",
+      "label": "Max receives",
+      "variant": "dashed"
+    },
+    {
+      "id": "poll-and-ack",
+      "from": "fargate-consumer",
+      "to": "work-queue",
+      "label": "Poll + delete",
+      "variant": "dashed"
+    },
+    {
+      "id": "write-artifact",
+      "from": "fargate-consumer",
+      "to": "private-objects",
+      "label": "PutObject · IAM",
+      "variant": "emphasis",
+      "labelAt": [
+        1240,
+        570
+      ]
+    },
+    {
+      "id": "worker-telemetry",
+      "from": "fargate-consumer",
+      "to": "worker-monitoring",
+      "label": "Logs + metrics",
+      "variant": "dashed"
+    }
+  ]
+}

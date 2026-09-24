@@ -1,0 +1,137 @@
+.architecture-section {
+  @apply pointer-events-auto relative min-h-svh px-5 py-16 text-white md:py-[5vw] md:pr-[1.39vw] md:pl-[21vw];
+  background-image: linear-gradient(#000, #222 44%);
+}
+.architecture-intro {
+  @apply mb-10 grid items-end gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:gap-[4vw];
+}
+.architecture-toolbar {
+  @apply mb-4 flex flex-wrap items-center justify-between gap-3;
+}
+.architecture-pagination {
+  @apply m-0 flex items-center gap-1;
+}
+.architecture-pagination-button {
+  @apply flex h-8 w-7 cursor-pointer items-center justify-center border-0 bg-transparent p-0;
+}
+.architecture-pagination-button span {
+  @apply h-1 w-[18px] rounded-full bg-white/30 transition-[width,background-color] duration-300;
+}
+.architecture-pagination-button[aria-current="true"] {
+  @apply w-11;
+}
+.architecture-pagination-button[aria-current="true"] span {
+  @apply w-9 bg-dukke-yellow;
+}
+.architecture-pagination-button:is(:hover, :focus-visible) span {
+  @apply bg-dukke-yellow;
+}
+.architecture-control {
+  @apply inline-flex size-11 cursor-pointer items-center justify-center rounded-full border border-white/25 bg-transparent text-white transition-colors hover:border-dukke-yellow hover:bg-dukke-yellow hover:text-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dukke-yellow disabled:pointer-events-none disabled:opacity-25;
+}
+.architecture-track {
+  @apply flex w-full snap-x snap-mandatory overflow-x-auto overscroll-x-contain rounded-xl border border-white/15 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dukke-yellow;
+  scrollbar-width: none;
+}
+.architecture-track::-webkit-scrollbar {
+  display: none;
+}
+.architecture-track {
+  cursor: grab;
+}
+.architecture-track[data-dragging="true"] {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  user-select: none;
+}
+.architecture-viewer-shell {
+  @apply relative my-5 h-[420px] w-full overflow-hidden rounded-lg bg-[#222] md:h-[clamp(32rem,52vw,48rem)];
+}
+.architecture-viewer {
+  @apply block size-full border-0;
+}
+.architecture-dialog-viewer {
+  @apply h-[70svh] min-h-0 flex-1;
+}
+.architecture-dialog-content {
+  height: 92svh;
+}
+.architecture-drag-cursor {
+  @apply pointer-events-none fixed top-0 left-0 z-[10000] flex items-center gap-2 text-dukke-yellow opacity-0 transition-opacity duration-150;
+  translate: -50% -50%;
+}
+.architecture-drag-cursor[data-visible="true"] {
+  @apply opacity-100;
+}
+.architecture-drag-cursor span {
+  @apply flex size-16 items-center justify-center rounded-full bg-dukke-yellow font-display text-xs text-black uppercase;
+}
+@media (hover: none), (pointer: coarse) {
+  .architecture-drag-cursor {
+    display: none;
+  }
+}
+.architecture-slide {
+  @apply flex h-full min-w-0 shrink-0 basis-full snap-start flex-col px-4 pt-5 pb-6 md:px-7 md:pt-6 md:pb-8;
+}
+.architecture-slide-heading {
+  @apply flex items-center justify-between gap-3 border-b border-white/10 pb-4;
+}
+.architecture-expand {
+  @apply inline-flex min-h-11 cursor-pointer items-center gap-2 border-0 bg-transparent p-0 text-xs text-white/60 transition-colors hover:text-dukke-yellow focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dukke-yellow sm:text-sm;
+}
+.architecture-caption {
+  @apply mt-auto grid gap-6 border-t border-white/15 pt-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-10;
+}
+.architecture-tags {
+  @apply mt-5 mb-0 flex list-none flex-wrap gap-2 p-0;
+}
+.architecture-tags li {
+  @apply rounded-full border border-white/15 px-3 py-1 text-xs text-white/65;
+}
+.architecture-tradeoffs {
+  @apply m-0 grid content-start gap-5 border-t border-white/10 pt-5 text-sm leading-relaxed lg:border-t-0 lg:border-l lg:pt-0 lg:pl-7;
+}
+.architecture-tradeoffs dt {
+  @apply mb-1 font-display text-xs uppercase tracking-wider text-dukke-yellow;
+}
+.architecture-tradeoffs dd {
+  @apply m-0 text-white/65;
+}
+.architecture-dialog {
+  @apply fixed inset-0 m-auto max-h-[92svh] w-[96vw] max-w-[90rem] overflow-hidden rounded-xl border border-white/20 bg-[#222] p-0 text-white;
+}
+.architecture-dialog::backdrop {
+  background: #000b;
+  backdrop-filter: blur(8px);
+}
+.architecture-dialog-content {
+  @apply flex max-h-[92svh] flex-col;
+}
+@media (max-width: 767px) {
+  .architecture-slide-heading {
+    @apply items-start;
+  }
+  .architecture-expand {
+    @apply min-h-11;
+  }
+  .architecture-pagination-button {
+    @apply w-5;
+  }
+  .architecture-pagination-button[aria-current="true"] {
+    @apply w-8;
+  }
+  .architecture-pagination-button[aria-current="true"] span {
+    @apply w-6;
+  }
+  .architecture-pagination-button span {
+    @apply w-3;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .architecture-carousel *,
+  .architecture-dialog * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

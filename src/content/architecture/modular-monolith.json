@@ -1,0 +1,284 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "A modular commerce platform",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "animation": "trace",
+    "viewBox": [
+      1260,
+      700
+    ]
+  },
+  "components": [
+    {
+      "id": "customer-ui",
+      "type": "frontend",
+      "label": "React storefront",
+      "sublabel": "Browser application",
+      "pos": [
+        90,
+        50
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "api-entry",
+      "type": "backend",
+      "label": "HTTP boundary",
+      "sublabel": "Validation + authorization",
+      "pos": [
+        500,
+        50
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "identity-provider",
+      "type": "security",
+      "label": "Identity provider",
+      "sublabel": "OIDC / signed JWTs",
+      "pos": [
+        910,
+        50
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "accounts-domain",
+      "type": "backend",
+      "label": "Accounts module",
+      "sublabel": "Profiles + access rules",
+      "pos": [
+        90,
+        210
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "orders-domain",
+      "type": "backend",
+      "label": "Orders module",
+      "sublabel": "Order + inventory rules",
+      "pos": [
+        500,
+        210
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "billing-domain",
+      "type": "backend",
+      "label": "Billing module",
+      "sublabel": "Invoice state + rules",
+      "pos": [
+        910,
+        210
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "accounts-store",
+      "type": "database",
+      "label": "Accounts schema",
+      "sublabel": "Module-owned tables",
+      "pos": [
+        90,
+        390
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "orders-store",
+      "type": "database",
+      "label": "Orders + job outbox",
+      "sublabel": "Atomic transaction",
+      "pos": [
+        500,
+        390
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "billing-store",
+      "type": "database",
+      "label": "Billing schema",
+      "sublabel": "Module-owned tables",
+      "pos": [
+        910,
+        390
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "task-runner",
+      "type": "backend",
+      "label": "Job runner",
+      "sublabel": "Lease + retry + dedupe",
+      "pos": [
+        500,
+        570
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "mail-provider",
+      "type": "external",
+      "label": "Email provider",
+      "sublabel": "External delivery",
+      "pos": [
+        910,
+        570
+      ],
+      "size": [
+        200,
+        80
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "DOMAIN MODULES / ONE PROCESS",
+      "wraps": [
+        "accounts-domain",
+        "orders-domain",
+        "billing-domain"
+      ],
+      "pad": 32
+    },
+    {
+      "kind": "region",
+      "label": "ONE POSTGRESQL CLUSTER / OWNED SCHEMAS",
+      "wraps": [
+        "accounts-store",
+        "orders-store",
+        "billing-store"
+      ],
+      "pad": 32
+    }
+  ],
+  "connections": [
+    {
+      "id": "request",
+      "from": "customer-ui",
+      "to": "api-entry",
+      "label": "HTTPS",
+      "variant": "emphasis"
+    },
+    {
+      "id": "verify",
+      "from": "api-entry",
+      "to": "identity-provider",
+      "label": "Verify JWT",
+      "variant": "security"
+    },
+    {
+      "id": "dispatch",
+      "from": "api-entry",
+      "to": "orders-domain",
+      "label": "Dispatch",
+      "variant": "emphasis",
+      "labelAt": [
+        600,
+        165
+      ]
+    },
+    {
+      "id": "account-call",
+      "from": "api-entry",
+      "to": "accounts-domain",
+      "label": "Dispatch",
+      "variant": "default"
+    },
+    {
+      "id": "billing-call",
+      "from": "api-entry",
+      "to": "billing-domain",
+      "label": "Dispatch",
+      "variant": "default"
+    },
+    {
+      "id": "accounts-sql",
+      "from": "accounts-domain",
+      "to": "accounts-store",
+      "label": "SQL",
+      "variant": "default",
+      "labelAt": [
+        190,
+        345
+      ]
+    },
+    {
+      "id": "orders-sql",
+      "from": "orders-domain",
+      "to": "orders-store",
+      "label": "SQL + job",
+      "variant": "emphasis",
+      "labelAt": [
+        600,
+        345
+      ]
+    },
+    {
+      "id": "billing-sql",
+      "from": "billing-domain",
+      "to": "billing-store",
+      "label": "SQL",
+      "variant": "default",
+      "labelAt": [
+        1010,
+        345
+      ]
+    },
+    {
+      "id": "drain",
+      "from": "orders-store",
+      "to": "task-runner",
+      "label": "Claim / lease",
+      "variant": "dashed",
+      "labelAt": [
+        600,
+        535
+      ]
+    },
+    {
+      "id": "notify",
+      "from": "task-runner",
+      "to": "mail-provider",
+      "label": "Send email",
+      "variant": "dashed"
+    }
+  ]
+}

@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "A durable report export",
+    "locale": "en",
+    "column_fit": "spread",
+    "viewBox": [
+      1080,
+      620
+    ],
+    "quality_profile": "showcase",
+    "animation": "trace",
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "participants": [
+    {
+      "id": "export-client",
+      "type": "frontend",
+      "label": "Browser",
+      "sublabel": "Export request"
+    },
+    {
+      "id": "export-api",
+      "type": "backend",
+      "label": "Exports API",
+      "sublabel": "Auth + idempotency"
+    },
+    {
+      "id": "job-store",
+      "type": "database",
+      "label": "PostgreSQL",
+      "sublabel": "Jobs + results"
+    },
+    {
+      "id": "export-worker",
+      "type": "backend",
+      "label": "Worker",
+      "sublabel": "Leased jobs"
+    },
+    {
+      "id": "render-service",
+      "type": "external",
+      "label": "Renderer",
+      "sublabel": "Report generation"
+    },
+    {
+      "id": "file-store",
+      "type": "cloud",
+      "label": "Object storage",
+      "sublabel": "Private artifacts"
+    }
+  ],
+  "messages": [
+    {
+      "id": "step-1",
+      "from": "export-client",
+      "to": "export-api",
+      "label": "POST /exports + idempotency key",
+      "variant": "emphasis",
+      "y": 160
+    },
+    {
+      "id": "step-2",
+      "from": "export-api",
+      "to": "job-store",
+      "label": "Commit job / reuse existing key",
+      "variant": "emphasis",
+      "y": 184
+    },
+    {
+      "id": "step-4",
+      "from": "export-api",
+      "to": "export-client",
+      "label": "202 Accepted + status URL",
+      "variant": "return",
+      "y": 208
+    },
+    {
+      "id": "step-5",
+      "from": "export-worker",
+      "to": "job-store",
+      "label": "Claim + load job with lease",
+      "variant": "default",
+      "y": 244
+    },
+    {
+      "id": "step-7",
+      "from": "export-worker",
+      "to": "render-service",
+      "label": "Render report",
+      "variant": "emphasis",
+      "y": 268
+    },
+    {
+      "id": "step-8",
+      "from": "render-service",
+      "to": "export-worker",
+      "label": "Report bytes",
+      "variant": "return",
+      "y": 296
+    },
+    {
+      "id": "step-9",
+      "from": "export-worker",
+      "to": "file-store",
+      "label": "PUT artifact at stable job key",
+      "variant": "emphasis",
+      "y": 324
+    },
+    {
+      "id": "step-10",
+      "from": "export-worker",
+      "to": "job-store",
+      "label": "Commit completed + object key",
+      "variant": "emphasis",
+      "y": 348
+    },
+    {
+      "id": "step-11",
+      "from": "export-client",
+      "to": "export-api",
+      "label": "GET /exports/:id",
+      "variant": "default",
+      "y": 384
+    },
+    {
+      "id": "step-12",
+      "from": "export-api",
+      "to": "job-store",
+      "label": "Read authorized job status",
+      "variant": "security",
+      "y": 408
+    },
+    {
+      "id": "step-13",
+      "from": "job-store",
+      "to": "export-api",
+      "label": "Completed + object key",
+      "variant": "return",
+      "y": 436
+    },
+    {
+      "id": "step-14",
+      "from": "export-api",
+      "to": "export-client",
+      "label": "200 + short-lived signed URL",
+      "variant": "return",
+      "y": 460
+    },
+    {
+      "id": "step-15",
+      "from": "render-service",
+      "to": "export-worker",
+      "label": "Alternative: timeout / 503",
+      "variant": "return",
+      "y": 496
+    },
+    {
+      "id": "step-16",
+      "from": "export-worker",
+      "to": "job-store",
+      "label": "Schedule retry / fail at limit",
+      "variant": "dashed",
+      "y": 520
+    }
+  ],
+  "segments": [
+    {
+      "from": 140,
+      "to": 225,
+      "label": "ACCEPT"
+    },
+    {
+      "from": 236,
+      "to": 363,
+      "label": "PROCESS"
+    },
+    {
+      "from": 374,
+      "to": 474,
+      "label": "OBSERVE"
+    },
+    {
+      "from": 482,
+      "to": 536,
+      "label": "ON FAILURE"
+    }
+  ]
+}

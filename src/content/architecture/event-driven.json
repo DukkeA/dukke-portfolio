@@ -1,0 +1,242 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Order events with durable delivery",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "animation": "trace",
+    "viewBox": [
+      1360,
+      770
+    ]
+  },
+  "components": [
+    {
+      "id": "orders-api",
+      "type": "backend",
+      "label": "Orders API",
+      "sublabel": "Validate + authorize",
+      "pos": [
+        55,
+        50
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "outbox-store",
+      "type": "database",
+      "label": "Order + outbox",
+      "sublabel": "One SQL transaction",
+      "pos": [
+        405,
+        50
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "event-relay",
+      "type": "backend",
+      "label": "Outbox relay",
+      "sublabel": "Publish + mark delivered",
+      "pos": [
+        754,
+        50
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "event-broker",
+      "type": "messagebus",
+      "label": "Event broker",
+      "sublabel": "Partition key: order ID",
+      "pos": [
+        754,
+        230
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "stock-consumer",
+      "type": "backend",
+      "label": "Inventory consumer",
+      "sublabel": "Dedupe + reserve stock",
+      "pos": [
+        405,
+        230
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "email-consumer",
+      "type": "backend",
+      "label": "Notification worker",
+      "sublabel": "Dedupe + provider retry",
+      "pos": [
+        1095,
+        230
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "stock-store",
+      "type": "database",
+      "label": "Stock + inbox",
+      "sublabel": "Atomic event processing",
+      "pos": [
+        405,
+        440
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "failed-events",
+      "type": "messagebus",
+      "label": "Dead-letter queue",
+      "sublabel": "Failed event + context",
+      "pos": [
+        754,
+        440
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "email-provider",
+      "type": "external",
+      "label": "Email provider",
+      "sublabel": "External side effect",
+      "pos": [
+        1095,
+        440
+      ],
+      "size": [
+        200,
+        80
+      ]
+    },
+    {
+      "id": "replay-operator",
+      "type": "security",
+      "label": "Controlled replay",
+      "sublabel": "Inspect + requeue safely",
+      "pos": [
+        754,
+        630
+      ],
+      "size": [
+        200,
+        80
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "save-order",
+      "from": "orders-api",
+      "to": "outbox-store",
+      "label": "Commit",
+      "variant": "emphasis"
+    },
+    {
+      "id": "scan-outbox",
+      "from": "outbox-store",
+      "to": "event-relay",
+      "label": "Read pending",
+      "variant": "default"
+    },
+    {
+      "id": "publish-event",
+      "from": "event-relay",
+      "to": "event-broker",
+      "label": "OrderPlaced",
+      "variant": "dashed",
+      "labelAt": [
+        854,
+        180
+      ]
+    },
+    {
+      "id": "inventory-delivery",
+      "from": "event-broker",
+      "to": "stock-consumer",
+      "label": "Deliver",
+      "variant": "dashed"
+    },
+    {
+      "id": "email-delivery",
+      "from": "event-broker",
+      "to": "email-consumer",
+      "label": "Deliver",
+      "variant": "dashed"
+    },
+    {
+      "id": "inventory-commit",
+      "from": "stock-consumer",
+      "to": "stock-store",
+      "label": "Commit + inbox",
+      "variant": "default",
+      "labelAt": [
+        505,
+        375
+      ]
+    },
+    {
+      "id": "email-send",
+      "from": "email-consumer",
+      "to": "email-provider",
+      "label": "Send + dedupe",
+      "variant": "default",
+      "labelAt": [
+        1195,
+        375
+      ]
+    },
+    {
+      "id": "dead-letter",
+      "from": "event-broker",
+      "to": "failed-events",
+      "label": "Retries exhausted",
+      "variant": "dashed",
+      "labelAt": [
+        854,
+        375
+      ]
+    },
+    {
+      "id": "inspect-failure",
+      "from": "failed-events",
+      "to": "replay-operator",
+      "label": "Inspect",
+      "variant": "security",
+      "labelAt": [
+        854,
+        575
+      ]
+    }
+  ],
+  "boundaries": []
+}
