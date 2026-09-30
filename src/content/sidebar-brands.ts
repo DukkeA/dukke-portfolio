@@ -1,8 +1,8 @@
 export const sidebarBrands = [
-  { name: "Nevato", image: "/assets/journey/nevato.png", tall: true },
+  { name: "Nevato", image: "/assets/journey/nevato.webp", tall: true },
   {
     name: "Prevalentware",
-    image: "/assets/journey/prevalentware.png",
+    image: "/assets/journey/prevalentware.webp",
     tall: true,
   },
   { name: "G6 Networks", image: "/assets/journey/gen6.svg" },

@@ -4,6 +4,11 @@ import { isIndexable, site } from "./src/content/site";
 
 const nextConfig: NextConfig = {
   devIndicators: false,
+  images: {
+    // The shared portrait is 1024px wide; avoid requesting upscaled copies.
+    deviceSizes: [512, 640, 768, 1024],
+    formats: ["image/avif", "image/webp"],
+  },
   rewrites() {
     return [{ source: profile.cv.path, destination: profile.cv.assetPath }];
   },

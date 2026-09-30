@@ -2,6 +2,7 @@ import { SourceIcon } from "../source-icons";
 import { ExperienceCounter } from "../experience-counter";
 import { profile } from "@/content/profile";
 import { ContactButtonLabel } from "../contact-button-label";
+import { heroPortraitProps } from "@/lib/portrait";
 
 export function Hero() {
   return (
@@ -165,10 +166,8 @@ export function Hero() {
         </div>
         <div className={"mobile-hero-image-wrap"}>
           <img
-            src={profile.image}
-            loading={"eager"}
-            fetchPriority={"high"}
-            alt={profile.name}
+            {...heroPortraitProps}
+            alt={heroPortraitProps.alt}
             className={"mobile-hero-image"}
           />
         </div>

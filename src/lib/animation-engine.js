@@ -1,7 +1,8 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
-import Swiper from "swiper/bundle";
+import Swiper from "swiper";
+import { A11y, Pagination } from "swiper/modules";
 import Lenis from "lenis";
 import { runStartupTasks } from "./startup-tasks";
 
@@ -800,6 +801,9 @@ export function createAnimationEngine(root, onResize = () => {}) {
         } else {
           const split = new SplitText(el, {
             type: splitType,
+            // Paragraphs and generic containers cannot carry an accessible name.
+            // Keep their real text exposed instead of adding aria-label/hidden.
+            aria: el.matches("h1,h2,h3,h4,h5,h6,a,button") ? "auto" : "none",
             linesClass: "line",
             wordsClass: "word",
             charsClass: "char",
@@ -2867,6 +2871,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
       });
 
       this.instance = new Swiper(".swiper", {
+        modules: [Pagination, A11y],
         slidesPerView: 1,
         spaceBetween: 14,
         loop: false,
@@ -3696,10 +3701,12 @@ export function createAnimationEngine(root, onResize = () => {}) {
 
         const splitA = new SplitText(originalTarget, {
           type: "words",
+          aria: "none",
           wordsClass: "word",
         });
         const splitB = new SplitText(cloneTarget, {
           type: "words",
+          aria: "none",
           wordsClass: "word",
         });
 

@@ -21,7 +21,7 @@ export const journey: readonly JourneyEntry[] = [
       "During my civil engineering degree at Universidad Nacional, programming started to catch my attention. I wanted to understand what I could do with it.",
     story:
       "I was studying civil engineering at Universidad Nacional de Colombia when programming began to interest me. I liked the idea of writing instructions, trying them out, and seeing what happened. Alongside my degree, that curiosity gradually made room for something new.",
-    image: "/assets/journey/unal.png",
+    image: "/assets/journey/unal.webp",
     imageAlt: "Universidad Nacional de Colombia",
     whiteLogo: true,
     tags: ["Curiosity", "Problem solving"],
@@ -44,7 +44,7 @@ export const journey: readonly JourneyEntry[] = [
       "Nevato gave me my first opportunity as a frontend developer. I built interfaces with React and learned what it takes to deliver work for clients.",
     story:
       "At Nevato, I worked on responsive interfaces, reusable components, and features for client projects. React, Tailwind, and REST APIs became part of my daily work. It was my first experience building software as part of a team, with people depending on what we delivered.",
-    image: "/assets/journey/nevato.png",
+    image: "/assets/journey/nevato.webp",
     imageAlt: "Nevato",
     whiteLogo: true,
     tags: ["React", "Tailwind", "REST APIs"],
@@ -69,7 +69,7 @@ export const journey: readonly JourneyEntry[] = [
       "At Prevalentware, I moved into full-stack development. My work grew to include APIs, databases, and the connections behind the interface.",
     story:
       "I joined Prevalentware as a full-stack developer, working across frontend and backend. Alongside React and Next.js, I used GraphQL, Prisma, and PostgreSQL. Following a feature from its interface down to its data helped me understand how the different parts of an application fit together.",
-    image: "/assets/journey/prevalentware.png",
+    image: "/assets/journey/prevalentware.webp",
     imageAlt: "Prevalentware",
     whiteLogo: true,
     tags: ["Next.js", "GraphQL", "PostgreSQL"],

@@ -1,6 +1,8 @@
 @import "tailwindcss/theme.css";
 @import "tailwindcss/utilities.css";
-@import "swiper/css/bundle";
+@import "swiper/css";
+@import "swiper/css/pagination";
+@import "swiper/css/a11y";
 @import "../styles/reference-tailwind.css";
 @import "../styles/interactions.css";
 @import "../styles/project-previews.css";

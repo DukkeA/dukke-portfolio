@@ -3,6 +3,7 @@ import { ProfileLinks } from "../profile-links";
 import { profile } from "@/content/profile";
 import { SidebarLogos } from "../sidebar-logos";
 import { ContactButtonLabel } from "../contact-button-label";
+import { heroPortraitProps } from "@/lib/portrait";
 
 export function Navigation() {
   return (
@@ -17,6 +18,7 @@ export function Navigation() {
     >
       <div className={"nav-container"}>
         <div
+          aria-hidden="true"
           data-tl-desktop={""}
           data-tl-type={"trigger"}
           data-tl-trigger={".hero"}
@@ -25,19 +27,16 @@ export function Navigation() {
         >
           <div className={"profile-img-item"}>
             <img
+              {...heroPortraitProps}
+              alt={heroPortraitProps.alt}
               className={"hero-profile-img"}
-              src={profile.image}
               data-tl-trigger={".hero"}
-              alt={profile.name}
               data-tl-end={"70% top"}
               data-tl-desktop={""}
               data-tl-type={"scroll"}
               data-tl-to={"{'filter': 'blur(90px)', 'opacity': 0.3}"}
               data-tl-start={"top top"}
-              sizes={"100vw"}
-              loading={"eager"}
               data-tl-from={"{'filter': 'blur(0px)', 'opacity': 1}"}
-              fetchPriority={"high"}
             />
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { profile } from "@/content/profile";
 import { ContactButtonLabel } from "../contact-button-label";
+import { contactPortraitProps } from "@/lib/portrait";
 
 export function Contact() {
   return (
@@ -44,9 +45,8 @@ export function Contact() {
           </p>
           <div className={"cta-wrap"}>
             <img
-              src={profile.image}
-              loading={"lazy"}
-              alt={profile.name}
+              {...contactPortraitProps}
+              alt={contactPortraitProps.alt}
               className="cta_img aspect-square shrink-0 rounded-full bg-[#e4e0ce] object-cover object-top"
             />
             <div className={"column"}>

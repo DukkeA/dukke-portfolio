@@ -279,7 +279,7 @@ export function ArchitectureCarousel({
         }}
       >
         {slides.map((slide, index) => (
-          <article
+          <div
             key={slide.id}
             className="architecture-slide"
             role="group"
@@ -343,7 +343,7 @@ export function ArchitectureCarousel({
                 </div>
               </dl>
             </div>
-          </article>
+          </div>
         ))}
       </div>
       <div
