@@ -1,9 +1,26 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { preload } from "react-dom";
 import { mountProjectMedia } from "@/lib/project-media";
 
 export function MotionRoot({ children }: { children: ReactNode }) {
+  // Keep the existing font faces and metrics; only discover hero fonts earlier.
+  preload("/assets/1f6c22ee-ppneuemontreal-book.woff2", {
+    as: "font",
+    type: "font/woff2",
+    crossOrigin: "anonymous",
+  });
+  preload("/assets/f581f73c-tr3a-bold.woff2", {
+    as: "font",
+    type: "font/woff2",
+    crossOrigin: "anonymous",
+  });
+  preload("/assets/28e27854-tr3a-medium.woff2", {
+    as: "font",
+    type: "font/woff2",
+    crossOrigin: "anonymous",
+  });
   const rootRef = useRef<HTMLDivElement>(null);
   const [revision, setRevision] = useState(0);
   const restoreScroll = useRef(0);
@@ -25,13 +42,18 @@ export function MotionRoot({ children }: { children: ReactNode }) {
     history.scrollRestoration = "manual";
 
     const initialize = async () => {
-      const { createAnimationEngine } = await import("@/lib/animation-engine");
-      await document.fonts.ready;
-      await Promise.all(
-        Array.from(
-          root.querySelectorAll<HTMLImageElement>(".hero-profile-img"),
-        ).map((img) => img.decode().catch(() => {})),
-      );
+      // These resources are independent, but all must be ready before FLIP.
+      const [{ createAnimationEngine }] = await Promise.all([
+        import("@/lib/animation-engine"),
+        document.fonts.ready,
+        Promise.all(
+          Array.from(
+            root.querySelectorAll<HTMLImageElement>(
+              ".hero-profile-img,.mobile-hero-image",
+            ),
+          ).map((img) => img.decode().catch(() => {})),
+        ),
+      ]);
       if (disposed) return;
       // FLIP measurements are taken from the original hero composition.
       window.scrollTo(0, 0);

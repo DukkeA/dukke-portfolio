@@ -3,9 +3,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import Swiper from "swiper/bundle";
 import Lenis from "lenis";
+import { runStartupTasks } from "./startup-tasks";
 
 /** Public reference choreography adapted to a scoped, disposable React mount. */
 export function createAnimationEngine(root, onResize = () => {}) {
+  let disposed = false;
   gsap.registerPlugin(ScrollTrigger, SplitText);
   const timeouts = new Set();
   const intervals = new Set();
@@ -1366,7 +1368,11 @@ export function createAnimationEngine(root, onResize = () => {}) {
         ? window.getComputedStyle(navLogoItem).display || "flex"
         : "flex";
 
-      this.timeline = gsap.timeline({ delay: CONFIG.preloaderDelay });
+      // Setup yields between tasks. Keep the hero still until all FLIP reads finish.
+      this.timeline = gsap.timeline({
+        delay: CONFIG.preloaderDelay,
+        paused: true,
+      });
 
       // At timeline start, hide .nav-logo-item via display:none. This fires AFTER
       // GhostEngine has measured the children, so FLIP positioning works correctly.
@@ -3876,7 +3882,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
   }
 
   let layoutReady = Promise.resolve();
-  function initAll() {
+  async function initAll() {
     if (STATE.initialized) {
       console.warn(
         "Animation engine already initialized. Call destroyAll() first.",
@@ -3886,81 +3892,102 @@ export function createAnimationEngine(root, onResize = () => {}) {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    Sidebar.init();
-    GhostEngine.init();
-    StyleEngine.init();
-    layoutReady = HorizontalScroll.init();
-    ThemeSwitcher.init();
-    MobileMenu.init();
-
-    CardInteractions.init();
-    ProfileImage.init();
-    CTAAnimation.init();
-    Clipboard.init();
-    ImageTrail.init();
-    ButtonHover.init();
-
-    SwiperInit.init();
-    LenisInit.init();
-    if (STATE.lenis && window.innerWidth >= 768) {
-      STATE.lenis.stop();
-      setTimeout(() => {
-        if (STATE.lenis) STATE.lenis.start();
-      }, 3000);
-    }
-
-    TextReveal.init();
-
-    if (
-      window.innerWidth < 768 &&
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      // Move the portrait and its editorial copy together through the hero exit.
-      gsap.to(
-        [Utils.$(".hero-container"), Utils.$(".mobile-hero-image-wrap")],
-        {
-          y: -24,
-          ease: "none",
-          scrollTrigger: {
-            trigger: ".hero",
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
-          },
+    // Preserve setup order and every module's measurements. Each boundary gives
+    // the browser a chance to paint or handle input instead of one long task.
+    const completed = await runStartupTasks(
+      [
+        () => Sidebar.init(),
+        () => GhostEngine.init(),
+        () => StyleEngine.init(),
+        () => {
+          layoutReady = HorizontalScroll.init();
+          ThemeSwitcher.init();
+          MobileMenu.init();
         },
-      );
-    }
-
-    // The React host rebuilds after a responsive breakpoint change.
-    ResizeHandler.init();
-
-    ScrollTrigger.refresh();
-
-    STATE.initialized = true;
-
-    setTimeout(() => {
-      MagneticPositions.init();
-      JourneyQualities.init();
-      ScrollTrigger.refresh();
-    }, CONFIG.magneticInitDelay);
-    Utils.addEvent(
-      window.matchMedia("(prefers-reduced-motion: reduce)"),
-      "change",
-      () => {
-        JourneyQualities.init();
-        ScrollTrigger.refresh();
+        () => CardInteractions.init(),
+        () => ProfileImage.init(),
+        () => CTAAnimation.init(),
+        () => Clipboard.init(),
+        () => ImageTrail.init(),
+        () => ButtonHover.init(),
+        () => SwiperInit.init(),
+        () => {
+          LenisInit.init();
+          if (STATE.lenis && window.innerWidth >= 768) STATE.lenis.stop();
+        },
+        () => TextReveal.init(),
+      ],
+      {
+        isCancelled: () => disposed,
+        // Re-enter the mount's GSAP context after each asynchronous boundary,
+        // so breakpoint changes and unmounts still revert all created tweens.
+        runTask: (task) => context.add(task),
       },
     );
+    if (!completed) return;
+
+    context.add(() => {
+      if (
+        window.innerWidth < 768 &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        // Move the portrait and its editorial copy together through the hero exit.
+        gsap.to(
+          [Utils.$(".hero-container"), Utils.$(".mobile-hero-image-wrap")],
+          {
+            y: -24,
+            ease: "none",
+            scrollTrigger: {
+              trigger: ".hero",
+              start: "top top",
+              end: "bottom top",
+              scrub: true,
+            },
+          },
+        );
+      }
+
+      // The React host rebuilds after a responsive breakpoint change.
+      ResizeHandler.init();
+
+      ScrollTrigger.refresh();
+
+      STATE.initialized = true;
+
+      setTimeout(() => {
+        MagneticPositions.init();
+        JourneyQualities.init();
+        ScrollTrigger.refresh();
+      }, CONFIG.magneticInitDelay);
+      Utils.addEvent(
+        window.matchMedia("(prefers-reduced-motion: reduce)"),
+        "change",
+        () => {
+          JourneyQualities.init();
+          ScrollTrigger.refresh();
+        },
+      );
+    });
   }
 
   let context;
+  let startup;
   return {
     start() {
-      context = gsap.context(() => {
-        Preloader.init();
-        initAll();
-      }, root);
-      return layoutReady;
+      startup ??= (async () => {
+        if (disposed) return;
+        context = gsap.context(() => Preloader.init(), root);
+        await initAll();
+        await layoutReady;
+        if (disposed) return;
+        Preloader.timeline?.play();
+        if (STATE.lenis && window.innerWidth >= 768) {
+          setTimeout(() => {
+            if (STATE.lenis) STATE.lenis.start();
+          }, 3000);
+        }
+      })();
+      return startup;
     },
     refresh() {
       Sidebar.scale();
@@ -3979,6 +4006,7 @@ export function createAnimationEngine(root, onResize = () => {}) {
       return STATE.lenis;
     },
     destroy() {
+      disposed = true;
       timeouts.forEach((id) => window.clearTimeout(id));
       intervals.forEach((id) => window.clearInterval(id));
       frames.forEach((id) => window.cancelAnimationFrame(id));
