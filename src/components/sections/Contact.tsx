@@ -47,7 +47,7 @@ export function Contact() {
             <img
               {...contactPortraitProps}
               alt={contactPortraitProps.alt}
-              className="cta_img aspect-square shrink-0 rounded-full bg-[#e4e0ce] object-cover object-top"
+              className="cta_img aspect-square h-auto shrink-0 rounded-full bg-[#e4e0ce] object-cover object-top"
             />
             <div className={"column"}>
               <div className={"cta-column-item"}>
