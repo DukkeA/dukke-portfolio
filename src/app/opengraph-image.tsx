@@ -10,7 +10,8 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 const [portrait, displayFont, bodyFont] = await Promise.all([
-  readFile(join(process.cwd(), "public", profile.image), "base64"),
+  // ImageResponse's renderer supports PNG portraits, but not WebP.
+  readFile(join(process.cwd(), "public", profile.socialPortrait), "base64"),
   readFile(join(process.cwd(), "src/assets/seo/display-bold.ttf")),
   readFile(join(process.cwd(), "src/assets/seo/body-regular.ttf")),
 ]);

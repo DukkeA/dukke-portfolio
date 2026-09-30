@@ -5,7 +5,8 @@ export const profile = {
   name: "Dukke",
   fullName: "Andrés Duque",
   legalName: "Andrés David Duque Cadena",
-  image: "/assets/main-photo.png",
+  image: "/assets/main-photo.webp",
+  socialPortrait: "/assets/main-photo.png",
   email: "andduque.ing@gmail.com",
   callUrl: "https://wa.me/573202411663",
   cv: {
