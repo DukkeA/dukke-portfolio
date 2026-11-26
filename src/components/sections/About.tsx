@@ -67,33 +67,28 @@ function JourneyQuality({ quality }: { quality: JourneyQuality }) {
   );
 }
 
-const starts = [
-  "-38% top",
-  "-25% top",
-  "-13% top",
-  "2% top",
-  "16% top",
-  "30% top",
-  "49% top",
-  "65% top",
-];
-const anchors = [
-  [1111, 6.5],
-  [186, 341.5],
-  [105, 739.5],
-  [998, 1092.5],
-  [582, 1482.5],
-  [59, 1766.5],
-  [458, 2129.5],
-  [1080, 2530],
-];
+const timelineWidth = 1118;
+const timelineHeight = 2980;
+// Each step shares the same trigger, anchor, and connector side.
+const timelineSteps = [
+  { start: "-33% top", point: [1111, 6.5], side: "right" },
+  { start: "-22% top", point: [186, 341.5], side: "left" },
+  { start: "-11% top", point: [105, 739.5], side: "left" },
+  { start: "2% top", point: [998, 1092.5], side: "right" },
+  { start: "14% top", point: [582, 1482.5], side: "left" },
+  { start: "26% top", point: [59, 1766.5], side: "left" },
+  { start: "42% top", point: [458, 2129.5], side: "left" },
+  { start: "56% top", point: [1080, 2530], side: "right" },
+  { start: "70% top", point: [540, 2935], side: "left" },
+] as const;
+const timelineViewBox = `0 0 ${timelineWidth} ${timelineHeight}`;
 
 function entrance(index: number, delay = 0.3, split = false) {
   return {
     "data-tl-desktop": "",
     "data-tl-type": "trigger",
     "data-tl-trigger": ".about-card-container",
-    "data-tl-start": starts[index],
+    "data-tl-start": timelineSteps[index].start,
     ...(split ? { "data-tl-split": "lines" } : {}),
     "data-tl-from": split
       ? "{'yPercent':100}"
@@ -155,7 +150,7 @@ function JourneyPoint({ index }: { index: number }) {
 }
 
 function JourneyCard({ entry, index }: { entry: JourneyEntry; index: number }) {
-  const fromRight = index === 0 || index === 3 || index === 7;
+  const fromRight = timelineSteps[index].side === "right";
   const headingId = `journey-${entry.id}-title`;
   const quality = qualities[entry.id as keyof typeof qualities];
   return (
@@ -181,7 +176,7 @@ function JourneyCard({ entry, index }: { entry: JourneyEntry; index: number }) {
                 data-tl-desktop=""
                 data-number-count={entry.year.slice(2)}
                 data-tl-trigger=".about-card-container"
-                data-tl-start={starts[index]}
+                data-tl-start={timelineSteps[index].start}
                 data-tl-to="{'duration':1.5,'stagger':0.1,'delay':0.2,'ease':'expo.out'}"
               >
                 {entry.year.slice(2)}
@@ -279,7 +274,7 @@ function JourneyTimeline() {
       >
         <svg
           className="about-timeline"
-          viewBox="0 0 1118 2580"
+          viewBox={timelineViewBox}
           preserveAspectRatio="none"
           fill="none"
         >
@@ -290,12 +285,12 @@ function JourneyTimeline() {
             viewBox="0 0 1118 2166"
           />
           <path
-            d="M490 2138C525 2147 560 2155 597 2164C820 2220 1100 2320 1080 2530"
+            d="M490 2138C525 2147 560 2155 597 2164C820 2220 1100 2320 1080 2530C1060 2740 784 2874 540 2935"
             stroke="currentColor"
             strokeWidth="2.17"
           />
           <path
-            d="m1080 2530-2 28"
+            d="m540 2935-32 8"
             stroke="currentColor"
             strokeWidth="2.17"
             strokeDasharray="6 6"
@@ -304,11 +299,11 @@ function JourneyTimeline() {
       </div>
       <svg
         className="about-timeline-position"
-        viewBox="0 0 1118 2580"
+        viewBox={timelineViewBox}
         preserveAspectRatio="none"
         fill="none"
       >
-        {anchors.map(([cx, cy], index) => (
+        {timelineSteps.map(({ point: [cx, cy] }, index) => (
           <circle
             key={index}
             cx={cx}

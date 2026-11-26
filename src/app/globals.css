@@ -25,6 +25,9 @@
 }
 
 .about-card-wrap.ac-8 {
+  @apply top-[76%];
+}
+.about-card-wrap.ac-9 {
   @apply top-[88%];
 }
 .journey-image {
@@ -88,7 +91,7 @@ button.popup-close {
   }
   .about-timeline,
   .about-timeline-position {
-    @apply h-[300vw];
+    @apply h-[346.5vw];
   }
   .journey-card-bottom {
     @apply flex-wrap;

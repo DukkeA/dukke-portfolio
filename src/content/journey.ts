@@ -79,9 +79,9 @@ export const journey: readonly JourneyEntry[] = [
     year: "2024",
     title: "More pieces to connect",
     summary:
-      "At G6 Networks, I build web applications that connect APIs and blockchain services, working closely with backend and product teams.",
+      "At G6 Networks, I built web applications that connected APIs and blockchain services, working closely with backend and product teams.",
     story:
-      "My work at G6 Networks brings together React, TypeScript, Next.js, and integrations with APIs and blockchain infrastructure. I work with backend and product teams on architecture and the experience people use. I've also built internal proofs of concept and contributed to a winning hackathon project.",
+      "From May 2024 to June 2026, I worked with React, TypeScript, Next.js, APIs, and blockchain infrastructure. I collaborated with backend and product teams, built internal proofs of concept, and contributed to a winning hackathon project.",
     image: "/assets/journey/gen6.svg",
     imageAlt: "Gen6, G6 Networks",
     whiteLogo: true,
@@ -99,6 +99,16 @@ export const journey: readonly JourneyEntry[] = [
     imageAlt: "Universidad de los Andes",
     whiteLogo: true,
     tags: ["Software engineering", "Architecture"],
+  },
+  {
+    id: "mercado-libre",
+    year: "2026",
+    title: "Joining Mercado Libre",
+    summary: "In November 2026, I joined Mercado Libre as a Software Engineer in Bogotá.",
+    story:
+      "I joined Mercado Libre in November 2026. After working across frontend and backend in previous roles, I'm getting to know a new team and how it builds, ships, and looks after its software.",
+    symbol: "code",
+    tags: ["Mercado Libre", "Software engineering"],
   },
   {
     id: "still-learning",

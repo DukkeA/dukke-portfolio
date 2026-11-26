@@ -1687,27 +1687,27 @@ a {
 }
 
 .about-card-wrap.ac-3 {
-  @apply [top:15%];
+  @apply [top:13%];
 }
 
 .about-card-wrap.ac-4 {
   @apply justify-start;
   @apply items-stretch;
-  @apply [top:30%];
+  @apply [top:26%];
 }
 
 .about-card-wrap.ac-5 {
-  @apply [top:45%];
+  @apply [top:39%];
 }
 
 .about-card-wrap.ac-6 {
   @apply [margin-top:-2.92vw];
-  @apply [top:62%];
+  @apply [top:54%];
 }
 
 .about-card-wrap.ac-7 {
   @apply [padding-bottom:0];
-  @apply [top:75%];
+  @apply [top:65%];
 }
 
 .about-card {
