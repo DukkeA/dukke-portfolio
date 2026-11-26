@@ -6,6 +6,7 @@ export const sidebarBrands = [
     tall: true,
   },
   { name: "G6 Networks", image: "/assets/journey/gen6.svg" },
+  { name: "Mercado Libre", image: "/assets/journey/mercado-libre.svg" },
   { name: "React", image: "/assets/stack/react.svg" },
   { name: "Next.js", image: "/assets/stack/nextjs.svg" },
   { name: "TypeScript", image: "/assets/stack/typescript.svg" },

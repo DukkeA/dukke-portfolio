@@ -107,7 +107,9 @@ export const journey: readonly JourneyEntry[] = [
     summary: "In November 2026, I joined Mercado Libre as a Software Engineer in Bogotá.",
     story:
       "I joined Mercado Libre in November 2026. After working across frontend and backend in previous roles, I'm getting to know a new team and how it builds, ships, and looks after its software.",
-    symbol: "code",
+    image: "/assets/journey/mercado-libre.svg",
+    imageAlt: "Mercado Libre",
+    whiteLogo: true,
     tags: ["Mercado Libre", "Software engineering"],
   },
   {
